@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check } from "lucide-react";
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap');
@@ -68,6 +68,19 @@ const CONTENT = {
     tvOnAir: "À l'antenne",
     donateBtn: "Faire un don",
     donateSubtext: "Soutenez la mission",
+    navPrayer: "Prière",
+    prayerTitle: "Demande de prière",
+    prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
+    prayerNameLabel: "Votre nom (optionnel)",
+    prayerNamePlaceholder: "Anonyme",
+    prayerRequestLabel: "Votre demande",
+    prayerRequestPlaceholder: "Écrivez votre demande ici...",
+    prayerSubmitBtn: "Envoyer la demande",
+    prayerSendingBtn: "Envoi en cours...",
+    prayerSuccessTitle: "Demande envoyée",
+    prayerSuccessBody: "Merci de nous avoir fait confiance. Notre équipe prie pour vous.",
+    prayerSuccessNew: "Envoyer une autre demande",
+    prayerErrorBody: "Une erreur est survenue. Veuillez réessayer.",
     pillars: [
       { key: "adoration", title: "Adoration", body: "Vivre en présence de Dieu, cœur ouvert, dans la louange et le silence." },
       { key: "fraternite", title: "Communion fraternelle", body: "Marcher ensemble, se porter les uns les autres avec vérité et tendresse." },
@@ -129,6 +142,19 @@ const CONTENT = {
     tvOnAir: "On air",
     donateBtn: "Donate",
     donateSubtext: "Support the mission",
+    navPrayer: "Prayer",
+    prayerTitle: "Prayer request",
+    prayerSubtitle: "Share what's on your heart — our team prays for you.",
+    prayerNameLabel: "Your name (optional)",
+    prayerNamePlaceholder: "Anonymous",
+    prayerRequestLabel: "Your request",
+    prayerRequestPlaceholder: "Write your request here...",
+    prayerSubmitBtn: "Send request",
+    prayerSendingBtn: "Sending...",
+    prayerSuccessTitle: "Request sent",
+    prayerSuccessBody: "Thank you for trusting us. Our team is praying for you.",
+    prayerSuccessNew: "Send another request",
+    prayerErrorBody: "Something went wrong. Please try again.",
     pillars: [
       { key: "adoration", title: "Worship", body: "Living in God's presence, an open heart, in praise and in silence." },
       { key: "fraternite", title: "Fellowship", body: "Walking together, carrying one another with truth and tenderness." },
@@ -190,6 +216,19 @@ const CONTENT = {
     tvOnAir: "Sou antèn",
     donateBtn: "Fè yon don",
     donateSubtext: "Soutni misyon an",
+    navPrayer: "Priyè",
+    prayerTitle: "Demann priyè",
+    prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
+    prayerNameLabel: "Non ou (opsyonèl)",
+    prayerNamePlaceholder: "Anonim",
+    prayerRequestLabel: "Demann ou",
+    prayerRequestPlaceholder: "Ekri demann ou la la...",
+    prayerSubmitBtn: "Voye demann lan",
+    prayerSendingBtn: "N ap voye...",
+    prayerSuccessTitle: "Demann voye",
+    prayerSuccessBody: "Mèsi paske ou fè nou konfyans. Ekip nou an ap priye pou ou.",
+    prayerSuccessNew: "Voye yon lòt demann",
+    prayerErrorBody: "Gen yon erè. Tanpri eseye ankò.",
     pillars: [
       { key: "adoration", title: "Adorasyon", body: "Viv nan prezans Bondye, ak yon kè ouvè, nan lwanj ak nan silans." },
       { key: "fraternite", title: "Fratènite", body: "Mache ansanm, pote youn lòt ak verite ak tandrès." },
@@ -226,6 +265,8 @@ const MEDIA = {
   tvChannelName: "Télé Centre Lumière",
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://www.paypal.com/donate",
+  // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
+  prayerFormEndpoint: "https://formspree.io/f/VOTRE_ID_FORMSPREE",
 };
 
 function Dawn({ compact }) {
@@ -264,8 +305,31 @@ export default function App() {
   const [liveSource, setLiveSource] = useState("youtube");
   const [isLive, setIsLive] = useState(true); // simulation pour la démo
   const [radioPlaying, setRadioPlaying] = useState(false);
+  const [prayerName, setPrayerName] = useState("");
+  const [prayerText, setPrayerText] = useState("");
+  const [prayerStatus, setPrayerStatus] = useState("idle"); // idle | sending | success | error
   const audioRef = useRef(null);
   const radioRef = useRef(null);
+
+  const submitPrayer = async (e) => {
+    e.preventDefault();
+    if (!prayerText.trim()) return;
+    setPrayerStatus("sending");
+    try {
+      const res = await fetch(MEDIA.prayerFormEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({ name: prayerName || "Anonyme", message: prayerText, langue: lang }),
+      });
+      if (res.ok) {
+        setPrayerStatus("success");
+      } else {
+        setPrayerStatus("error");
+      }
+    } catch {
+      setPrayerStatus("error");
+    }
+  };
 
   const toggleRadio = () => {
     const el = radioRef.current;
@@ -885,6 +949,141 @@ export default function App() {
             </div>
           )}
 
+          {tab === "prayer" && (
+            <div key={lang + "-prayer"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.prayerTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.prayerSubtitle}</p>
+
+              {prayerStatus === "success" ? (
+                <div
+                  style={{
+                    marginTop: 24,
+                    textAlign: "center",
+                    background: COLORS.ink,
+                    borderRadius: 16,
+                    padding: "36px 20px",
+                    border: "1px solid rgba(244,185,66,0.25)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: "rgba(244,185,66,0.16)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 16px",
+                    }}
+                  >
+                    <Check size={26} color={COLORS.dawn} />
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700 }}>{t.prayerSuccessTitle}</div>
+                  <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.5 }}>{t.prayerSuccessBody}</p>
+                  <button
+                    onClick={() => {
+                      setPrayerStatus("idle");
+                      setPrayerName("");
+                      setPrayerText("");
+                    }}
+                    style={{
+                      marginTop: 20,
+                      background: "transparent",
+                      border: `1px solid rgba(255,255,255,0.2)`,
+                      color: COLORS.light,
+                      borderRadius: 12,
+                      padding: "10px 18px",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {t.prayerSuccessNew}
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={submitPrayer} style={{ marginTop: 22, display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.prayerNameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={prayerName}
+                      onChange={(e) => setPrayerName(e.target.value)}
+                      placeholder={t.prayerNamePlaceholder}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.prayerRequestLabel}
+                    </label>
+                    <textarea
+                      value={prayerText}
+                      onChange={(e) => setPrayerText(e.target.value)}
+                      placeholder={t.prayerRequestPlaceholder}
+                      required
+                      rows={6}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        resize: "vertical",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+
+                  {prayerStatus === "error" && (
+                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.prayerErrorBody}</div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={prayerStatus === "sending"}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      background: COLORS.ember,
+                      color: COLORS.light,
+                      border: "none",
+                      borderRadius: 14,
+                      padding: "14px 18px",
+                      fontSize: 14.5,
+                      fontWeight: 600,
+                      cursor: prayerStatus === "sending" ? "default" : "pointer",
+                      opacity: prayerStatus === "sending" ? 0.7 : 1,
+                    }}
+                  >
+                    <Send size={16} />
+                    {prayerStatus === "sending" ? t.prayerSendingBtn : t.prayerSubmitBtn}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
+
           {tab === "tv" && (
             <div key={lang + "-tv"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -1052,6 +1251,7 @@ export default function App() {
         >
           {[
             { key: "home", label: t.navHome, Icon: Home },
+            { key: "prayer", label: t.navPrayer, Icon: HandHeart },
             { key: "live", label: t.navLive, Icon: Video },
             { key: "tv", label: t.navTv, Icon: Tv },
             { key: "radio", label: t.navRadio, Icon: Radio },
