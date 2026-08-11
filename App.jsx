@@ -69,6 +69,19 @@ const CONTENT = {
     donateBtn: "Faire un don",
     donateSubtext: "Soutenez la mission",
     navPrayer: "Prière",
+    navDonate: "Don",
+    donateTitle: "Soutenir la mission",
+    donateHeroBody: "Chaque don aide à porter l'Évangile plus loin — production de contenu, diffusion, accompagnement pastoral, aide aux plus démunis.",
+    donateImpactTitle: "Ce que votre don rend possible",
+    donateImpact1: "Produire des dévotions et enseignements pour la communauté",
+    donateImpact2: "Maintenir le direct, la radio et la télévision en ligne",
+    donateImpact3: "Soutenir les familles dans le besoin",
+    donateOneTime: "Don unique",
+    donateMonthly: "Don mensuel",
+    donateAmountLabel: "Choisissez un montant",
+    donateCustom: "Autre montant",
+    donateCta: "Faire un don maintenant",
+    donateSecure: "Paiement sécurisé via PayPal",
     prayerTitle: "Demande de prière",
     prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
     prayerNameLabel: "Votre nom (optionnel)",
@@ -143,6 +156,19 @@ const CONTENT = {
     donateBtn: "Donate",
     donateSubtext: "Support the mission",
     navPrayer: "Prayer",
+    navDonate: "Give",
+    donateTitle: "Support the mission",
+    donateHeroBody: "Every gift helps carry the Gospel further — content, broadcasting, pastoral care, and support for those in need.",
+    donateImpactTitle: "What your gift makes possible",
+    donateImpact1: "Producing devotions and teaching for the community",
+    donateImpact2: "Keeping the live stream, radio, and TV running",
+    donateImpact3: "Supporting families in need",
+    donateOneTime: "One-time gift",
+    donateMonthly: "Monthly gift",
+    donateAmountLabel: "Choose an amount",
+    donateCustom: "Other amount",
+    donateCta: "Give now",
+    donateSecure: "Secure payment via PayPal",
     prayerTitle: "Prayer request",
     prayerSubtitle: "Share what's on your heart — our team prays for you.",
     prayerNameLabel: "Your name (optional)",
@@ -217,6 +243,19 @@ const CONTENT = {
     donateBtn: "Fè yon don",
     donateSubtext: "Soutni misyon an",
     navPrayer: "Priyè",
+    navDonate: "Don",
+    donateTitle: "Soutni misyon an",
+    donateHeroBody: "Chak don ede pote Levanjil la pi lwen — kontni, difizyon, akonpayman pastoral, ak èd pou fanmi ki nan bezwen.",
+    donateImpactTitle: "Sa don ou fè posib",
+    donateImpact1: "Pwodwi devosyon ak ansèyman pou kominote a",
+    donateImpact2: "Kenbe dirèk la, radyo a, ak televizyon an sou entènèt",
+    donateImpact3: "Soutni fanmi ki nan bezwen",
+    donateOneTime: "Don sèl fwa",
+    donateMonthly: "Don chak mwa",
+    donateAmountLabel: "Chwazi yon montan",
+    donateCustom: "Lòt montan",
+    donateCta: "Fè yon don kounye a",
+    donateSecure: "Peman sekirize via PayPal",
     prayerTitle: "Demann priyè",
     prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
     prayerNameLabel: "Non ou (opsyonèl)",
@@ -308,6 +347,8 @@ export default function App() {
   const [prayerName, setPrayerName] = useState("");
   const [prayerText, setPrayerText] = useState("");
   const [prayerStatus, setPrayerStatus] = useState("idle"); // idle | sending | success | error
+  const [donateAmount, setDonateAmount] = useState(25);
+  const [donateFrequency, setDonateFrequency] = useState("once");
   const audioRef = useRef(null);
   const radioRef = useRef(null);
 
@@ -316,7 +357,7 @@ export default function App() {
     if (!prayerText.trim()) return;
     setPrayerStatus("sending");
     try {
-      const res = await fetch(MEDIA.prayerFormEndpoint, { 
+      const res = await fetch(MEDIA.prayerFormEndpoint, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: JSON.stringify({ name: prayerName || "Anonyme", message: prayerText, langue: lang }),
@@ -503,10 +544,8 @@ export default function App() {
                   <ChevronRight size={18} />
                 </button>
 
-                <a
-                  href={MEDIA.donationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setTab("donate")}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -521,14 +560,13 @@ export default function App() {
                     fontSize: 14,
                     fontWeight: 600,
                     cursor: "pointer",
-                    textDecoration: "none",
                     boxSizing: "border-box",
                   }}
                 >
                   <Heart size={17} />
-                  <span style={{ flex: 1 }}>{t.donateBtn}</span>
+                  <span style={{ flex: 1, textAlign: "left" }}>{t.donateBtn}</span>
                   <span style={{ fontSize: 11.5, color: COLORS.mist, fontWeight: 500 }}>{t.donateSubtext}</span>
-                </a>
+                </button>
 
                 <div style={{ marginTop: 26, marginBottom: 8 }}>
                   <div className="display" style={{ fontSize: 19, fontWeight: 600 }}>
@@ -1084,6 +1122,114 @@ export default function App() {
             </div>
           )}
 
+          {tab === "donate" && (
+            <div key={lang + "-donate"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.donateTitle}
+              </div>
+              <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.55 }}>{t.donateHeroBody}</p>
+
+              <div
+                style={{
+                  marginTop: 20,
+                  background: COLORS.ink,
+                  borderRadius: 16,
+                  padding: 18,
+                  border: "1px solid rgba(244,185,66,0.18)",
+                }}
+              >
+                <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.dawn, fontWeight: 600, marginBottom: 12 }}>
+                  {t.donateImpactTitle}
+                </div>
+                {[t.donateImpact1, t.donateImpact2, t.donateImpact3].map((line, i) => (
+                  <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: i < 2 ? 10 : 0 }}>
+                    <Heart size={14} color={COLORS.ember} style={{ marginTop: 2, flexShrink: 0 }} />
+                    <span style={{ fontSize: 13, lineHeight: 1.5 }}>{line}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Toggle unique / mensuel */}
+              <div style={{ display: "flex", gap: 8, marginTop: 22 }}>
+                {[
+                  { key: "once", label: t.donateOneTime },
+                  { key: "monthly", label: t.donateMonthly },
+                ].map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setDonateFrequency(key)}
+                    style={{
+                      flex: 1,
+                      padding: "11px 0",
+                      borderRadius: 10,
+                      border: `1px solid ${donateFrequency === key ? COLORS.dawn : "rgba(255,255,255,0.15)"}`,
+                      background: donateFrequency === key ? "rgba(244,185,66,0.14)" : "transparent",
+                      color: donateFrequency === key ? COLORS.dawn : COLORS.mist,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Montants suggérés */}
+              <div style={{ marginTop: 18 }}>
+                <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, marginBottom: 10 }}>{t.donateAmountLabel}</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+                  {[10, 25, 50, 100, 250, 500].map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setDonateAmount(amount)}
+                      style={{
+                        padding: "14px 0",
+                        borderRadius: 12,
+                        border: `1px solid ${donateAmount === amount ? COLORS.dawn : "rgba(255,255,255,0.15)"}`,
+                        background: donateAmount === amount ? "rgba(244,185,66,0.14)" : "rgba(255,255,255,0.04)",
+                        color: donateAmount === amount ? COLORS.dawn : COLORS.light,
+                        fontSize: 15,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                      }}
+                    >
+                      ${amount}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href={MEDIA.donationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  width: "100%",
+                  marginTop: 22,
+                  background: COLORS.ember,
+                  color: COLORS.light,
+                  border: "none",
+                  borderRadius: 14,
+                  padding: "15px 18px",
+                  fontSize: 15,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  boxSizing: "border-box",
+                }}
+              >
+                <Heart size={17} />
+                {t.donateCta} — ${donateAmount}
+              </a>
+              <div style={{ textAlign: "center", fontSize: 11.5, color: COLORS.mist, marginTop: 10 }}>{t.donateSecure}</div>
+            </div>
+          )}
+
           {tab === "tv" && (
             <div key={lang + "-tv"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -1251,6 +1397,7 @@ export default function App() {
         >
           {[
             { key: "home", label: t.navHome, Icon: Home },
+            { key: "donate", label: t.navDonate, Icon: Heart },
             { key: "prayer", label: t.navPrayer, Icon: HandHeart },
             { key: "live", label: t.navLive, Icon: Video },
             { key: "tv", label: t.navTv, Icon: Tv },
