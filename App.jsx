@@ -316,7 +316,7 @@ export default function App() {
     if (!prayerText.trim()) return;
     setPrayerStatus("sending");
     try {
-      const res = await fetch(MEDIA.prayerFormEndpoint, {
+      const res = await fetch(MEDIA.prayerFormEndpoint, { https://formspree.io/f/xyegwewb
         method: "POST",
         headers: { Accept: "application/json" },
         body: JSON.stringify({ name: prayerName || "Anonyme", message: prayerText, langue: lang }),
