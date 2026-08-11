@@ -266,7 +266,7 @@ const MEDIA = {
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://www.paypal.com/donate",
   // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
-  prayerFormEndpoint: "https://formspree.io/f/VOTRE_ID_FORMSPREE",
+  prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
 };
 
 function Dawn({ compact }) {
@@ -316,7 +316,7 @@ export default function App() {
     if (!prayerText.trim()) return;
     setPrayerStatus("sending");
     try {
-      const res = await fetch(MEDIA.prayerFormEndpoint, { https://formspree.io/f/xyegwewb
+      const res = await fetch(MEDIA.prayerFormEndpoint, { 
         method: "POST",
         headers: { Accept: "application/json" },
         body: JSON.stringify({ name: prayerName || "Anonyme", message: prayerText, langue: lang }),
