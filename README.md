@@ -2,7 +2,7 @@
 
 ## Contenu du projet
 - `src/App.jsx` — toute l'application (écrans, contenu, styles)
-- `src/main.jsx` — point d'entrée technique (ne pas modifier)
+- `/main.jsx` — point d'entrée technique (ne pas modifier)
 - `index.html` — page HTML (titre, couleur de la barre du navigateur)
 - `package.json` — liste des dépendances
 
