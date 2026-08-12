@@ -60,7 +60,7 @@ const CONTENT = {
     watchOnFacebook: "Regarder sur Facebook",
     navRadio: "Radio",
     radioTitle: "Radio en direct",
-    radioSubtitle: "Louange, prédications et enseignements, 24h/24",
+    radioSubtitle: "La lumière qui ne s'éteint jamais",
     radioOnAir: "À l'antenne",
     navTv: "Télévision",
     tvTitle: "Télévision en direct",
@@ -71,7 +71,7 @@ const CONTENT = {
     navPrayer: "Prière",
     navDonate: "Don",
     donateTitle: "Soutenir la mission",
-    donateHeroBody: "Chaque don aide à porter l'Évangile plus loin — production de contenu, diffusion, accompagnement pastoral, aide aux plus démunis.",
+    donateHeroBody: "Ensemble, nous faisons plus que nous ne pourrions jamais faire seuls. Votre don d'aujourd'hui devient une dévotion partagée demain, une famille soutenue, une âme touchée.",
     donateImpactTitle: "Ce que votre don rend possible",
     donateImpact1: "Produire des dévotions et enseignements pour la communauté",
     donateImpact2: "Maintenir le direct, la radio et la télévision en ligne",
@@ -147,7 +147,7 @@ const CONTENT = {
     watchOnFacebook: "Watch on Facebook",
     navRadio: "Radio",
     radioTitle: "Live radio",
-    radioSubtitle: "Worship, sermons, and teaching, 24/7",
+    radioSubtitle: "The light that never goes out",
     radioOnAir: "On air",
     navTv: "TV",
     tvTitle: "Live TV",
@@ -158,7 +158,7 @@ const CONTENT = {
     navPrayer: "Prayer",
     navDonate: "Give",
     donateTitle: "Support the mission",
-    donateHeroBody: "Every gift helps carry the Gospel further — content, broadcasting, pastoral care, and support for those in need.",
+    donateHeroBody: "Together, we do more than we could ever do alone. Your gift today becomes tomorrow's shared devotion, a family supported, a soul touched.",
     donateImpactTitle: "What your gift makes possible",
     donateImpact1: "Producing devotions and teaching for the community",
     donateImpact2: "Keeping the live stream, radio, and TV running",
@@ -234,7 +234,7 @@ const CONTENT = {
     watchOnFacebook: "Gade sou Facebook",
     navRadio: "Radyo",
     radioTitle: "Radyo an dirèk",
-    radioSubtitle: "Adorasyon, predikasyon ak ansèyman, 24/24",
+    radioSubtitle: "Limyè ki pa janm etenn",
     radioOnAir: "Sou antèn",
     navTv: "Televizyon",
     tvTitle: "Televizyon an dirèk",
@@ -245,7 +245,7 @@ const CONTENT = {
     navPrayer: "Priyè",
     navDonate: "Don",
     donateTitle: "Soutni misyon an",
-    donateHeroBody: "Chak don ede pote Levanjil la pi lwen — kontni, difizyon, akonpayman pastoral, ak èd pou fanmi ki nan bezwen.",
+    donateHeroBody: "Ansanm, nou fè plis pase sa nou t ap ka fè pou kont nou. Don ou bay jodi a vin yon devosyon pataje demen, yon fanmi ki jwenn sipò, yon nanm ki touche.",
     donateImpactTitle: "Sa don ou fè posib",
     donateImpact1: "Pwodwi devosyon ak ansèyman pou kominote a",
     donateImpact2: "Kenbe dirèk la, radyo a, ak televizyon an sou entènèt",
@@ -297,15 +297,15 @@ const MEDIA = {
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
-  radioStreamUrl: "https://stream.zeno.fm/b41men4e0mruv",
+  radioStreamUrl: "https://ice1.somafm.com/groovesalad-256-mp3",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
   tvChannelName: "Télé Centre Lumière",
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
-  donationUrl: "https://www.paypal.com/donate/?hosted_button_id=ZAYBYSWWVXULJ",
+  donationUrl: "https://www.paypal.com/donate",
   // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
-  prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
+  prayerFormEndpoint: "https://formspree.io/f/VOTRE_ID_FORMSPREE",
 };
 
 function Dawn({ compact }) {
