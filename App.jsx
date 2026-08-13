@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award } from "lucide-react";
 
 const FONTS = ``;
 
@@ -19,6 +19,10 @@ const CONTENT = {
     navHome: "Accueil",
     navDevotion: "Dévotion",
     navPillars: "Piliers",
+    navHeroes: "Héros",
+    navMedia: "Média",
+    navMore: "Plus",
+    backLabel: "Retour",
     heroTitle: "La lumière se lève encore",
     slogan: "La Grâce Réveille, La Lumière Transforme",
     heroBody:
@@ -34,6 +38,74 @@ const CONTENT = {
       "L'Esprit du Seigneur est sur moi, il m'a envoyé pour annoncer la bonne nouvelle aux pauvres.",
     pillarsTitle: "Cinq piliers, un même appel",
     pillarsIntro: "Fondés sur Matthieu 28:19, ces piliers structurent toute notre vie communautaire.",
+    heroesTitle: "Héros de la foi",
+    heroesIntro: "Des vies qui ont marqué leur génération et continuent d'inspirer la nôtre.",
+    heroesLessonLabel: "Leçon clé",
+    heroes: [
+      {
+        name: "Charles Spurgeon",
+        years: "1834–1892",
+        role: "Le « prince des prédicateurs »",
+        bio: "Pasteur baptiste anglais, il prêchait chaque semaine devant des milliers de personnes au Metropolitan Tabernacle de Londres. Ses sermons imprimés continuent d'être lus dans le monde entier, plus d'un siècle après sa mort.",
+        lesson: "Spurgeon a commencé à prêcher dès l'âge de 17 ans, sans formation théologique formelle. Sa vie rappelle que Dieu peut puissamment utiliser quelqu'un, quel que soit son parcours, quand ce dernier se rend simplement disponible.",
+      },
+      {
+        name: "John Wesley",
+        years: "1703–1791",
+        role: "Fondateur du méthodisme",
+        bio: "Théologien anglais, il a parcouru l'Angleterre à cheval pendant des décennies, prêchant en plein air à des dizaines de milliers de personnes et fondant un mouvement qui a transformé la vie spirituelle et sociale de toute une nation.",
+        lesson: "Wesley organisait ses convertis en petits groupes de responsabilité mutuelle. Sa vie enseigne l'importance d'une communauté structurée pour une croissance durable dans la foi, au-delà des expériences spirituelles ponctuelles.",
+      },
+      {
+        name: "D.L. Moody",
+        years: "1837–1899",
+        role: "Évangéliste sans formation théologique",
+        bio: "Ancien vendeur de chaussures sans éducation formelle, Moody est devenu l'un des évangélistes les plus influents du 19e siècle, touchant des millions de personnes en Amérique et en Grande-Bretagne.",
+        lesson: "Moody disait que le monde n'avait pas encore vu ce que Dieu pouvait faire à travers une personne entièrement consacrée à lui. Sa vie illustre que la disponibilité du cœur compte plus que les qualifications humaines.",
+      },
+      {
+        name: "George Whitefield",
+        years: "1714–1770",
+        role: "Prédicateur du Grand Réveil",
+        bio: "L'un des instigateurs du Premier Grand Réveil en Amérique et en Angleterre, il prêchait en plein air devant des foules de plusieurs dizaines de milliers de personnes, sans microphone, à travers les treize colonies américaines.",
+        lesson: "Whitefield a traversé l'Atlantique treize fois pour prêcher. Son endurance rappelle que porter l'Évangile demande souvent un vrai sacrifice, pas seulement une conviction intérieure.",
+      },
+      {
+        name: "Smith Wigglesworth",
+        years: "1859–1947",
+        role: "« L'apôtre de la foi »",
+        bio: "Plombier britannique sans instruction formelle, il est devenu un prédicateur reconnu pour son ministère de guérison et sa foi radicale, marquant profondément le mouvement pentecôtiste naissant.",
+        lesson: "Wigglesworth affirmait fonder sa vie non sur ce qu'il voyait ou ressentait, mais sur ce qu'il croyait. Sa vie encourage à ancrer sa foi dans la Parole de Dieu plutôt que dans les circonstances visibles.",
+      },
+      {
+        name: "Kathryn Kuhlman",
+        years: "1907–1976",
+        role: "Ministère de guérison",
+        bio: "Prédicatrice américaine connue pour ses grands rassemblements marqués par des guérisons rapportées et une forte présence du Saint-Esprit, elle a insisté toute sa vie sur le fait qu'elle-même n'avait aucun pouvoir.",
+        lesson: "Kuhlman refusait qu'on lui attribue le mérite des guérisons, redirigeant systématiquement l'attention vers Dieu seul. Sa posture rappelle l'importance de rester un simple instrument, jamais la source.",
+      },
+      {
+        name: "A.A. Allen",
+        years: "1911–1970",
+        role: "Ministère de guérison et miracles",
+        bio: "Prédicateur américain associé au mouvement de guérison par la foi des années 1950-60, connu pour ses grandes campagnes sous tente marquées par des guérisons et miracles rapportés, touchant particulièrement les communautés marginalisées.",
+        lesson: "Allen prêchait avec la conviction que Dieu voulait agir puissamment aujourd'hui, pas seulement dans les récits bibliques du passé. Sa vie, avec ses luttes personnelles bien documentées, rappelle aussi qu'aucun ministre n'est à l'abri de la faiblesse humaine — la grâce reste nécessaire à tous, y compris ceux qui prêchent.",
+      },
+      {
+        name: "Billy Graham",
+        years: "1918–2018",
+        role: "« L'évangéliste des présidents »",
+        bio: "Considéré comme l'évangéliste le plus influent du 20e siècle, il a prêché en personne devant plus de 200 millions de personnes dans 185 pays lors de ses grandes croisades, tout en conseillant plusieurs présidents américains sans jamais se laisser entraîner dans la politique partisane.",
+        lesson: "Graham a maintenu une réputation d'intégrité personnelle et financière irréprochable pendant plus de 60 ans de ministère public, en s'imposant des règles strictes de transparence. Sa vie rappelle que la crédibilité d'un témoignage se construit autant par le caractère que par le message.",
+      },
+      {
+        name: "Oral Roberts",
+        years: "1918–2009",
+        role: "Pionnier de la guérison divine télévisée",
+        bio: "Prédicateur américain pionnier de la télévangélisation, il a porté le ministère de guérison divine à une échelle nationale grâce à la télévision, et a fondé l'Oral Roberts University pour former une nouvelle génération de leaders chrétiens.",
+        lesson: "Roberts insistait sur le principe qu'il appelait la « foi de semence » — donner généreusement en confiance que Dieu multiplie ce qui est semé. Sa vie illustre l'importance d'oser innover dans la manière de porter l'Évangile, en utilisant les outils de son époque.",
+      },
+    ],
     ctaDevotion: "Lire la dévotion du jour",
     devotionLabel: "Dévotion du jour",
     devotionDate: "Aujourd'hui",
@@ -917,6 +989,7 @@ const CONTENT = {
       },
     ],
     shareBtn: "Partager",
+    shareCopied: "Copié !",
     footerNote: "Bâti avec grâce, pour le monde entier.",
     audioLabel: "Écouter le message",
     videoLabel: "Regarder la vidéo",
@@ -1015,6 +1088,10 @@ const CONTENT = {
     navHome: "Home",
     navDevotion: "Devotion",
     navPillars: "Pillars",
+    navHeroes: "Heroes",
+    navMedia: "Media",
+    navMore: "More",
+    backLabel: "Back",
     heroTitle: "The light rises again",
     slogan: "Grace Awakens, Light Transforms",
     heroBody:
@@ -1030,6 +1107,74 @@ const CONTENT = {
       "The Spirit of the Lord is on me, he has sent me to proclaim good news to the poor.",
     pillarsTitle: "Five pillars, one calling",
     pillarsIntro: "Grounded in Matthew 28:19, these pillars shape our whole community life.",
+    heroesTitle: "Heroes of the faith",
+    heroesIntro: "Lives that marked their generation and continue to inspire ours.",
+    heroesLessonLabel: "Key lesson",
+    heroes: [
+      {
+        name: "Charles Spurgeon",
+        years: "1834–1892",
+        role: "The \"prince of preachers\"",
+        bio: "An English Baptist pastor, he preached to thousands each week at London's Metropolitan Tabernacle. His printed sermons are still read worldwide, more than a century after his death.",
+        lesson: "Spurgeon began preaching at just 17, without formal theological training. His life is a reminder that God can powerfully use anyone, whatever their background, once they make themselves available.",
+      },
+      {
+        name: "John Wesley",
+        years: "1703–1791",
+        role: "Founder of Methodism",
+        bio: "An English theologian, he traveled England on horseback for decades, preaching outdoors to tens of thousands and founding a movement that transformed the spiritual and social life of a nation.",
+        lesson: "Wesley organized converts into small groups of mutual accountability. His life teaches the importance of structured community for lasting growth in faith, beyond isolated spiritual experiences.",
+      },
+      {
+        name: "D.L. Moody",
+        years: "1837–1899",
+        role: "Evangelist with no theological training",
+        bio: "A former shoe salesman with no formal education, Moody became one of the most influential evangelists of the 19th century, reaching millions across America and Britain.",
+        lesson: "Moody said the world had yet to see what God could do through a person fully consecrated to him. His life shows that availability of heart matters more than human qualifications.",
+      },
+      {
+        name: "George Whitefield",
+        years: "1714–1770",
+        role: "Preacher of the Great Awakening",
+        bio: "One of the driving forces of the First Great Awakening in America and England, he preached outdoors to crowds of tens of thousands, without a microphone, across the thirteen American colonies.",
+        lesson: "Whitefield crossed the Atlantic thirteen times to preach. His endurance is a reminder that carrying the Gospel often requires real sacrifice, not just inner conviction.",
+      },
+      {
+        name: "Smith Wigglesworth",
+        years: "1859–1947",
+        role: "The \"apostle of faith\"",
+        bio: "A British plumber with no formal training, he became a preacher known for his healing ministry and radical faith, deeply shaping the emerging Pentecostal movement.",
+        lesson: "Wigglesworth said he was moved not by what he saw or felt, but by what he believed. His life encourages us to anchor our faith in God's word rather than visible circumstances.",
+      },
+      {
+        name: "Kathryn Kuhlman",
+        years: "1907–1976",
+        role: "Healing ministry",
+        bio: "An American preacher known for large gatherings marked by reported healings and a strong sense of the Holy Spirit's presence, she insisted throughout her life that she herself had no power.",
+        lesson: "Kuhlman refused credit for healings, consistently redirecting attention to God alone. Her posture is a reminder of the importance of remaining a simple instrument, never the source.",
+      },
+      {
+        name: "A.A. Allen",
+        years: "1911–1970",
+        role: "Healing and miracle ministry",
+        bio: "An American preacher associated with the 1950s-60s faith healing movement, known for large tent campaigns marked by reported healings and miracles, especially reaching marginalized communities.",
+        lesson: "Allen preached with the conviction that God wanted to act powerfully today, not only in biblical accounts of the past. His life, including his well-documented personal struggles, also reminds us that no minister is beyond human weakness — grace remains necessary for all, including those who preach.",
+      },
+      {
+        name: "Billy Graham",
+        years: "1918–2018",
+        role: "\"The evangelist to presidents\"",
+        bio: "Widely regarded as the most influential evangelist of the 20th century, he preached in person to more than 200 million people across 185 countries during his crusades, while advising several U.S. presidents without ever becoming entangled in partisan politics.",
+        lesson: "Graham maintained a reputation for personal and financial integrity across more than 60 years of public ministry, holding himself to strict standards of transparency. His life reminds us that credibility is built as much through character as through message.",
+      },
+      {
+        name: "Oral Roberts",
+        years: "1918–2009",
+        role: "Pioneer of televised divine healing",
+        bio: "An American preacher who pioneered televangelism, he brought the divine healing ministry to a national scale through television, and founded Oral Roberts University to train a new generation of Christian leaders.",
+        lesson: "Roberts emphasized what he called \"seed faith\" — giving generously in trust that God multiplies what is sown. His life illustrates the importance of daring to innovate in how the Gospel is carried, using the tools of one's own time.",
+      },
+    ],
     ctaDevotion: "Read today's devotion",
     devotionLabel: "Today's devotion",
     devotionDate: "Today",
@@ -1068,6 +1213,7 @@ const CONTENT = {
       },
     ],
     shareBtn: "Share",
+    shareCopied: "Copied!",
     footerNote: "Built with grace, for the whole world.",
     audioLabel: "Listen to the message",
     videoLabel: "Watch the video",
@@ -1166,6 +1312,10 @@ const CONTENT = {
     navHome: "Akèy",
     navDevotion: "Devosyon",
     navPillars: "Pilye",
+    navHeroes: "Ewo",
+    navMedia: "Medya",
+    navMore: "Plis",
+    backLabel: "Tounen",
     heroTitle: "Limyè a leve ankò",
     slogan: "Gras Reveye, Limyè Transfòme",
     heroBody:
@@ -1181,6 +1331,74 @@ const CONTENT = {
       "Lespri Senyè a sou mwen, li voye m pou m anonse bon nouvèl la bay pòv yo.",
     pillarsTitle: "Senk pilye, yon sèl apèl",
     pillarsIntro: "Baze sou Matye 28:19, pilye sa yo dirije tout lavi kominote nou an.",
+    heroesTitle: "Ewo lafwa",
+    heroesIntro: "Lavi ki make jenerasyon yo e ki kontinye enspire pa nou an.",
+    heroesLessonLabel: "Leson kle",
+    heroes: [
+      {
+        name: "Charles Spurgeon",
+        years: "1834–1892",
+        role: "\"Prens predikatè yo\"",
+        bio: "Pastè batis angle, li te preche chak semèn devan dè milye moun nan Metropolitan Tabernacle Lond. Sèmon li yo enprime toujou ap li nan lemonn antye, plis pase yon syèk apre lanmò l.",
+        lesson: "Spurgeon te kòmanse preche depi laj 17 an, san fòmasyon teyolojik fòmèl. Lavi l montre Bondye ka itilize yon moun avèk pouvwa, kèlkeswa background li, depi li rann tèt li disponib.",
+      },
+      {
+        name: "John Wesley",
+        years: "1703–1791",
+        role: "Fondatè metodis la",
+        bio: "Teyolojyen angle, li te vwayaje Angletè sou chwal pandan plizyè deseni, li preche deyò devan dè dizèn milye moun, e li fonde yon mouvman ki transfòme lavi espirityèl ak sosyal yon nasyon antye.",
+        lesson: "Wesley te òganize moun ki konvèti yo an ti gwoup responsablite mityèl. Lavi l anseye enpòtans yon kominote estriktire pou yon kwasans dirab nan lafwa.",
+      },
+      {
+        name: "D.L. Moody",
+        years: "1837–1899",
+        role: "Evanjelis san fòmasyon teyolojik",
+        bio: "Ansyen machann soulye san edikasyon fòmèl, Moody vin youn nan evanjelis ki gen plis enfliyans nan 19yèm syèk la, li touche dè milyon moun nan Amerik ak Grann Bretay.",
+        lesson: "Moody te di lemonn poko wè sa Bondye ka fè atravè yon moun ki konsakre nèt bay li. Lavi l montre disponiblite kè a konte plis pase kalifikasyon imen.",
+      },
+      {
+        name: "George Whitefield",
+        years: "1714–1770",
+        role: "Predikatè Gran Reveye a",
+        bio: "Youn nan moun ki te lanse Premye Gran Reveye a nan Amerik ak Angletè, li te preche deyò devan foul dè dizèn milye moun, san mikwo, atravè trèz kolòni ameriken yo.",
+        lesson: "Whitefield te travèse Atlantik trèz fwa pou l preche. Andirans li montre pote Levanjil la souvan mande yon vrè sakrifis, pa sèlman yon konviksyon anndan.",
+      },
+      {
+        name: "Smith Wigglesworth",
+        years: "1859–1947",
+        role: "\"Apot lafwa a\"",
+        bio: "Plonbye britanik san fòmasyon fòmèl, li vin yon predikatè ke moun rekonèt pou ministè gerizon li ak lafwa radikal li, ki make mouvman pantkotis k ap kòmanse a anpil.",
+        lesson: "Wigglesworth te di li pa t mache sou sa l wè oswa santi, men sou sa l kwè. Lavi l ankouraje nou ansre lafwa nou nan Pawòl Bondye a pito pase sikonstans vizib yo.",
+      },
+      {
+        name: "Kathryn Kuhlman",
+        years: "1907–1976",
+        role: "Ministè gerizon",
+        bio: "Predikatris ameriken ke moun konnen pou gwo rasanbleman li yo make ak gerizon rapòte ak yon fò prezans Sentespri, li te toujou ensiste li menm pa t gen pouvwa.",
+        lesson: "Kuhlman te refize moun bay li kredi pou gerizon yo, li toujou redirije atansyon an sou Bondye sèl. Pozisyon l montre enpòtans pou rete yon senp enstriman, pa janm sous la.",
+      },
+      {
+        name: "A.A. Allen",
+        years: "1911–1970",
+        role: "Ministè gerizon ak mirak",
+        bio: "Predikatè ameriken ki asosye ak mouvman gerizon pa lafwa ane 1950-60 yo, li te konnen pou gwo kanpay anba tant ki make ak gerizon ak mirak rapòte, e ki te touche espesyalman kominote ki mete sou kote yo.",
+        lesson: "Allen te preche ak konviksyon Bondye vle aji ak pouvwa jodi a, pa sèlman nan istwa biblik nan tan lontan. Lavi l, ansanm ak difikilte pèsonèl byen dokimante li yo, montre tou okenn minis pa alabri feblès imen — gras la nesesè pou tout moun, menm sa yo k ap preche.",
+      },
+      {
+        name: "Billy Graham",
+        years: "1918–2018",
+        role: "\"Evanjelis prezidan yo\"",
+        bio: "Konsidere kòm evanjelis ki gen plis enfliyans nan 20yèm syèk la, li te preche an pèsòn devan plis pase 200 milyon moun nan 185 peyi pandan gwo kwazad li yo, pandan l ap konseye plizyè prezidan ameriken san l pa janm mele nan politik patizan.",
+        lesson: "Graham te kenbe yon repitasyon entegrite pèsonèl ak finansye san repwòch pandan plis pase 60 an nan ministè piblik, li te enpoze tèt li règ estrik transparans. Lavi l montre kredibilite yon temwayaj bati ni sou karaktè ni sou mesaj la.",
+      },
+      {
+        name: "Oral Roberts",
+        years: "1918–2009",
+        role: "Pyonye gerizon divin nan televizyon",
+        bio: "Predikatè ameriken ki te pyonye televanjelizasyon, li te pote ministè gerizon divin nan yon echèl nasyonal atravè televizyon, e li te fonde Oral Roberts University pou fòme yon nouvo jenerasyon lidè kretyen.",
+        lesson: "Roberts te ensiste sou prensip li te rele \"lafwa semans\" — bay ak jenewozite avèk konfyans Bondye ap miltipliye sa ki simen. Lavi l montre enpòtans pou n oze inove nan fason nou pote Levanjil la, an itilize zouti epòk nou an.",
+      },
+    ],
     ctaDevotion: "Li devosyon jodi a",
     devotionLabel: "Devosyon jodi a",
     devotionDate: "Jodi a",
@@ -1219,6 +1437,7 @@ const CONTENT = {
       },
     ],
     shareBtn: "Pataje",
+    shareCopied: "Kopye !",
     footerNote: "Bati ak gras, pou lemonn antye.",
     audioLabel: "Koute mesaj la",
     videoLabel: "Gade videyo a",
@@ -1332,7 +1551,7 @@ const MEDIA = {
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
-  radioStreamUrl: "https://stream.zeno.fm/b41men4e0mruv",
+  radioStreamUrl: "https://zeno.fm/radio/radio-centre-lumiere/",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
@@ -1374,6 +1593,8 @@ function Dawn({ compact }) {
 export default function App() {
   const [lang, setLang] = useState("fr");
   const [tab, setTab] = useState("home");
+  const [mediaView, setMediaView] = useState("live"); // live | tv | radio
+  const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
   const [loaded, setLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [liveSource, setLiveSource] = useState("youtube");
@@ -1414,6 +1635,27 @@ export default function App() {
       el.pause();
     } else {
       el.play();
+    }
+  };
+
+  const [shareStatus, setShareStatus] = useState("idle"); // idle | copied
+
+  const shareDevotion = async () => {
+    const text = `${todayDevotion.verse} — ${todayDevotion.ref}\n\n${todayDevotion.reflection}\n\n${t.tagline}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: t.devotionLabel, text });
+      } catch {
+        // utilisateur a annulé le partage — rien à faire
+      }
+    } else if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setShareStatus("copied");
+        setTimeout(() => setShareStatus("idle"), 2000);
+      } catch {
+        // presse-papiers indisponible — rien à faire
+      }
     }
   };
   const t = CONTENT[lang];
@@ -1623,7 +1865,10 @@ export default function App() {
                 </button>
 
                 <button
-                  onClick={() => setTab("donate")}
+                  onClick={() => {
+                    setTab("more");
+                    setMoreView("donate");
+                  }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1780,14 +2025,50 @@ export default function App() {
                   fontWeight: 600,
                   cursor: "pointer",
                 }}
+                onClick={shareDevotion}
               >
-                {t.shareBtn}
+                {shareStatus === "copied" ? t.shareCopied : t.shareBtn}
               </button>
             </div>
           )}
 
-          {tab === "live" && (
-            <div key={lang + "-live"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+          {tab === "media" && (
+            <div style={{ padding: "20px 20px 0" }}>
+              <div style={{ display: "flex", gap: 8 }}>
+                {[
+                  { key: "live", label: t.navLive, Icon: Video },
+                  { key: "tv", label: t.navTv, Icon: Tv },
+                  { key: "radio", label: t.navRadio, Icon: Radio },
+                ].map(({ key, label, Icon }) => (
+                  <button
+                    key={key}
+                    onClick={() => setMediaView(key)}
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 6,
+                      padding: "10px 0",
+                      borderRadius: 10,
+                      border: `1px solid ${mediaView === key ? COLORS.dawn : "rgba(255,255,255,0.15)"}`,
+                      background: mediaView === key ? "rgba(244,185,66,0.14)" : "transparent",
+                      color: mediaView === key ? COLORS.dawn : COLORS.mist,
+                      fontSize: 12.5,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Icon size={15} />
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "media" && mediaView === "live" && (
+            <div key={lang + "-live"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                   {t.navLive}
@@ -1946,8 +2227,8 @@ export default function App() {
             </div>
           )}
 
-          {tab === "radio" && (
-            <div key={lang + "-radio"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+          {tab === "media" && mediaView === "radio" && (
+            <div key={lang + "-radio"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
               <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                 {t.radioTitle}
               </div>
@@ -2155,8 +2436,75 @@ export default function App() {
             </div>
           )}
 
-          {tab === "donate" && (
-            <div key={lang + "-donate"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+          {tab === "more" && moreView === null && (
+            <div key={lang + "-more"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.navMore}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+                {[
+                  { key: "donate", label: t.navDonate, Icon: Heart },
+                  { key: "heroes", label: t.navHeroes, Icon: Award },
+                  { key: "pillars", label: t.navPillars, Icon: Compass },
+                ].map(({ key, label, Icon }) => (
+                  <button
+                    key={key}
+                    onClick={() => setMoreView(key)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      background: COLORS.ink,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: 14,
+                      padding: "16px 16px",
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: 11,
+                        background: "rgba(244,185,66,0.14)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Icon size={18} color={COLORS.dawn} />
+                    </div>
+                    <span style={{ fontSize: 15, fontWeight: 600, color: COLORS.light, flex: 1 }}>{label}</span>
+                    <ChevronRight size={18} color={COLORS.mist} />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "donate" && (
+            <div key={lang + "-donate"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
               <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                 {t.donateTitle}
               </div>
@@ -2263,8 +2611,8 @@ export default function App() {
             </div>
           )}
 
-          {tab === "tv" && (
-            <div key={lang + "-tv"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+          {tab === "media" && mediaView === "tv" && (
+            <div key={lang + "-tv"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                   {t.tvTitle}
@@ -2323,8 +2671,105 @@ export default function App() {
             </div>
           )}
 
-          {tab === "pillars" && (
-            <div key={lang + "-pillars"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+          {tab === "more" && moreView === "heroes" && (
+            <div key={lang + "-heroes"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 24, fontWeight: 600 }}>
+                {t.heroesTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.heroesIntro}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 20 }}>
+                {t.heroes.map((h, i) => (
+                  <div
+                    key={h.name}
+                    style={{
+                      background: COLORS.ink,
+                      borderRadius: 14,
+                      padding: 18,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <div
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: 11,
+                          background: "rgba(244,185,66,0.14)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Award size={18} color={COLORS.dawn} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 15.5, fontWeight: 700 }}>{h.name}</div>
+                        <div style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 1 }}>
+                          {h.years} · {h.role}
+                        </div>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 10, lineHeight: 1.55 }}>{h.bio}</p>
+                    <div
+                      style={{
+                        marginTop: 12,
+                        paddingTop: 10,
+                        borderTop: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                    >
+                      <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.ember, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                        {t.heroesLessonLabel}
+                      </div>
+                      <p style={{ fontSize: 13, color: COLORS.light, marginTop: 6, lineHeight: 1.55 }}>{h.lesson}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "pillars" && (
+            <div key={lang + "-pillars"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
               <div className="display" style={{ fontSize: 24, fontWeight: 600 }}>
                 {t.pillarsTitle}
               </div>
@@ -2413,7 +2858,7 @@ export default function App() {
         />
 
         {/* Mini-barre radio, visible sur tous les écrans sauf l'onglet Radio lui-même */}
-        {radioPlaying && tab !== "radio" && (
+        {radioPlaying && !(tab === "media" && mediaView === "radio") && (
           <div
             style={{
               display: "flex",
@@ -2424,7 +2869,10 @@ export default function App() {
               borderTop: "1px solid rgba(244,185,66,0.25)",
               cursor: "pointer",
             }}
-            onClick={() => setTab("radio")}
+            onClick={() => {
+              setTab("media");
+              setMediaView("radio");
+            }}
           >
             <Volume2 size={15} color={COLORS.dawn} />
             <div style={{ fontSize: 12, fontWeight: 600, flex: 1 }}>{MEDIA.radioStationName}</div>
@@ -2461,17 +2909,29 @@ export default function App() {
         >
           {[
             { key: "home", label: t.navHome, Icon: Home },
-            { key: "donate", label: t.navDonate, Icon: Heart },
+            {
+              key: "media",
+              label: t.navMedia,
+              Icon: Video,
+              onSelect: () => {
+                setTab("media");
+              },
+            },
             { key: "prayer", label: t.navPrayer, Icon: HandHeart },
-            { key: "live", label: t.navLive, Icon: Video },
-            { key: "tv", label: t.navTv, Icon: Tv },
-            { key: "radio", label: t.navRadio, Icon: Radio },
             { key: "devotion", label: t.navDevotion, Icon: BookOpen },
-            { key: "pillars", label: t.navPillars, Icon: Compass },
-          ].map(({ key, label, Icon }) => (
+            {
+              key: "more",
+              label: t.navMore,
+              Icon: Compass,
+              onSelect: () => {
+                setTab("more");
+                setMoreView(null);
+              },
+            },
+          ].map(({ key, label, Icon, onSelect }) => (
             <button
               key={key}
-              onClick={() => setTab(key)}
+              onClick={() => (onSelect ? onSelect() : setTab(key))}
               className="tab-btn"
               style={{
                 flex: 1,
