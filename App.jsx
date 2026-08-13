@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check } from "lucide-react";
 
-const FONTS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap');
-`;
+const FONTS = ``;
 
 const COLORS = {
   night: "#1B1B3A",
@@ -22,11 +20,15 @@ const CONTENT = {
     navDevotion: "Dévotion",
     navPillars: "Piliers",
     heroTitle: "La lumière se lève encore",
+    slogan: "La Grâce Réveille, La Lumière Transforme",
     heroBody:
       "Une communauté vivante, portée par la grâce, envoyée pour éclairer chaque nation, chaque langue, chaque cœur.",
     missionLabel: "Notre mission",
+    visionLabel: "Notre vision",
+    visionTagline: "Réveiller les cœurs, libérer la grâce, illuminer le monde et régner.",
+    visionBody: "Être un épicentre de réveil spirituel, une ambassade du ciel où chaque personne, quelle que soit son histoire, rencontre la grâce transformative de Dieu, découvre son identité en Christ et est équipée pour rayonner la lumière du royaume dans sa sphère d'influence.",
     missionBody:
-      "Faire des disciples de toutes les nations, en incarnant l'amour du Christ par l'adoration, le service et l'annonce de la bonne nouvelle — jusqu'aux périphéries.",
+      "Nous existons pour glorifier Dieu et étendre son royaume, en adorant avec ferveur, en cultivant une communauté fraternelle authentique, en faisant des disciples matures et engagés, en servant avec amour les pauvres, les brisés et les marginalisés de notre communauté, en œuvrant pour la justice, la réconciliation et la dignité humaine, et en proclamant l'Évangile de la grâce avec puissance — jusqu'à ce que le grand réveil transforme chaque cœur, chaque famille et chaque nation.",
     verseRef: "Luc 4:18",
     verseText:
       "L'Esprit du Seigneur est sur moi, il m'a envoyé pour annoncer la bonne nouvelle aux pauvres.",
@@ -965,11 +967,46 @@ const CONTENT = {
     prayerSuccessNew: "Envoyer une autre demande",
     prayerErrorBody: "Une erreur est survenue. Veuillez réessayer.",
     pillars: [
-      { key: "adoration", title: "Adoration", body: "Vivre en présence de Dieu, cœur ouvert, dans la louange et le silence." },
-      { key: "fraternite", title: "Communion fraternelle", body: "Marcher ensemble, se porter les uns les autres avec vérité et tendresse." },
-      { key: "discipolat", title: "Discipolat", body: "Grandir dans la Parole, être formé et former d'autres à leur tour." },
-      { key: "service", title: "Service", body: "Servir les pauvres et les marginalisés, à l'image du Christ." },
-      { key: "evangelisation", title: "Évangélisation", body: "Annoncer la bonne nouvelle jusqu'aux extrémités de la terre." },
+      {
+        key: "adoration",
+        title: "Adoration",
+        subtitle: "Célébrer, glorifier la présence de Dieu",
+        tagline: "Aimer Dieu",
+        body: "Vivre des rencontres puissantes de louange où l'on expérimente la présence du Dieu de grâce.",
+        verseRef: "Matthieu 22:37",
+      },
+      {
+        key: "fraternite",
+        title: "Communion fraternelle",
+        subtitle: "Incorporer la famille de Dieu — Ambassade des Relations et d'Accueil",
+        tagline: "Baptême",
+        body: "Bâtir une famille spirituelle authentique où chacun est aimé, soutenu et accepté inconditionnellement.",
+        verseRef: "Actes 2:41",
+      },
+      {
+        key: "discipolat",
+        title: "Discipolat (Maturité)",
+        subtitle: "Former pour le Réveil — Enseigner le peuple de Dieu",
+        tagline: "Enseigner",
+        body: "Équiper chaque croyant par l'enseignement de la grâce pour qu'il devienne semblable à Christ et mature.",
+        verseRef: "Matthieu 28:20",
+      },
+      {
+        key: "service",
+        title: "Ministère (Service)",
+        subtitle: "Libérer les dons — Démontrer l'amour de Dieu",
+        tagline: "Servir",
+        body: "Aider chaque ambassadeur à découvrir ses dons et à servir avec passion dans l'église et la société — une vie de disciple.",
+        verseRef: "1 Pierre 4:10",
+      },
+      {
+        key: "evangelisation",
+        title: "Évangélisation (Missiologie)",
+        subtitle: "Porter la Lumière — illuminer la société — Communiquer la parole de Dieu",
+        tagline: "Allez",
+        body: "Être des témoins de la grâce partout. Étendre l'influence du royaume par des actions sociales, évangéliques, l'implantation d'autres Centres/Ambassades et le soutien aux missions, pour transformer la communauté locale et les nations.",
+        verseRef: "Matthieu 28:19",
+      },
     ],
   },
   en: {
@@ -979,11 +1016,15 @@ const CONTENT = {
     navDevotion: "Devotion",
     navPillars: "Pillars",
     heroTitle: "The light rises again",
+    slogan: "Grace Awakens, Light Transforms",
     heroBody:
       "A living community, carried by grace, sent to light up every nation, every language, every heart.",
     missionLabel: "Our mission",
+    visionLabel: "Our vision",
+    visionTagline: "Awaken hearts, release grace, illuminate the world, and reign.",
+    visionBody: "To be an epicenter of spiritual awakening, an embassy of heaven where every person, whatever their story, encounters the transforming grace of God, discovers their identity in Christ, and is equipped to radiate the light of the kingdom in their sphere of influence.",
     missionBody:
-      "Making disciples of all nations, embodying the love of Christ through worship, service, and the proclamation of good news — to the very edges.",
+      "We exist to glorify God and extend his kingdom — worshiping with fervor, cultivating authentic fellowship, making mature and committed disciples, lovingly serving the poor, the broken, and the marginalized in our community, working for justice, reconciliation, and human dignity, and proclaiming the Gospel of grace with power — until the great awakening transforms every heart, every family, and every nation.",
     verseRef: "Luke 4:18",
     verseText:
       "The Spirit of the Lord is on me, he has sent me to proclaim good news to the poor.",
@@ -1077,11 +1118,46 @@ const CONTENT = {
     prayerSuccessNew: "Send another request",
     prayerErrorBody: "Something went wrong. Please try again.",
     pillars: [
-      { key: "adoration", title: "Worship", body: "Living in God's presence, an open heart, in praise and in silence." },
-      { key: "fraternite", title: "Fellowship", body: "Walking together, carrying one another with truth and tenderness." },
-      { key: "discipolat", title: "Discipleship", body: "Growing in the Word, being formed and forming others in turn." },
-      { key: "service", title: "Service", body: "Serving the poor and the marginalized, after the image of Christ." },
-      { key: "evangelisation", title: "Evangelism", body: "Proclaiming the good news to the ends of the earth." },
+      {
+        key: "adoration",
+        title: "Worship",
+        subtitle: "Celebrating and glorifying God's presence",
+        tagline: "Love God",
+        body: "Living powerful moments of praise where we experience the presence of the God of grace.",
+        verseRef: "Matthew 22:37",
+      },
+      {
+        key: "fraternite",
+        title: "Fellowship",
+        subtitle: "Welcoming people into God's family — an embassy of relationship and hospitality",
+        tagline: "Baptism",
+        body: "Building an authentic spiritual family where everyone is loved, supported, and unconditionally accepted.",
+        verseRef: "Acts 2:41",
+      },
+      {
+        key: "discipolat",
+        title: "Discipleship (Maturity)",
+        subtitle: "Forming people for the Awakening — teaching God's people",
+        tagline: "Teach",
+        body: "Equipping every believer through the teaching of grace to become Christlike and mature.",
+        verseRef: "Matthew 28:20",
+      },
+      {
+        key: "service",
+        title: "Ministry (Service)",
+        subtitle: "Releasing gifts — demonstrating God's love",
+        tagline: "Serve",
+        body: "Helping every ambassador discover their gifts and serve with passion in the church and society — a life of discipleship.",
+        verseRef: "1 Peter 4:10",
+      },
+      {
+        key: "evangelisation",
+        title: "Evangelism (Missiology)",
+        subtitle: "Carrying the Light — illuminating society — communicating God's word",
+        tagline: "Go",
+        body: "Being witnesses of grace everywhere. Extending the kingdom's influence through social and evangelistic action, planting new Centers/Embassies, and supporting missions, to transform the local community and the nations.",
+        verseRef: "Matthew 28:19",
+      },
     ],
   },
   ht: {
@@ -1091,11 +1167,15 @@ const CONTENT = {
     navDevotion: "Devosyon",
     navPillars: "Pilye",
     heroTitle: "Limyè a leve ankò",
+    slogan: "Gras Reveye, Limyè Transfòme",
     heroBody:
       "Yon kominote vivan, gras pote l, voye pou klere chak nasyon, chak lang, chak kè.",
     missionLabel: "Misyon nou",
+    visionLabel: "Vizyon nou",
+    visionTagline: "Reveye kè yo, libere gras la, klere mond lan epi renye.",
+    visionBody: "Vin yon sant kote reveye espirityèl la fèt, yon anbasad syèl la kote chak moun, kèlkeswa istwa yo, rankontre gras Bondye ki transfòme a, dekouvri idantite yo an Kris, e yo ekipe pou yo klere limyè wayòm nan nan sfè enfliyans yo.",
     missionBody:
-      "Fè disip nan tout nasyon, montre lanmou Kris la nan adorasyon, sèvis, ak anonse bon nouvèl la — jiska dènye kwen tè a.",
+      "Nou egziste pou nou glorifye Bondye e elaji wayòm li an — nan adore avèk fèvè, nan kiltive yon vrè fratènite, nan fè disip ki mati e ki angaje, nan sèvi ak lanmou pòv yo, moun ki brize yo, ak moun ki mete sou kote nan kominote nou an, nan travay pou jistis, rekonsilyasyon, ak diyite imen, ak nan anonse Levanjil gras la avèk pouvwa — jiskaske gran reveye a transfòme chak kè, chak fanmi, ak chak nasyon.",
     verseRef: "Lik 4:18",
     verseText:
       "Lespri Senyè a sou mwen, li voye m pou m anonse bon nouvèl la bay pòv yo.",
@@ -1189,11 +1269,46 @@ const CONTENT = {
     prayerSuccessNew: "Voye yon lòt demann",
     prayerErrorBody: "Gen yon erè. Tanpri eseye ankò.",
     pillars: [
-      { key: "adoration", title: "Adorasyon", body: "Viv nan prezans Bondye, ak yon kè ouvè, nan lwanj ak nan silans." },
-      { key: "fraternite", title: "Fratènite", body: "Mache ansanm, pote youn lòt ak verite ak tandrès." },
-      { key: "discipolat", title: "Disiplina", body: "Grandi nan Pawòl la, fòme e fòme lòt moun." },
-      { key: "service", title: "Sèvis", body: "Sèvi pòv yo ak moun ki mete sou kote yo, jan Kris fè l la." },
-      { key: "evangelisation", title: "Evanjelizasyon", body: "Anonse bon nouvèl la jiska dènye kwen latè." },
+      {
+        key: "adoration",
+        title: "Adorasyon",
+        subtitle: "Selebre, glorifye prezans Bondye",
+        tagline: "Renmen Bondye",
+        body: "Viv rankont pwisan lwanj kote nou eksperimante prezans Bondye gras la.",
+        verseRef: "Matye 22:37",
+      },
+      {
+        key: "fraternite",
+        title: "Fratènite",
+        subtitle: "Enkòpore fanmi Bondye a — Anbasad Relasyon ak Akèy",
+        tagline: "Batèm",
+        body: "Bati yon vrè fanmi espirityèl kote chak moun renmen, sipòte, e aksepte san kondisyon.",
+        verseRef: "Travay 2:41",
+      },
+      {
+        key: "discipolat",
+        title: "Disiplina (Maturite)",
+        subtitle: "Fòme pou Reveye a — Anseye pèp Bondye a",
+        tagline: "Anseye",
+        body: "Ekipe chak kwayan atravè ansèyman gras la pou li vin sanble ak Kris e vin mati.",
+        verseRef: "Matye 28:20",
+      },
+      {
+        key: "service",
+        title: "Ministè (Sèvis)",
+        subtitle: "Libere don yo — Demontre lanmou Bondye",
+        tagline: "Sèvi",
+        body: "Ede chak anbasadè dekouvri don yo e sèvi ak pasyon nan legliz la ak nan sosyete a — yon lavi disip.",
+        verseRef: "1 Pyè 4:10",
+      },
+      {
+        key: "evangelisation",
+        title: "Evanjelizasyon (Misyoloji)",
+        subtitle: "Pote Limyè a — klere sosyete a — Kominike pawòl Bondye a",
+        tagline: "Ale",
+        body: "Vin temwen gras la toupatou. Elaji enfliyans wayòm nan atravè aksyon sosyal ak evanjelik, plante lòt Sant/Anbasad, ak sipòte misyon yo, pou transfòme kominote lokal la ak nasyon yo.",
+        verseRef: "Matye 28:19",
+      },
     ],
   },
 };
@@ -1320,6 +1435,10 @@ export default function App() {
   };
 
   useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  useEffect(() => {
     const id = setTimeout(() => setLoaded(true), 60);
     return () => clearTimeout(id);
   }, []);
@@ -1421,6 +1540,21 @@ export default function App() {
                   >
                     {t.heroTitle}
                   </div>
+                  <div
+                    style={{
+                      display: "inline-block",
+                      marginTop: 10,
+                      fontSize: 12.5,
+                      fontWeight: 700,
+                      letterSpacing: 0.4,
+                      color: COLORS.dawn,
+                      textTransform: "uppercase",
+                      borderLeft: `2px solid ${COLORS.dawn}`,
+                      paddingLeft: 10,
+                    }}
+                  >
+                    {t.slogan}
+                  </div>
                   <p style={{ fontSize: 14.5, color: COLORS.mist, marginTop: 14, lineHeight: 1.55, maxWidth: 300 }}>
                     {t.heroBody}
                   </p>
@@ -1446,6 +1580,24 @@ export default function App() {
                     </p>
                     <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 6 }}>— {t.verseRef}</div>
                   </div>
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 12,
+                    background: `linear-gradient(160deg, ${COLORS.ink}, ${COLORS.night})`,
+                    borderRadius: 16,
+                    padding: 20,
+                    border: `1px solid rgba(232,98,44,0.22)`,
+                  }}
+                >
+                  <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.ember, fontWeight: 600 }}>
+                    {t.visionLabel}
+                  </div>
+                  <p className="display" style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, marginTop: 10, color: COLORS.light }}>
+                    « {t.visionTagline} »
+                  </p>
+                  <p style={{ fontSize: 13.5, lineHeight: 1.6, marginTop: 10, color: COLORS.mist }}>{t.visionBody}</p>
                 </div>
 
                 <button
@@ -1493,53 +1645,6 @@ export default function App() {
                   <span style={{ flex: 1, textAlign: "left" }}>{t.donateBtn}</span>
                   <span style={{ fontSize: 11.5, color: COLORS.mist, fontWeight: 500 }}>{t.donateSubtext}</span>
                 </button>
-
-                <div style={{ marginTop: 26, marginBottom: 8 }}>
-                  <div className="display" style={{ fontSize: 19, fontWeight: 600 }}>
-                    {t.pillarsTitle}
-                  </div>
-                  <p style={{ fontSize: 12.5, color: COLORS.mist, marginTop: 4 }}>{t.pillarsIntro}</p>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 10, paddingBottom: 24 }}>
-                  {t.pillars.map((p) => {
-                    const Icon = PILLAR_ICONS[p.key];
-                    return (
-                      <div
-                        key={p.key}
-                        className="pillar-card"
-                        style={{
-                          display: "flex",
-                          gap: 12,
-                          alignItems: "flex-start",
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          borderRadius: 12,
-                          padding: 14,
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: 34,
-                            height: 34,
-                            borderRadius: 10,
-                            background: "rgba(244,185,66,0.14)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexShrink: 0,
-                          }}
-                        >
-                          <Icon size={17} color={COLORS.dawn} />
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 600 }}>{p.title}</div>
-                          <div style={{ fontSize: 12.5, color: COLORS.mist, marginTop: 2, lineHeight: 1.5 }}>{p.body}</div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           )}
@@ -1721,6 +1826,7 @@ export default function App() {
                   <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 14 }}>
                     <button
                       onClick={() => setLiveSource("youtube")}
+                      aria-label="YouTube"
                       style={{
                         flex: 1,
                         display: "flex",
@@ -1741,6 +1847,7 @@ export default function App() {
                     </button>
                     <button
                       onClick={() => setLiveSource("facebook")}
+                      aria-label="Facebook"
                       style={{
                         flex: 1,
                         display: "flex",
@@ -2250,9 +2357,40 @@ export default function App() {
                         >
                           <Icon size={19} color={COLORS.dawn} />
                         </div>
-                        <div style={{ fontSize: 15.5, fontWeight: 700 }}>{p.title}</div>
+                        <div>
+                          <div style={{ fontSize: 15.5, fontWeight: 700 }}>{p.title}</div>
+                          {p.subtitle && (
+                            <div style={{ fontSize: 11.5, color: COLORS.dawn, marginTop: 1, fontWeight: 600 }}>{p.subtitle}</div>
+                          )}
+                        </div>
                       </div>
                       <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 10, lineHeight: 1.55 }}>{p.body}</p>
+                      {p.verseRef && (
+                        <div
+                          style={{
+                            marginTop: 12,
+                            paddingTop: 10,
+                            borderTop: "1px solid rgba(255,255,255,0.08)",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: COLORS.ember,
+                              background: "rgba(232,98,44,0.14)",
+                              padding: "3px 9px",
+                              borderRadius: 999,
+                            }}
+                          >
+                            {p.tagline}
+                          </span>
+                          <span style={{ fontSize: 11.5, color: COLORS.mist }}>{p.verseRef}</span>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
