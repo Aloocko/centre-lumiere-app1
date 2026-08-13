@@ -1025,8 +1025,9 @@ const CONTENT = {
     donateMonthly: "Don mensuel",
     donateAmountLabel: "Choisissez un montant",
     donateCustom: "Autre montant",
-    donateCta: "Faire un don maintenant",
-    donateSecure: "Paiement sécurisé via PayPal",
+    donateCta: "Faire un don via PayPal",
+    donateStripeCta: "Payer par carte (Stripe)",
+    donateSecure: "Paiement sécurisé",
     prayerTitle: "Demande de prière",
     prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
     prayerNameLabel: "Votre nom (optionnel)",
@@ -1249,8 +1250,9 @@ const CONTENT = {
     donateMonthly: "Monthly gift",
     donateAmountLabel: "Choose an amount",
     donateCustom: "Other amount",
-    donateCta: "Give now",
-    donateSecure: "Secure payment via PayPal",
+    donateCta: "Give via PayPal",
+    donateStripeCta: "Pay by card (Stripe)",
+    donateSecure: "Secure payment",
     prayerTitle: "Prayer request",
     prayerSubtitle: "Share what's on your heart — our team prays for you.",
     prayerNameLabel: "Your name (optional)",
@@ -1473,8 +1475,9 @@ const CONTENT = {
     donateMonthly: "Don chak mwa",
     donateAmountLabel: "Chwazi yon montan",
     donateCustom: "Lòt montan",
-    donateCta: "Fè yon don kounye a",
-    donateSecure: "Peman sekirize via PayPal",
+    donateCta: "Fè yon don via PayPal",
+    donateStripeCta: "Peye ak kat (Stripe)",
+    donateSecure: "Peman sekirize",
     prayerTitle: "Demann priyè",
     prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
     prayerNameLabel: "Non ou (opsyonèl)",
@@ -1558,6 +1561,8 @@ const MEDIA = {
   tvChannelName: "Télé Centre Lumière",
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
+  // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
+  stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
   // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
   prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
 };
@@ -2583,7 +2588,7 @@ export default function App() {
               </div>
 
               <a
-                href={MEDIA.donationUrl}
+                href={MEDIA.stripeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -2606,7 +2611,33 @@ export default function App() {
                 }}
               >
                 <Heart size={17} />
-                {t.donateCta} — ${donateAmount}
+                {t.donateStripeCta} — ${donateAmount}
+              </a>
+
+              <a
+                href={MEDIA.donationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  width: "100%",
+                  marginTop: 10,
+                  background: "transparent",
+                  color: COLORS.light,
+                  border: `1px solid rgba(255,255,255,0.2)`,
+                  borderRadius: 14,
+                  padding: "13px 18px",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  boxSizing: "border-box",
+                }}
+              >
+                {t.donateCta}
               </a>
               <div style={{ textAlign: "center", fontSize: 11.5, color: COLORS.mist, marginTop: 10 }}>{t.donateSecure}</div>
             </div>
