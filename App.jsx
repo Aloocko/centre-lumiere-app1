@@ -1641,10 +1641,11 @@ export default function App() {
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied
 
   const shareDevotion = async () => {
-    const text = `${todayDevotion.verse} — ${todayDevotion.ref}\n\n${todayDevotion.reflection}\n\n${t.tagline}`;
+    const appUrl = "https://centre-lumiere-app1.vercel.app";
+    const text = `${todayDevotion.verse} — ${todayDevotion.ref}\n\n${todayDevotion.reflection}\n\n${t.tagline}\n${appUrl}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: t.devotionLabel, text });
+        await navigator.share({ title: t.devotionLabel, text: `${todayDevotion.verse} — ${todayDevotion.ref}\n\n${todayDevotion.reflection}\n\n${t.tagline}`, url: appUrl });
       } catch {
         // utilisateur a annulé le partage — rien à faire
       }
