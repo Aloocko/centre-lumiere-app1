@@ -1338,7 +1338,7 @@ const MEDIA = {
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
   tvChannelName: "Télé Centre Lumière",
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
-  donationUrl: "https://www.paypal.com/donate",
+  donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
   prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
 };
