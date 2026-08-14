@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus } from "lucide-react";
 
 const FONTS = ``;
 
@@ -1028,6 +1028,38 @@ const CONTENT = {
     donateCta: "Faire un don via PayPal",
     donateStripeCta: "Payer par carte (Stripe)",
     donateSecure: "Paiement sécurisé",
+    streakLabel: "jours consécutifs",
+    streakLabelSingular: "jour consécutif",
+    membersLabel: "Membres",
+    prayersLabel: "Prières envoyées",
+    eventsTitle: "Événements",
+    eventsIntro: "Prochains rendez-vous de la communauté.",
+    addToCalendar: "Ajouter au calendrier",
+    navMember: "Devenir membre",
+    memberTitle: "Rejoindre la famille",
+    memberSubtitle: "Devenez membre du Centre Lumière et recevez nos actualités.",
+    memberNameLabel: "Nom complet",
+    memberEmailLabel: "Adresse courriel",
+    memberPhoneLabel: "Téléphone (optionnel)",
+    memberNewsletterLabel: "Je souhaite recevoir l'infolettre et les actualités par courriel",
+    memberSubmitBtn: "S'inscrire",
+    memberSendingBtn: "Envoi en cours...",
+    memberSuccessTitle: "Bienvenue dans la famille !",
+    memberSuccessBody: "Merci de vous être inscrit. Notre équipe vous contactera bientôt.",
+    memberSuccessNew: "Inscrire quelqu'un d'autre",
+    memberErrorBody: "Une erreur est survenue. Veuillez réessayer.",
+    navBible: "Bible",
+    bibleTitle: "La Bible",
+    bibleSubtitle: "Recherchez un passage — ex. « Jean 3 » ou « Psaume 23 »",
+    biblePlaceholder: "Ex. Jean 3, Psaume 23:1-6...",
+    bibleSearchBtn: "Rechercher",
+    bibleLoading: "Chargement...",
+    bibleErrorBody: "Passage introuvable. Essayez un autre format, ex. « Jean 3 » ou « Genese 1:1-5 ».",
+    events: [
+      { title: "Culte du dimanche", date: "Chaque dimanche, 10h00", location: "Centre Lumière du Grand Réveil" },
+      { title: "Soirée de prière", date: "Chaque mercredi, 19h00", location: "En ligne et sur place" },
+      { title: "Étude biblique", date: "Chaque vendredi, 19h00", location: "Centre Lumière du Grand Réveil" },
+    ],
     prayerTitle: "Demande de prière",
     prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
     prayerNameLabel: "Votre nom (optionnel)",
@@ -1253,6 +1285,38 @@ const CONTENT = {
     donateCta: "Give via PayPal",
     donateStripeCta: "Pay by card (Stripe)",
     donateSecure: "Secure payment",
+    streakLabel: "day streak",
+    streakLabelSingular: "day streak",
+    membersLabel: "Members",
+    prayersLabel: "Prayers sent",
+    eventsTitle: "Events",
+    eventsIntro: "Upcoming community gatherings.",
+    addToCalendar: "Add to calendar",
+    navMember: "Become a Member",
+    memberTitle: "Join the family",
+    memberSubtitle: "Become a member of Centre Lumière and receive our updates.",
+    memberNameLabel: "Full name",
+    memberEmailLabel: "Email address",
+    memberPhoneLabel: "Phone (optional)",
+    memberNewsletterLabel: "I want to receive the newsletter and updates by email",
+    memberSubmitBtn: "Sign up",
+    memberSendingBtn: "Sending...",
+    memberSuccessTitle: "Welcome to the family!",
+    memberSuccessBody: "Thank you for signing up. Our team will contact you soon.",
+    memberSuccessNew: "Sign up someone else",
+    memberErrorBody: "Something went wrong. Please try again.",
+    navBible: "Bible",
+    bibleTitle: "The Bible",
+    bibleSubtitle: "Search a passage — e.g. \"John 3\" or \"Psalm 23\"",
+    biblePlaceholder: "E.g. John 3, Psalm 23:1-6...",
+    bibleSearchBtn: "Search",
+    bibleLoading: "Loading...",
+    bibleErrorBody: "Passage not found. Try another format, e.g. \"John 3\" or \"Genesis 1:1-5\".",
+    events: [
+      { title: "Sunday Service", date: "Every Sunday, 10:00 AM", location: "Centre Lumière du Grand Réveil" },
+      { title: "Prayer Night", date: "Every Wednesday, 7:00 PM", location: "Online and in person" },
+      { title: "Bible Study", date: "Every Friday, 7:00 PM", location: "Centre Lumière du Grand Réveil" },
+    ],
     prayerTitle: "Prayer request",
     prayerSubtitle: "Share what's on your heart — our team prays for you.",
     prayerNameLabel: "Your name (optional)",
@@ -1478,6 +1542,38 @@ const CONTENT = {
     donateCta: "Fè yon don via PayPal",
     donateStripeCta: "Peye ak kat (Stripe)",
     donateSecure: "Peman sekirize",
+    streakLabel: "jou youn apre lòt",
+    streakLabelSingular: "jou",
+    membersLabel: "Manm",
+    prayersLabel: "Priyè voye",
+    eventsTitle: "Evènman",
+    eventsIntro: "Pwochen rasanbleman kominote a.",
+    addToCalendar: "Ajoute nan kalandriye",
+    navMember: "Vin Manm",
+    memberTitle: "Rejwenn fanmi an",
+    memberSubtitle: "Vin manm Centre Lumière epi resevwa nouvèl nou yo.",
+    memberNameLabel: "Non konplè",
+    memberEmailLabel: "Adrès imèl",
+    memberPhoneLabel: "Telefòn (opsyonèl)",
+    memberNewsletterLabel: "Mwen vle resevwa enfolèt ak nouvèl yo pa imèl",
+    memberSubmitBtn: "Enskri",
+    memberSendingBtn: "N ap voye...",
+    memberSuccessTitle: "Byenveni nan fanmi an !",
+    memberSuccessBody: "Mèsi paske ou enskri. Ekip nou an ap kontakte w byento.",
+    memberSuccessNew: "Enskri yon lòt moun",
+    memberErrorBody: "Gen yon erè. Tanpri eseye ankò.",
+    navBible: "Bib",
+    bibleTitle: "Bib la",
+    bibleSubtitle: "Chèche yon pasaj — pa egzanp « Jan 3 » oswa « Sòm 23 »",
+    biblePlaceholder: "Pa egzanp Jan 3, Sòm 23:1-6...",
+    bibleSearchBtn: "Chèche",
+    bibleLoading: "L ap chaje...",
+    bibleErrorBody: "Nou pa jwenn pasaj la. Eseye yon lòt fòma, pa egzanp « Jan 3 » oswa « Jenèz 1:1-5 ».",
+    events: [
+      { title: "Sèvis Dimanch", date: "Chak dimanch, 10h00", location: "Centre Lumière du Grand Réveil" },
+      { title: "Sware Priyè", date: "Chak mèkredi, 19h00", location: "Anliy ak sou plas" },
+      { title: "Etid Biblik", date: "Chak vandredi, 19h00", location: "Centre Lumière du Grand Réveil" },
+    ],
     prayerTitle: "Demann priyè",
     prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
     prayerNameLabel: "Non ou (opsyonèl)",
@@ -1547,14 +1643,14 @@ const LANG_LABELS = { fr: "FR", en: "EN", ht: "HT" };
 
 // Remplacez ces liens par vos propres fichiers audio (mp3) et vidéos (page YouTube/Vimeo, etc.)
 const MEDIA = {
-  audioSrc: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
+  audioSrc: "https://stream.zeno.fm/b41men4e0mruv",
   videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   // Remplacez par l'URL "embed" de votre chaîne YouTube (ex: https://www.youtube.com/embed/live_stream?channel=VOTRE_ID)
   youtubeEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
-  radioStreamUrl: "https://stream.zeno.fm/b41men4e0mruv",
+  radioStreamUrl: "https://ice1.somafm.com/groovesalad-256-mp3",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
@@ -1563,8 +1659,13 @@ const MEDIA = {
   donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
   stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
+  // Compteurs sociaux — mettez à jour ces chiffres manuellement de temps en temps
+  memberCount: "500+",
+  prayerCount: "1200+",
   // Remplacez par votre URL Formspree (gratuit sur formspree.io) pour recevoir les demandes de prière par email
   prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
+  // Créez un DEUXIÈME formulaire sur Formspree pour les inscriptions membre/infolettre, et mettez son lien ici
+  memberFormEndpoint: "https://formspree.io/f/mgawzbqq",
 };
 
 function Dawn({ compact }) {
@@ -1633,6 +1734,62 @@ export default function App() {
     }
   };
 
+  const [memberName, setMemberName] = useState("");
+  const [memberEmail, setMemberEmail] = useState("");
+  const [memberPhone, setMemberPhone] = useState("");
+  const [memberNewsletter, setMemberNewsletter] = useState(true);
+  const [memberStatus, setMemberStatus] = useState("idle"); // idle | sending | success | error
+
+  // --- Bible intégrée ---
+  const [bibleQuery, setBibleQuery] = useState("Jean 3");
+  const [bibleResult, setBibleResult] = useState(null);
+  const [bibleStatus, setBibleStatus] = useState("idle"); // idle | loading | error
+
+  const fetchBible = async (query) => {
+    const q = (query || bibleQuery).trim();
+    if (!q) return;
+    setBibleStatus("loading");
+    setBibleResult(null);
+    try {
+      const res = await fetch(`https://bible-api.com/${encodeURIComponent(q)}?translation=lsg`);
+      const data = await res.json();
+      if (data && data.verses && data.verses.length > 0) {
+        setBibleResult(data);
+        setBibleStatus("idle");
+      } else {
+        setBibleStatus("error");
+      }
+    } catch {
+      setBibleStatus("error");
+    }
+  };
+
+  const submitMember = async (e) => {
+    e.preventDefault();
+    if (!memberName.trim() || !memberEmail.trim()) return;
+    setMemberStatus("sending");
+    try {
+      const res = await fetch(MEDIA.memberFormEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({
+          name: memberName,
+          email: memberEmail,
+          phone: memberPhone || "—",
+          newsletter: memberNewsletter ? "oui" : "non",
+          langue: lang,
+        }),
+      });
+      if (res.ok) {
+        setMemberStatus("success");
+      } else {
+        setMemberStatus("error");
+      }
+    } catch {
+      setMemberStatus("error");
+    }
+  };
+
   const toggleRadio = () => {
     const el = radioRef.current;
     if (!el) return;
@@ -1644,6 +1801,35 @@ export default function App() {
   };
 
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied
+
+  // --- Streak de lecture (série de jours consécutifs) ---
+  const [streak, setStreak] = useState(0);
+  useEffect(() => {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const stored = JSON.parse(localStorage.getItem("cl_streak") || "null");
+      if (stored && stored.lastDate) {
+        const last = new Date(stored.lastDate);
+        const now = new Date(today);
+        const diffDays = Math.round((now - last) / 86400000);
+        if (diffDays === 0) {
+          setStreak(stored.count);
+        } else if (diffDays === 1) {
+          const newCount = stored.count + 1;
+          localStorage.setItem("cl_streak", JSON.stringify({ lastDate: today, count: newCount }));
+          setStreak(newCount);
+        } else {
+          localStorage.setItem("cl_streak", JSON.stringify({ lastDate: today, count: 1 }));
+          setStreak(1);
+        }
+      } else {
+        localStorage.setItem("cl_streak", JSON.stringify({ lastDate: today, count: 1 }));
+        setStreak(1);
+      }
+    } catch {
+      // localStorage indisponible — pas grave, le streak reste simplement à 0
+    }
+  }, []);
 
   const shareDevotion = async () => {
     const appUrl = "https://centre-lumiere-app1.vercel.app";
@@ -1806,6 +1992,41 @@ export default function App() {
                   <p style={{ fontSize: 14.5, color: COLORS.mist, marginTop: 14, lineHeight: 1.55, maxWidth: 300 }}>
                     {t.heroBody}
                   </p>
+
+                  {streak > 0 && (
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        marginTop: 16,
+                        background: "rgba(232,98,44,0.14)",
+                        border: `1px solid rgba(232,98,44,0.35)`,
+                        borderRadius: 999,
+                        padding: "6px 12px",
+                      }}
+                    >
+                      <span style={{ fontSize: 14 }}>🔥</span>
+                      <span style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.light }}>
+                        {streak} {streak === 1 ? t.streakLabelSingular : t.streakLabel}
+                      </span>
+                    </div>
+                  )}
+
+                  <div style={{ display: "flex", gap: 20, marginTop: 18 }}>
+                    <div>
+                      <div className="display" style={{ fontSize: 20, fontWeight: 700, color: COLORS.dawn }}>
+                        {MEDIA.memberCount}
+                      </div>
+                      <div style={{ fontSize: 11, color: COLORS.mist, marginTop: 1 }}>{t.membersLabel}</div>
+                    </div>
+                    <div>
+                      <div className="display" style={{ fontSize: 20, fontWeight: 700, color: COLORS.dawn }}>
+                        {MEDIA.prayerCount}
+                      </div>
+                      <div style={{ fontSize: 11, color: COLORS.mist, marginTop: 1 }}>{t.prayersLabel}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -2450,6 +2671,9 @@ export default function App() {
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
                 {[
                   { key: "donate", label: t.navDonate, Icon: Heart },
+                  { key: "events", label: t.eventsTitle, Icon: Calendar },
+                  { key: "member", label: t.navMember, Icon: UserPlus },
+                  { key: "bible", label: t.navBible, Icon: BookOpen },
                   { key: "heroes", label: t.navHeroes, Icon: Award },
                   { key: "pillars", label: t.navPillars, Icon: Compass },
                 ].map(({ key, label, Icon }) => (
@@ -2700,6 +2924,350 @@ export default function App() {
               <div style={{ marginTop: 14, fontSize: 13.5, fontWeight: 600, textAlign: "center", color: COLORS.mist }}>
                 {MEDIA.tvChannelName}
               </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "events" && (
+            <div key={lang + "-events"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.eventsTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.eventsIntro}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+                {t.events.map((ev, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: COLORS.ink,
+                      borderRadius: 14,
+                      padding: 16,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                      <div
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: 11,
+                          background: "rgba(244,185,66,0.14)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Calendar size={17} color={COLORS.dawn} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 15, fontWeight: 700 }}>{ev.title}</div>
+                        <div style={{ fontSize: 12.5, color: COLORS.dawn, marginTop: 2, fontWeight: 600 }}>{ev.date}</div>
+                        <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{ev.location}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "member" && (
+            <div key={lang + "-member"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.memberTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.memberSubtitle}</p>
+
+              {memberStatus === "success" ? (
+                <div
+                  style={{
+                    marginTop: 24,
+                    textAlign: "center",
+                    background: COLORS.ink,
+                    borderRadius: 16,
+                    padding: "36px 20px",
+                    border: "1px solid rgba(244,185,66,0.25)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: "rgba(244,185,66,0.16)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 16px",
+                    }}
+                  >
+                    <Check size={26} color={COLORS.dawn} />
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700 }}>{t.memberSuccessTitle}</div>
+                  <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.5 }}>{t.memberSuccessBody}</p>
+                  <button
+                    onClick={() => {
+                      setMemberStatus("idle");
+                      setMemberName("");
+                      setMemberEmail("");
+                      setMemberPhone("");
+                      setMemberNewsletter(true);
+                    }}
+                    style={{
+                      marginTop: 20,
+                      background: "transparent",
+                      border: `1px solid rgba(255,255,255,0.2)`,
+                      color: COLORS.light,
+                      borderRadius: 12,
+                      padding: "10px 18px",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {t.memberSuccessNew}
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={submitMember} style={{ marginTop: 22, display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.memberNameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={memberName}
+                      onChange={(e) => setMemberName(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.memberEmailLabel}
+                    </label>
+                    <input
+                      type="email"
+                      value={memberEmail}
+                      onChange={(e) => setMemberEmail(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.memberPhoneLabel}
+                    </label>
+                    <input
+                      type="tel"
+                      value={memberPhone}
+                      onChange={(e) => setMemberPhone(e.target.value)}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+
+                  <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
+                    <input
+                      type="checkbox"
+                      checked={memberNewsletter}
+                      onChange={(e) => setMemberNewsletter(e.target.checked)}
+                      style={{ marginTop: 3, width: 16, height: 16, flexShrink: 0 }}
+                    />
+                    <span style={{ fontSize: 13, color: COLORS.mist, lineHeight: 1.5 }}>{t.memberNewsletterLabel}</span>
+                  </label>
+
+                  {memberStatus === "error" && (
+                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.memberErrorBody}</div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={memberStatus === "sending"}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      background: COLORS.ember,
+                      color: COLORS.light,
+                      border: "none",
+                      borderRadius: 14,
+                      padding: "14px 18px",
+                      fontSize: 14.5,
+                      fontWeight: 600,
+                      cursor: memberStatus === "sending" ? "default" : "pointer",
+                      opacity: memberStatus === "sending" ? 0.7 : 1,
+                    }}
+                  >
+                    <UserPlus size={16} />
+                    {memberStatus === "sending" ? t.memberSendingBtn : t.memberSubmitBtn}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
+
+          {tab === "more" && moreView === "bible" && (
+            <div key={lang + "-bible"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.bibleTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.bibleSubtitle}</p>
+
+              <div style={{ display: "flex", gap: 8, marginTop: 18 }}>
+                <input
+                  type="text"
+                  value={bibleQuery}
+                  onChange={(e) => setBibleQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && fetchBible()}
+                  placeholder={t.biblePlaceholder}
+                  style={{
+                    flex: 1,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 10,
+                    padding: "11px 14px",
+                    color: COLORS.light,
+                    fontSize: 14,
+                    fontFamily: "inherit",
+                    boxSizing: "border-box",
+                  }}
+                />
+                <button
+                  onClick={() => fetchBible()}
+                  style={{
+                    background: COLORS.ember,
+                    color: COLORS.light,
+                    border: "none",
+                    borderRadius: 10,
+                    padding: "0 18px",
+                    fontSize: 13.5,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {t.bibleSearchBtn}
+                </button>
+              </div>
+
+              {bibleStatus === "loading" && (
+                <div style={{ textAlign: "center", marginTop: 30, color: COLORS.mist, fontSize: 13.5 }}>{t.bibleLoading}</div>
+              )}
+
+              {bibleStatus === "error" && (
+                <div style={{ textAlign: "center", marginTop: 30, color: COLORS.ember, fontSize: 13.5 }}>{t.bibleErrorBody}</div>
+              )}
+
+              {bibleResult && bibleStatus === "idle" && (
+                <div
+                  style={{
+                    marginTop: 20,
+                    background: COLORS.ink,
+                    borderRadius: 16,
+                    padding: 20,
+                    border: "1px solid rgba(244,185,66,0.18)",
+                  }}
+                >
+                  <div className="display" style={{ fontSize: 16, fontWeight: 700, color: COLORS.dawn, marginBottom: 12 }}>
+                    {bibleResult.reference}
+                  </div>
+                  {bibleResult.verses.map((v) => (
+                    <p key={v.verse} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
+                      <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>{v.verse}</span>
+                      {v.text.trim()}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
