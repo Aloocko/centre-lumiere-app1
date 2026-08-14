@@ -2,7 +2,6 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="K7WTjUxBCEQeovftmkHkhxCjQ9T6PujrloqDppbC8P0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1B1B3A" />
     <meta name="description" content="Centre Lumière du Grand Réveil — Ambassade de la Grâce. Église chrétienne à Laval, Québec : dévotions quotidiennes, radio chrétienne en direct, cultes en ligne, télévision, demandes de prière et dons." />
@@ -28,6 +27,20 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap"
     />
     <title>Centre Lumière du Grand Réveil — Église, Radio Chrétienne & Dévotions | Ambassade de la Grâce</title>
+    <!-- Notifications push OneSignal — remplacez VOTRE_APP_ID par celui donné par OneSignal -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(function (OneSignal) {
+        OneSignal.init({
+          appId: "Integrate the OneSignal SDK into this codebase.
+
+Follow the instructions at: https://raw.githubusercontent.com/OneSignal/sdk-ai-prompts/main/docs/ios/ai-prompt.md
+
+App ID: b86bc72d-558b-4259-8537-3b49f1bb6cea",
+        });
+      });
+    </script>
   </head>
   <body style="margin:0;">
     <div id="root"></div>
