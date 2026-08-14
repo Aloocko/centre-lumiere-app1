@@ -1775,9 +1775,12 @@ export default function App() {
     setBibleResult(null);
     try {
       const res = await fetch(`https://api.getbible.net/v2/ls1910/${bibleBook}/${bibleChapter}.json`);
+      if (!res.ok) throw new Error("bad response");
       const data = await res.json();
-      const verses = data?.book?.chapter?.verses || data?.chapter?.verses || data?.verses;
-      if (verses && verses.length > 0) {
+      let raw = data?.book?.chapter?.verses ?? data?.chapter?.verses ?? data?.verses;
+      // Normalise en tableau, que l'API renvoie une liste ou un objet indexé par numéro de verset
+      const verses = Array.isArray(raw) ? raw : raw && typeof raw === "object" ? Object.values(raw) : [];
+      if (verses.length > 0) {
         const bookName = BIBLE_BOOKS_FR.find((b) => b.nr === Number(bibleBook))?.name || "";
         setBibleResult({ reference: `${bookName} ${bibleChapter}`, verses });
         setBibleStatus("idle");
@@ -3306,14 +3309,16 @@ export default function App() {
                   <div className="display" style={{ fontSize: 16, fontWeight: 700, color: COLORS.dawn, marginBottom: 12 }}>
                     {bibleResult.reference}
                   </div>
-                  {bibleResult.verses.map((v, idx) => (
-                    <p key={v.verse_nr || idx} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
-                      <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>
-                        {v.verse_nr || idx + 1}
-                      </span>
-                      {(v.verse || v.text || "").trim()}
-                    </p>
-                  ))}
+                  {bibleResult.verses.map((v, idx) => {
+                    const num = typeof v === "object" ? v.verse_nr : idx + 1;
+                    const txt = typeof v === "string" ? v : v.verse || v.text || "";
+                    return (
+                      <p key={num || idx} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
+                        <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>{num}</span>
+                        {String(txt).trim()}
+                      </p>
+                    );
+                  })}
                 </div>
               )}
             </div>
