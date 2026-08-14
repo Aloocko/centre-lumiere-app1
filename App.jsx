@@ -1643,14 +1643,14 @@ const LANG_LABELS = { fr: "FR", en: "EN", ht: "HT" };
 
 // Remplacez ces liens par vos propres fichiers audio (mp3) et vidéos (page YouTube/Vimeo, etc.)
 const MEDIA = {
-  audioSrc: "https://stream.zeno.fm/b41men4e0mruv",
+  audioSrc: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
   videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   // Remplacez par l'URL "embed" de votre chaîne YouTube (ex: https://www.youtube.com/embed/live_stream?channel=VOTRE_ID)
   youtubeEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
-  radioStreamUrl: "https://ice1.somafm.com/groovesalad-256-mp3",
+  radioStreamUrl: "https://stream.zeno.fm/b41men4e0mruv",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
@@ -1740,21 +1740,46 @@ export default function App() {
   const [memberNewsletter, setMemberNewsletter] = useState(true);
   const [memberStatus, setMemberStatus] = useState("idle"); // idle | sending | success | error
 
-  // --- Bible intégrée ---
-  const [bibleQuery, setBibleQuery] = useState("Jean 3");
+  // --- Bible intégrée (Louis Segond 1910, via GetBible.net) ---
+  const BIBLE_BOOKS_FR = [
+    { nr: 1, name: "Genèse" }, { nr: 2, name: "Exode" }, { nr: 3, name: "Lévitique" },
+    { nr: 4, name: "Nombres" }, { nr: 5, name: "Deutéronome" }, { nr: 6, name: "Josué" },
+    { nr: 7, name: "Juges" }, { nr: 8, name: "Ruth" }, { nr: 9, name: "1 Samuel" },
+    { nr: 10, name: "2 Samuel" }, { nr: 11, name: "1 Rois" }, { nr: 12, name: "2 Rois" },
+    { nr: 13, name: "1 Chroniques" }, { nr: 14, name: "2 Chroniques" }, { nr: 15, name: "Esdras" },
+    { nr: 16, name: "Néhémie" }, { nr: 17, name: "Esther" }, { nr: 18, name: "Job" },
+    { nr: 19, name: "Psaumes" }, { nr: 20, name: "Proverbes" }, { nr: 21, name: "Ecclésiaste" },
+    { nr: 22, name: "Cantique des Cantiques" }, { nr: 23, name: "Ésaïe" }, { nr: 24, name: "Jérémie" },
+    { nr: 25, name: "Lamentations" }, { nr: 26, name: "Ézéchiel" }, { nr: 27, name: "Daniel" },
+    { nr: 28, name: "Osée" }, { nr: 29, name: "Joël" }, { nr: 30, name: "Amos" },
+    { nr: 31, name: "Abdias" }, { nr: 32, name: "Jonas" }, { nr: 33, name: "Michée" },
+    { nr: 34, name: "Nahum" }, { nr: 35, name: "Habacuc" }, { nr: 36, name: "Sophonie" },
+    { nr: 37, name: "Aggée" }, { nr: 38, name: "Zacharie" }, { nr: 39, name: "Malachie" },
+    { nr: 40, name: "Matthieu" }, { nr: 41, name: "Marc" }, { nr: 42, name: "Luc" },
+    { nr: 43, name: "Jean" }, { nr: 44, name: "Actes" }, { nr: 45, name: "Romains" },
+    { nr: 46, name: "1 Corinthiens" }, { nr: 47, name: "2 Corinthiens" }, { nr: 48, name: "Galates" },
+    { nr: 49, name: "Éphésiens" }, { nr: 50, name: "Philippiens" }, { nr: 51, name: "Colossiens" },
+    { nr: 52, name: "1 Thessaloniciens" }, { nr: 53, name: "2 Thessaloniciens" }, { nr: 54, name: "1 Timothée" },
+    { nr: 55, name: "2 Timothée" }, { nr: 56, name: "Tite" }, { nr: 57, name: "Philémon" },
+    { nr: 58, name: "Hébreux" }, { nr: 59, name: "Jacques" }, { nr: 60, name: "1 Pierre" },
+    { nr: 61, name: "2 Pierre" }, { nr: 62, name: "1 Jean" }, { nr: 63, name: "2 Jean" },
+    { nr: 64, name: "3 Jean" }, { nr: 65, name: "Jude" }, { nr: 66, name: "Apocalypse" },
+  ];
+  const [bibleBook, setBibleBook] = useState(43); // Jean par défaut
+  const [bibleChapter, setBibleChapter] = useState(3);
   const [bibleResult, setBibleResult] = useState(null);
   const [bibleStatus, setBibleStatus] = useState("idle"); // idle | loading | error
 
-  const fetchBible = async (query) => {
-    const q = (query || bibleQuery).trim();
-    if (!q) return;
+  const fetchBible = async () => {
     setBibleStatus("loading");
     setBibleResult(null);
     try {
-      const res = await fetch(`https://bible-api.com/${encodeURIComponent(q)}?translation=lsg`);
+      const res = await fetch(`https://api.getbible.net/v2/ls1910/${bibleBook}/${bibleChapter}.json`);
       const data = await res.json();
-      if (data && data.verses && data.verses.length > 0) {
-        setBibleResult(data);
+      const verses = data?.book?.chapter?.verses || data?.chapter?.verses || data?.verses;
+      if (verses && verses.length > 0) {
+        const bookName = BIBLE_BOOKS_FR.find((b) => b.nr === Number(bibleBook))?.name || "";
+        setBibleResult({ reference: `${bookName} ${bibleChapter}`, verses });
         setBibleStatus("idle");
       } else {
         setBibleStatus("error");
@@ -3203,18 +3228,39 @@ export default function App() {
               <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.bibleSubtitle}</p>
 
               <div style={{ display: "flex", gap: 8, marginTop: 18 }}>
-                <input
-                  type="text"
-                  value={bibleQuery}
-                  onChange={(e) => setBibleQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && fetchBible()}
-                  placeholder={t.biblePlaceholder}
+                <select
+                  value={bibleBook}
+                  onChange={(e) => setBibleBook(Number(e.target.value))}
                   style={{
                     flex: 1,
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.12)",
                     borderRadius: 10,
-                    padding: "11px 14px",
+                    padding: "11px 8px",
+                    color: COLORS.light,
+                    fontSize: 13.5,
+                    fontFamily: "inherit",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {BIBLE_BOOKS_FR.map((b) => (
+                    <option key={b.nr} value={b.nr} style={{ color: "#000" }}>
+                      {b.name}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  min="1"
+                  value={bibleChapter}
+                  onChange={(e) => setBibleChapter(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && fetchBible()}
+                  style={{
+                    width: 70,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 10,
+                    padding: "11px 10px",
                     color: COLORS.light,
                     fontSize: 14,
                     fontFamily: "inherit",
@@ -3260,10 +3306,12 @@ export default function App() {
                   <div className="display" style={{ fontSize: 16, fontWeight: 700, color: COLORS.dawn, marginBottom: 12 }}>
                     {bibleResult.reference}
                   </div>
-                  {bibleResult.verses.map((v) => (
-                    <p key={v.verse} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
-                      <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>{v.verse}</span>
-                      {v.text.trim()}
+                  {bibleResult.verses.map((v, idx) => (
+                    <p key={v.verse_nr || idx} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
+                      <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>
+                        {v.verse_nr || idx + 1}
+                      </span>
+                      {(v.verse || v.text || "").trim()}
                     </p>
                   ))}
                 </div>
