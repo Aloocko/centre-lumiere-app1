@@ -3310,10 +3310,30 @@ export default function App() {
                     {bibleResult.reference}
                   </div>
                   {bibleResult.verses.map((v, idx) => {
-                    const num = typeof v === "object" ? v.verse_nr : idx + 1;
-                    const txt = typeof v === "string" ? v : v.verse || v.text || "";
+                    let num = idx + 1;
+                    let txt = "";
+                    if (typeof v === "string") {
+                      txt = v;
+                    } else if (v && typeof v === "object") {
+                      num = v.verse_nr || v.verse || v.nr || num;
+                      const candidateKeys = ["verse_text", "text", "content", "value", "verse"];
+                      for (const key of candidateKeys) {
+                        if (typeof v[key] === "string" && v[key].trim()) {
+                          txt = v[key];
+                          break;
+                        }
+                      }
+                      if (!txt) {
+                        for (const key in v) {
+                          if (typeof v[key] === "string" && v[key].trim().length > 1) {
+                            txt = v[key];
+                            break;
+                          }
+                        }
+                      }
+                    }
                     return (
-                      <p key={num || idx} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
+                      <p key={idx} style={{ fontSize: 14.5, lineHeight: 1.7, marginBottom: 8, color: COLORS.light }}>
                         <span style={{ color: COLORS.mist, fontSize: 11.5, verticalAlign: "super", marginRight: 4 }}>{num}</span>
                         {String(txt).trim()}
                       </p>
