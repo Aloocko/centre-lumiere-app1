@@ -1029,6 +1029,8 @@ const CONTENT = {
     donateCta: "Faire un don via PayPal",
     donateStripeCta: "Payer par carte (Stripe)",
     donateSecure: "Paiement sécurisé",
+    donateVerse: "« Donnez, et il vous sera donné : on versera dans votre sein une bonne mesure, tassée, secouée et qui déborde ; car on vous mesurera avec la mesure dont vous vous serez servis. »",
+    donateVerseRef: "Luc 6:38",
     streakLabel: "jours consécutifs",
     streakLabelSingular: "jour consécutif",
     membersLabel: "Membres",
@@ -1316,6 +1318,8 @@ const CONTENT = {
     donateCta: "Give via PayPal",
     donateStripeCta: "Pay by card (Stripe)",
     donateSecure: "Secure payment",
+    donateVerse: "\"Give, and it will be given to you. A good measure, pressed down, shaken together and running over, will be poured into your lap. For with the measure you use, it will be measured to you.\"",
+    donateVerseRef: "Luke 6:38",
     streakLabel: "day streak",
     streakLabelSingular: "day streak",
     membersLabel: "Members",
@@ -1603,6 +1607,8 @@ const CONTENT = {
     donateCta: "Fè yon don via PayPal",
     donateStripeCta: "Peye ak kat (Stripe)",
     donateSecure: "Peman sekirize",
+    donateVerse: "« Bay, y ap ba ou. Y ap vide nan pòch ou yon bon mezi, tase, souke, ki plen rive tonbe deyò. Paske se menm mezi nou sèvi pou lòt yo, y ap sèvi pou nou. »",
+    donateVerseRef: "Lik 6:38",
     streakLabel: "jou youn apre lòt",
     streakLabelSingular: "jou",
     membersLabel: "Manm",
@@ -2962,6 +2968,21 @@ export default function App() {
                 {t.donateTitle}
               </div>
               <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.55 }}>{t.donateHeroBody}</p>
+
+              <div
+                style={{
+                  marginTop: 16,
+                  background: "rgba(244,185,66,0.08)",
+                  border: "1px solid rgba(244,185,66,0.2)",
+                  borderRadius: 12,
+                  padding: 14,
+                }}
+              >
+                <p className="display" style={{ fontSize: 13.5, fontStyle: "italic", lineHeight: 1.5, color: COLORS.light }}>
+                  {t.donateVerse}
+                </p>
+                <div style={{ fontSize: 11.5, color: COLORS.dawn, marginTop: 5, fontWeight: 600 }}>{t.donateVerseRef}</div>
+              </div>
 
               <div
                 style={{
