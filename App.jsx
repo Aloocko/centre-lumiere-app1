@@ -23,6 +23,7 @@ const CONTENT = {
     navMedia: "Média",
     navMore: "Plus",
     backLabel: "Retour",
+    copyrightLabel: "Centre Lumière du Grand Réveil — Ambassade de la Grâce. Tous droits réservés.",
     heroTitle: "La lumière se lève encore",
     slogan: "La Grâce Réveille, La Lumière Transforme",
     heroBody:
@@ -1125,6 +1126,7 @@ const CONTENT = {
     navMedia: "Media",
     navMore: "More",
     backLabel: "Back",
+    copyrightLabel: "Centre Lumière du Grand Réveil — Embassy of Grace. All rights reserved.",
     heroTitle: "The light rises again",
     slogan: "Grace Awakens, Light Transforms",
     heroBody:
@@ -1382,6 +1384,7 @@ const CONTENT = {
     navMedia: "Medya",
     navMore: "Plis",
     backLabel: "Tounen",
+    copyrightLabel: "Centre Lumière du Grand Réveil — Anbasad Gras la. Tout dwa rezève.",
     heroTitle: "Limyè a leve ankò",
     slogan: "Gras Reveye, Limyè Transfòme",
     heroBody:
@@ -1650,7 +1653,7 @@ const MEDIA = {
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
-  radioStreamUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
+  radioStreamUrl: "https://stream.zeno.fm/b41men4e0mruv",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
   tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
@@ -2738,6 +2741,11 @@ export default function App() {
                     <ChevronRight size={18} color={COLORS.mist} />
                   </button>
                 ))}
+              </div>
+              <div style={{ marginTop: 26, textAlign: "center" }}>
+                <div style={{ fontSize: 10.5, color: COLORS.mist, lineHeight: 1.5 }}>
+                  © {new Date().getFullYear()} {t.copyrightLabel}
+                </div>
               </div>
             </div>
           )}
