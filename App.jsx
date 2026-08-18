@@ -1063,14 +1063,43 @@ const CONTENT = {
     ],
     prayerTitle: "Demande de prière",
     prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
+    prayerVerse: "« Qui cherche trouve ; qui demande reçoit ; à qui frappe, on ouvrira. »",
+    prayerVerseRef: "Matthieu 7:7-8",
+    navTestimony: "Témoignage",
+    testimonyEncourageTitle: "Partagez ce que Dieu a fait",
+    testimonyEncourageBody: "Votre témoignage peut encourager quelqu'un d'autre aujourd'hui. N'ayez pas peur de raconter ce que Dieu a fait dans votre vie.",
+    testimonyTitle: "Partager un témoignage",
+    testimonySubtitle: "Racontez ce que Dieu a fait dans votre vie — votre histoire peut encourager quelqu'un d'autre.",
+    testimonyNameLabel: "Votre nom (optionnel)",
+    testimonyTextLabel: "Votre témoignage",
+    testimonyTextPlaceholder: "Racontez votre histoire ici...",
+    testimonySubmitBtn: "Envoyer mon témoignage",
+    testimonySendingBtn: "Envoi en cours...",
+    testimonySuccessTitle: "Merci d'avoir partagé !",
+    testimonySuccessBody: "Votre témoignage encouragera d'autres personnes. Merci de l'avoir partagé avec nous.",
+    testimonySuccessNew: "Partager un autre témoignage",
+    testimonyErrorBody: "Une erreur est survenue. Veuillez réessayer.",
     prayerNameLabel: "Votre nom (optionnel)",
     prayerNamePlaceholder: "Anonyme",
     prayerRequestLabel: "Votre demande",
+    prayerTopicLabel: "Sujet de la demande (optionnel)",
+    prayerTopicPlaceholder: "Choisissez un sujet...",
+    prayerTopics: [
+      "Abus", "Dépendances", "Inquiétude / Anxiété", "Faillite", "Percée", "Entreprise",
+      "Délivrance", "Dépression / Troubles émotionnels", "Découragement / Déceptions",
+      "Famille", "Conseils / Sagesse", "Guérison", "Emploi", "Restauration du mariage",
+      "Ministère", "Biens et provisions", "Protection divine", "Salut des enfants",
+      "Suicide", "Voyage", "Succès", "Réussite professionnelle",
+      "Délivrance des alliances ancestrales",
+      "Maladies chroniques", "Deuil / Perte d'un être cher", "Immigration / Papiers",
+      "Études / Réussite scolaire", "Finances", "Grossesse", "Paix intérieure",
+      "Persécution", "Direction / Appel de Dieu",
+    ],
     prayerRequestPlaceholder: "Écrivez votre demande ici...",
     prayerSubmitBtn: "Envoyer la demande",
     prayerSendingBtn: "Envoi en cours...",
     prayerSuccessTitle: "Demande envoyée",
-    prayerSuccessBody: "Merci de nous avoir fait confiance. Notre équipe prie pour vous.",
+    prayerSuccessBody: "Merci de nous avoir fait confiance. Nos intercesseurs et nos sentinelles prient pour vous.",
     prayerSuccessNew: "Envoyer une autre demande",
     prayerErrorBody: "Une erreur est survenue. Veuillez réessayer.",
     pillars: [
@@ -1321,14 +1350,43 @@ const CONTENT = {
     ],
     prayerTitle: "Prayer request",
     prayerSubtitle: "Share what's on your heart — our team prays for you.",
+    prayerVerse: "\"Ask and it will be given to you; seek and you will find; knock and the door will be opened to you.\"",
+    prayerVerseRef: "Matthew 7:7-8",
+    navTestimony: "Testimony",
+    testimonyEncourageTitle: "Share what God has done",
+    testimonyEncourageBody: "Your testimony can encourage someone else today. Don't be afraid to share what God has done in your life.",
+    testimonyTitle: "Share a testimony",
+    testimonySubtitle: "Tell us what God has done in your life — your story can encourage someone else.",
+    testimonyNameLabel: "Your name (optional)",
+    testimonyTextLabel: "Your testimony",
+    testimonyTextPlaceholder: "Share your story here...",
+    testimonySubmitBtn: "Send my testimony",
+    testimonySendingBtn: "Sending...",
+    testimonySuccessTitle: "Thank you for sharing!",
+    testimonySuccessBody: "Your testimony will encourage others. Thank you for sharing it with us.",
+    testimonySuccessNew: "Share another testimony",
+    testimonyErrorBody: "Something went wrong. Please try again.",
     prayerNameLabel: "Your name (optional)",
     prayerNamePlaceholder: "Anonymous",
     prayerRequestLabel: "Your request",
+    prayerTopicLabel: "Topic (optional)",
+    prayerTopicPlaceholder: "Choose a topic...",
+    prayerTopics: [
+      "Abuse", "Addictions", "Worry / Anxiety", "Bankruptcy", "Breakthrough", "Business",
+      "Deliverance", "Depression / Emotional struggles", "Discouragement / Disappointment",
+      "Family", "Guidance / Wisdom", "Healing", "Employment", "Marriage restoration",
+      "Ministry", "Provision / Resources", "Divine protection", "Salvation of children",
+      "Suicide", "Travel", "Success", "Career success",
+      "Deliverance from ancestral covenants",
+      "Chronic illness", "Grief / Loss of a loved one", "Immigration / Documentation",
+      "Studies / Academic success", "Finances", "Pregnancy", "Inner peace",
+      "Persecution", "Guidance / God's calling",
+    ],
     prayerRequestPlaceholder: "Write your request here...",
     prayerSubmitBtn: "Send request",
     prayerSendingBtn: "Sending...",
     prayerSuccessTitle: "Request sent",
-    prayerSuccessBody: "Thank you for trusting us. Our team is praying for you.",
+    prayerSuccessBody: "Thank you for trusting us. Our intercessors and watchmen are praying for you.",
     prayerSuccessNew: "Send another request",
     prayerErrorBody: "Something went wrong. Please try again.",
     pillars: [
@@ -1579,14 +1637,43 @@ const CONTENT = {
     ],
     prayerTitle: "Demann priyè",
     prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
+    prayerVerse: "« Moun ki chèche jwenn ; moun ki mande resevwa ; y ap louvri pou moun k ap frape. »",
+    prayerVerseRef: "Matye 7:7-8",
+    navTestimony: "Temwayaj",
+    testimonyEncourageTitle: "Pataje sa Bondye fè",
+    testimonyEncourageBody: "Temwayaj ou ka ankouraje yon lòt moun jodi a. Pa pè rakonte sa Bondye fè nan lavi w.",
+    testimonyTitle: "Pataje yon temwayaj",
+    testimonySubtitle: "Rakonte nou sa Bondye fè nan lavi w — istwa w ka ankouraje yon lòt moun.",
+    testimonyNameLabel: "Non ou (opsyonèl)",
+    testimonyTextLabel: "Temwayaj ou",
+    testimonyTextPlaceholder: "Rakonte istwa w la a...",
+    testimonySubmitBtn: "Voye temwayaj mwen",
+    testimonySendingBtn: "N ap voye...",
+    testimonySuccessTitle: "Mèsi paske ou pataje !",
+    testimonySuccessBody: "Temwayaj ou pral ankouraje lòt moun. Mèsi paske ou pataje l ak nou.",
+    testimonySuccessNew: "Pataje yon lòt temwayaj",
+    testimonyErrorBody: "Gen yon erè. Tanpri eseye ankò.",
     prayerNameLabel: "Non ou (opsyonèl)",
     prayerNamePlaceholder: "Anonim",
     prayerRequestLabel: "Demann ou",
+    prayerTopicLabel: "Sijè demann lan (opsyonèl)",
+    prayerTopicPlaceholder: "Chwazi yon sijè...",
+    prayerTopics: [
+      "Abi", "Depandans", "Enkyetid / Ankwaye", "Fayit", "Avansman", "Biznis",
+      "Delivrans", "Depresyon / Pwoblèm emosyonèl", "Dekourajman / Desepsyon",
+      "Fanmi", "Konsèy / Sajès", "Gerizon", "Travay", "Restorasyon maryaj",
+      "Ministè", "Byen ak pwovizyon", "Pwoteksyon divin", "Sali pou pitit",
+      "Swisid", "Vwayaj", "Siksè", "Reyisit pwofesyonèl",
+      "Delivrans alyans zansèt yo",
+      "Maladi kwonik", "Dèy / Pèdi yon moun renmen", "Imigrasyon / Papye",
+      "Etid / Siksè lekòl", "Finans", "Gwosès", "Lapè anndan",
+      "Pèsekisyon", "Direksyon / Apèl Bondye",
+    ],
     prayerRequestPlaceholder: "Ekri demann ou la la...",
     prayerSubmitBtn: "Voye demann lan",
     prayerSendingBtn: "N ap voye...",
     prayerSuccessTitle: "Demann voye",
-    prayerSuccessBody: "Mèsi paske ou fè nou konfyans. Ekip nou an ap priye pou ou.",
+    prayerSuccessBody: "Mèsi paske ou fè nou konfyans. Entèsesè nou yo ak gadyen nou yo ap priye pou ou.",
     prayerSuccessNew: "Voye yon lòt demann",
     prayerErrorBody: "Gen yon erè. Tanpri eseye ankò.",
     pillars: [
@@ -1669,6 +1756,8 @@ const MEDIA = {
   prayerFormEndpoint: "https://formspree.io/f/xyegwewb",
   // Créez un DEUXIÈME formulaire sur Formspree pour les inscriptions membre/infolettre, et mettez son lien ici
   memberFormEndpoint: "https://formspree.io/f/mgawzbqq",
+  // Créez un TROISIÈME formulaire sur Formspree pour les témoignages, et mettez son lien ici
+  testimonyFormEndpoint: "https://formspree.io/f/mljrozby",
 };
 
 function Dawn({ compact }) {
@@ -1711,6 +1800,7 @@ export default function App() {
   const [radioPlaying, setRadioPlaying] = useState(false);
   const [prayerName, setPrayerName] = useState("");
   const [prayerText, setPrayerText] = useState("");
+  const [prayerTopic, setPrayerTopic] = useState("");
   const [prayerStatus, setPrayerStatus] = useState("idle"); // idle | sending | success | error
   const [donateAmount, setDonateAmount] = useState(25);
   const [donateFrequency, setDonateFrequency] = useState("once");
@@ -1725,7 +1815,7 @@ export default function App() {
       const res = await fetch(MEDIA.prayerFormEndpoint, {
         method: "POST",
         headers: { Accept: "application/json" },
-        body: JSON.stringify({ name: prayerName || "Anonyme", message: prayerText, langue: lang }),
+        body: JSON.stringify({ name: prayerName || "Anonyme", sujet: prayerTopic || "—", message: prayerText, langue: lang }),
       });
       if (res.ok) {
         setPrayerStatus("success");
@@ -1742,6 +1832,30 @@ export default function App() {
   const [memberPhone, setMemberPhone] = useState("");
   const [memberNewsletter, setMemberNewsletter] = useState(true);
   const [memberStatus, setMemberStatus] = useState("idle"); // idle | sending | success | error
+
+  const [testimonyName, setTestimonyName] = useState("");
+  const [testimonyText, setTestimonyText] = useState("");
+  const [testimonyStatus, setTestimonyStatus] = useState("idle"); // idle | sending | success | error
+
+  const submitTestimony = async (e) => {
+    e.preventDefault();
+    if (!testimonyText.trim()) return;
+    setTestimonyStatus("sending");
+    try {
+      const res = await fetch(MEDIA.testimonyFormEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({ name: testimonyName || "Anonyme", message: testimonyText, langue: lang }),
+      });
+      if (res.ok) {
+        setTestimonyStatus("success");
+      } else {
+        setTestimonyStatus("error");
+      }
+    } catch {
+      setTestimonyStatus("error");
+    }
+  };
 
   // --- Bible intégrée (Louis Segond 1910, via GetBible.net) ---
   const BIBLE_BOOKS_FR = [
@@ -2566,6 +2680,48 @@ export default function App() {
               </div>
               <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.prayerSubtitle}</p>
 
+              <div
+                style={{
+                  marginTop: 16,
+                  background: "rgba(244,185,66,0.08)",
+                  border: "1px solid rgba(244,185,66,0.2)",
+                  borderRadius: 12,
+                  padding: 14,
+                }}
+              >
+                <p className="display" style={{ fontSize: 13.5, fontStyle: "italic", lineHeight: 1.5, color: COLORS.light }}>
+                  {t.prayerVerse}
+                </p>
+                <div style={{ fontSize: 11.5, color: COLORS.dawn, marginTop: 5, fontWeight: 600 }}>{t.prayerVerseRef}</div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setTab("more");
+                  setMoreView("testimony");
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  width: "100%",
+                  marginTop: 12,
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 12,
+                  padding: 14,
+                  cursor: "pointer",
+                  textAlign: "left",
+                }}
+              >
+                <Megaphone size={17} color={COLORS.dawn} style={{ flexShrink: 0 }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.light }}>{t.testimonyEncourageTitle}</div>
+                  <div style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 2, lineHeight: 1.4 }}>{t.testimonyEncourageBody}</div>
+                </div>
+                <ChevronRight size={16} color={COLORS.mist} style={{ flexShrink: 0 }} />
+              </button>
+
               {prayerStatus === "success" ? (
                 <div
                   style={{
@@ -2598,6 +2754,7 @@ export default function App() {
                       setPrayerStatus("idle");
                       setPrayerName("");
                       setPrayerText("");
+                      setPrayerTopic("");
                     }}
                     style={{
                       marginTop: 20,
@@ -2637,6 +2794,35 @@ export default function App() {
                         boxSizing: "border-box",
                       }}
                     />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.prayerTopicLabel}
+                    </label>
+                    <select
+                      value={prayerTopic}
+                      onChange={(e) => setPrayerTopic(e.target.value)}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    >
+                      <option value="" style={{ color: "#000" }}>
+                        {t.prayerTopicPlaceholder}
+                      </option>
+                      {t.prayerTopics.map((topic) => (
+                        <option key={topic} value={topic} style={{ color: "#000" }}>
+                          {topic}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
@@ -2705,6 +2891,7 @@ export default function App() {
                   { key: "events", label: t.eventsTitle, Icon: Calendar },
                   { key: "member", label: t.navMember, Icon: UserPlus },
                   { key: "bible", label: t.navBible, Icon: BookOpen },
+                  { key: "testimony", label: t.navTestimony, Icon: Megaphone },
                   { key: "heroes", label: t.navHeroes, Icon: Award },
                   { key: "pillars", label: t.navPillars, Icon: Compass },
                 ].map(({ key, label, Icon }) => (
@@ -3348,6 +3535,159 @@ export default function App() {
                     );
                   })}
                 </div>
+              )}
+            </div>
+          )}
+
+          {tab === "more" && moreView === "testimony" && (
+            <div key={lang + "-testimony"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.testimonyTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.testimonySubtitle}</p>
+
+              {testimonyStatus === "success" ? (
+                <div
+                  style={{
+                    marginTop: 24,
+                    textAlign: "center",
+                    background: COLORS.ink,
+                    borderRadius: 16,
+                    padding: "36px 20px",
+                    border: "1px solid rgba(244,185,66,0.25)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: "rgba(244,185,66,0.16)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 16px",
+                    }}
+                  >
+                    <Check size={26} color={COLORS.dawn} />
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700 }}>{t.testimonySuccessTitle}</div>
+                  <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.5 }}>{t.testimonySuccessBody}</p>
+                  <button
+                    onClick={() => {
+                      setTestimonyStatus("idle");
+                      setTestimonyName("");
+                      setTestimonyText("");
+                    }}
+                    style={{
+                      marginTop: 20,
+                      background: "transparent",
+                      border: `1px solid rgba(255,255,255,0.2)`,
+                      color: COLORS.light,
+                      borderRadius: 12,
+                      padding: "10px 18px",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {t.testimonySuccessNew}
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={submitTestimony} style={{ marginTop: 22, display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.testimonyNameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={testimonyName}
+                      onChange={(e) => setTestimonyName(e.target.value)}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.testimonyTextLabel}
+                    </label>
+                    <textarea
+                      value={testimonyText}
+                      onChange={(e) => setTestimonyText(e.target.value)}
+                      placeholder={t.testimonyTextPlaceholder}
+                      required
+                      rows={7}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        resize: "vertical",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+
+                  {testimonyStatus === "error" && (
+                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.testimonyErrorBody}</div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={testimonyStatus === "sending"}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      background: COLORS.ember,
+                      color: COLORS.light,
+                      border: "none",
+                      borderRadius: 14,
+                      padding: "14px 18px",
+                      fontSize: 14.5,
+                      fontWeight: 600,
+                      cursor: testimonyStatus === "sending" ? "default" : "pointer",
+                      opacity: testimonyStatus === "sending" ? 0.7 : 1,
+                    }}
+                  >
+                    <Megaphone size={16} />
+                    {testimonyStatus === "sending" ? t.testimonySendingBtn : t.testimonySubmitBtn}
+                  </button>
+                </form>
               )}
             </div>
           )}
