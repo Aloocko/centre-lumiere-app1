@@ -31,14 +31,12 @@
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
       window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(function (OneSignal) {
-        OneSignal.init({
-          appId: "Integrate the OneSignal SDK into this codebase.
-
-Follow the instructions at: https://raw.githubusercontent.com/OneSignal/sdk-ai-prompts/main/docs/ios/ai-prompt.md
-
-App ID: 1b88232b-07c0-4dca-98cb-fd90ecdad271",
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "1b88232b-07c0-4dca-98cb-fd90ecdad271",
         });
+        // Affiche réellement la demande de permission après quelques secondes
+        OneSignal.Slidedown.promptPush();
       });
     </script>
   </head>
