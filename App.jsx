@@ -1982,7 +1982,7 @@ const MEDIA = {
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
-  stripeUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
+  stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
   // Compteurs sociaux — mettez à jour ces chiffres manuellement de temps en temps
   memberCount: "500+",
   prayerCount: "1200+",
@@ -1993,7 +1993,7 @@ const MEDIA = {
   // Créez un TROISIÈME formulaire sur Formspree pour les témoignages, et mettez son lien ici
   testimonyFormEndpoint: "https://formspree.io/f/mljrozby",
   // Créez un QUATRIÈME formulaire sur Formspree pour les décisions de foi, et mettez son lien ici
-  salvationFormEndpoint: "https://formspree.io/f/VOTRE_4E_ID_FORMSPREE",
+  salvationFormEndpoint: "https://formspree.io/f/xqpzwpbj",
 };
 
 function Dawn({ compact }) {
@@ -2351,6 +2351,8 @@ export default function App() {
                 key={code}
                 onClick={() => setLang(code)}
                 className="lang-pill"
+                aria-label={`${LANG_LABELS[code]}${lang === code ? " (" + t.navHome + ")" : ""}`}
+                aria-pressed={lang === code}
                 style={{
                   border: "none",
                   cursor: "pointer",
@@ -2369,7 +2371,7 @@ export default function App() {
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, overflowY: "auto", position: "relative" }}>
+        <div role="main" aria-label={t.navHome} style={{ flex: 1, overflowY: "auto", position: "relative" }}>
           {tab === "home" && (
             <div key={lang + "-home"} className="fade-up">
               <div style={{ position: "relative", padding: "36px 24px 28px", minHeight: 230, overflow: "hidden" }}>
@@ -2844,6 +2846,7 @@ export default function App() {
                       key={liveSource}
                       src={liveSource === "youtube" ? MEDIA.youtubeEmbedUrl : MEDIA.facebookEmbedUrl}
                       title="Direct"
+                      loading="lazy"
                       allow="autoplay; encrypted-media; picture-in-picture"
                       allowFullScreen
                       style={{
@@ -3456,6 +3459,7 @@ export default function App() {
                 <iframe
                   src={MEDIA.tvEmbedUrl}
                   title={t.tvTitle}
+                  loading="lazy"
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
                   style={{
@@ -4471,7 +4475,8 @@ export default function App() {
         )}
 
         {/* Bottom nav */}
-        <div
+        <nav
+          aria-label={t.navMore}
           style={{
             display: "flex",
             borderTop: "1px solid rgba(255,255,255,0.08)",
@@ -4510,13 +4515,15 @@ export default function App() {
               className="tab-btn"
               style={{
                 flex: 1,
+                minHeight: 44,
                 background: "none",
                 border: "none",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 3,
-                padding: "6px 0",
+                padding: "8px 0",
                 cursor: "pointer",
                 color: tab === key ? COLORS.dawn : COLORS.mist,
               }}
@@ -4525,7 +4532,7 @@ export default function App() {
               <span style={{ fontSize: 9, fontWeight: 600, whiteSpace: "nowrap" }}>{label}</span>
             </button>
           ))}
-        </div>
+        </nav>
       </div>
     </div>
   );
