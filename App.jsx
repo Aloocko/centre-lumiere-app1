@@ -1740,9 +1740,9 @@ const LANG_LABELS = { fr: "FR", en: "EN", ht: "HT" };
 // Remplacez ces liens par vos propres fichiers audio (mp3) et vidéos (page YouTube/Vimeo, etc.)
 const MEDIA = {
   audioSrc: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
-  videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  videoUrl: "https://www.youtube.com/channel/UCtD9sGaj2biDHiha_TSDI6Q",
   // Remplacez par l'URL "embed" de votre chaîne YouTube (ex: https://www.youtube.com/embed/live_stream?channel=VOTRE_ID)
-  youtubeEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
+  youtubeEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UCtD9sGaj2biDHiha_TSDI6Q",
   // Remplacez par l'URL "embed" de votre page Facebook (via Facebook Video Plugin)
   facebookEmbedUrl: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F",
   // Remplacez par l'URL de votre flux radio en direct (Icecast/Shoutcast, ou un service comme Radio.co, Zeno.fm)
