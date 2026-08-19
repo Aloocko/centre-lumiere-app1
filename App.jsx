@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles } from "lucide-react";
 
 const FONTS = ``;
 
@@ -1081,6 +1081,82 @@ const CONTENT = {
     testimonySuccessBody: "Votre témoignage encouragera d'autres personnes. Merci de l'avoir partagé avec nous.",
     testimonySuccessNew: "Partager un autre témoignage",
     testimonyErrorBody: "Une erreur est survenue. Veuillez réessayer.",
+    navSalvation: "J'accepte Jésus",
+    salvationHomeTitle: "Envie de connaître Jésus ?",
+    salvationHomeBody: "Vous pouvez recevoir Christ dès aujourd'hui — sans conditions, juste tel que vous êtes.",
+    salvationHomeBtn: "Je fais ce pas aujourd'hui",
+    salvationTitle: "Recevoir Jésus-Christ",
+    salvationIntro: "Vous n'avez pas besoin d'être parfait pour venir à Dieu — juste sincère. Lisez cette prière à voix haute, avec votre cœur.",
+    salvationPrayerTitle: "Une prière pour recevoir Christ",
+    salvationPrayer: "Seigneur Jésus, je reconnais que j'ai besoin de toi. Je crois que tu es mort sur la croix pour mes péchés et que tu es ressuscité. Aujourd'hui, je me détourne de mon ancienne vie et je te reçois comme mon Sauveur et Seigneur. Merci de me pardonner et de me donner une vie nouvelle. Amen.",
+    salvationConfirmBtn: "J'ai prié cette prière avec mon cœur",
+    salvationNameLabel: "Votre nom (optionnel)",
+    salvationEmailLabel: "Courriel ou téléphone (pour un suivi)",
+    salvationSubmitBtn: "Confirmer ma décision",
+    salvationSendingBtn: "Envoi en cours...",
+    salvationSuccessTitle: "Bienvenue dans la famille de Dieu !",
+    salvationSuccessBody: "Le ciel se réjouit aujourd'hui à cause de vous. Notre équipe va vous contacter pour vous accompagner dans cette nouvelle vie.",
+    salvationNextStepsTitle: "Vos premiers pas",
+    salvationNextSteps: [
+      "Lisez un passage de la Bible chaque jour, même court",
+      "Parlez à Dieu chaque jour dans la prière, comme à un ami",
+      "Rejoignez une communauté — ne restez pas seul dans votre foi",
+      "Parlez de cette décision à quelqu'un de confiance",
+      "Envisagez le baptême comme témoignage public de votre foi",
+    ],
+    victoriousLifeTitle: "Vie chrétienne victorieuse",
+    victoriousLifeIntro: "Des vérités simples pour marcher chaque jour avec force et espérance.",
+    victoriousTeachings: [
+      {
+        title: "Votre identité en Christ",
+        body: "Vous n'êtes plus défini par votre passé, vos échecs ou ce que les autres disent de vous. En Christ, vous êtes une nouvelle création, aimé et accepté. Votre valeur ne dépend pas de vos performances.",
+      },
+      {
+        title: "Vaincre la tentation",
+        body: "La tentation n'est pas un péché — céder l'est. Dieu promet toujours une issue. Fuir certaines situations n'est pas de la faiblesse, c'est de la sagesse.",
+      },
+      {
+        title: "La guerre spirituelle",
+        body: "Le combat n'est pas contre les gens autour de vous, mais spirituel. La prière, la Parole de Dieu et la louange sont des armes puissantes, pas de simples habitudes religieuses.",
+      },
+      {
+        title: "Marcher par la foi",
+        body: "La foi n'est pas l'absence de doute — c'est choisir de faire confiance à Dieu malgré l'incertitude. Chaque petit pas de foi renforce le suivant.",
+      },
+      {
+        title: "Le pouvoir du pardon",
+        body: "Pardonner ne veut pas dire excuser le mal fait — c'est se libérer soi-même du poison de la rancune. Le pardon est un choix, pas un sentiment.",
+      },
+      {
+        title: "Une prière qui change les choses",
+        body: "La prière n'est pas une formalité religieuse, c'est une vraie conversation avec un Père qui écoute. Priez simplement, honnêtement, régulièrement.",
+      },
+      {
+        title: "La Parole comme fondation",
+        body: "Les émotions changent, les circonstances changent — la Parole de Dieu reste stable. Ancrer sa vie dans la Bible, c'est bâtir sur un roc, pas sur du sable.",
+      },
+      {
+        title: "Persévérer dans l'épreuve",
+        body: "Les difficultés ne signifient pas que Dieu vous a abandonné. Souvent, c'est justement dans l'épreuve que le caractère se forme et que la foi devient réelle.",
+      },
+    ],
+    dailyEncouragements: [
+      "Dieu n'a pas fini son œuvre en vous — continuez d'avancer.",
+      "Vous êtes plus fort que ce que vous traversez aujourd'hui.",
+      "Rien de ce que vous vivez n'échappe au regard de Dieu.",
+      "Un petit pas de foi aujourd'hui peut changer toute votre semaine.",
+      "Vous êtes aimé, pas parce que vous le méritez, mais parce que Dieu vous a choisi.",
+      "Le découragement ment — la promesse de Dieu reste vraie.",
+      "Chaque jour est une nouvelle occasion de recommencer.",
+      "Votre prière d'hier n'a pas été oubliée.",
+      "Dieu peut faire plus avec vos fragments que vous seul avec vos forces.",
+      "La lumière brille même dans les nuits les plus sombres.",
+      "Ce que vous semez en secret, Dieu le récompense en public.",
+      "Votre histoire n'est pas encore terminée.",
+      "La grâce de Dieu est suffisante pour aujourd'hui, pas besoin de tout porter d'avance.",
+      "Quelqu'un a besoin d'entendre votre témoignage aujourd'hui.",
+      "Dieu répare ce qui semble irréparable.",
+    ],
     prayerNameLabel: "Votre nom (optionnel)",
     prayerNamePlaceholder: "Anonyme",
     prayerRequestLabel: "Votre demande",
@@ -1370,6 +1446,82 @@ const CONTENT = {
     testimonySuccessBody: "Your testimony will encourage others. Thank you for sharing it with us.",
     testimonySuccessNew: "Share another testimony",
     testimonyErrorBody: "Something went wrong. Please try again.",
+    navSalvation: "Accept Jesus",
+    salvationHomeTitle: "Want to know Jesus?",
+    salvationHomeBody: "You can receive Christ today — no conditions, just as you are.",
+    salvationHomeBtn: "I'm taking this step today",
+    salvationTitle: "Receiving Jesus Christ",
+    salvationIntro: "You don't need to be perfect to come to God — just sincere. Read this prayer out loud, with your heart.",
+    salvationPrayerTitle: "A prayer to receive Christ",
+    salvationPrayer: "Lord Jesus, I recognize I need you. I believe you died on the cross for my sins and rose again. Today, I turn from my old life and receive you as my Savior and Lord. Thank you for forgiving me and giving me new life. Amen.",
+    salvationConfirmBtn: "I prayed this prayer with my heart",
+    salvationNameLabel: "Your name (optional)",
+    salvationEmailLabel: "Email or phone (for follow-up)",
+    salvationSubmitBtn: "Confirm my decision",
+    salvationSendingBtn: "Sending...",
+    salvationSuccessTitle: "Welcome to God's family!",
+    salvationSuccessBody: "Heaven is rejoicing over you today. Our team will reach out to walk with you in this new life.",
+    salvationNextStepsTitle: "Your first steps",
+    salvationNextSteps: [
+      "Read a passage of the Bible each day, even a short one",
+      "Talk to God every day in prayer, like a friend",
+      "Join a community — don't stay alone in your faith",
+      "Tell someone you trust about this decision",
+      "Consider baptism as a public witness of your faith",
+    ],
+    victoriousLifeTitle: "Victorious Christian Life",
+    victoriousLifeIntro: "Simple truths to walk each day with strength and hope.",
+    victoriousTeachings: [
+      {
+        title: "Your identity in Christ",
+        body: "You are no longer defined by your past, your failures, or what others say about you. In Christ, you are a new creation, loved and accepted. Your worth doesn't depend on your performance.",
+      },
+      {
+        title: "Overcoming temptation",
+        body: "Temptation isn't sin — giving in is. God always provides a way out. Fleeing certain situations isn't weakness, it's wisdom.",
+      },
+      {
+        title: "Spiritual warfare",
+        body: "The battle isn't against the people around you, but a spiritual one. Prayer, God's Word, and worship are powerful weapons, not just religious habits.",
+      },
+      {
+        title: "Walking by faith",
+        body: "Faith isn't the absence of doubt — it's choosing to trust God despite uncertainty. Every small step of faith strengthens the next one.",
+      },
+      {
+        title: "The power of forgiveness",
+        body: "Forgiving doesn't mean excusing the harm done — it means freeing yourself from the poison of resentment. Forgiveness is a choice, not a feeling.",
+      },
+      {
+        title: "Prayer that changes things",
+        body: "Prayer isn't a religious formality — it's a real conversation with a Father who listens. Pray simply, honestly, regularly.",
+      },
+      {
+        title: "The Word as foundation",
+        body: "Emotions change, circumstances change — God's Word stays stable. Anchoring your life in the Bible means building on rock, not sand.",
+      },
+      {
+        title: "Persevering through trials",
+        body: "Difficulties don't mean God has abandoned you. Often, it's precisely in the trial that character is formed and faith becomes real.",
+      },
+    ],
+    dailyEncouragements: [
+      "God isn't finished with you yet — keep moving forward.",
+      "You are stronger than what you're facing today.",
+      "Nothing you're going through escapes God's sight.",
+      "One small step of faith today can change your whole week.",
+      "You are loved, not because you deserve it, but because God chose you.",
+      "Discouragement lies — God's promise remains true.",
+      "Every day is a new chance to begin again.",
+      "Your prayer from yesterday hasn't been forgotten.",
+      "God can do more with your fragments than you can with your own strength.",
+      "Light shines even in the darkest nights.",
+      "What you sow in secret, God rewards in public.",
+      "Your story isn't over yet.",
+      "God's grace is enough for today — no need to carry it all in advance.",
+      "Someone needs to hear your testimony today.",
+      "God repairs what seems irreparable.",
+    ],
     prayerNameLabel: "Your name (optional)",
     prayerNamePlaceholder: "Anonymous",
     prayerRequestLabel: "Your request",
@@ -1659,6 +1811,82 @@ const CONTENT = {
     testimonySuccessBody: "Temwayaj ou pral ankouraje lòt moun. Mèsi paske ou pataje l ak nou.",
     testimonySuccessNew: "Pataje yon lòt temwayaj",
     testimonyErrorBody: "Gen yon erè. Tanpri eseye ankò.",
+    navSalvation: "Aksepte Jezi",
+    salvationHomeTitle: "Ou vle konnen Jezi?",
+    salvationHomeBody: "Ou ka resevwa Kris jodi a — san kondisyon, jan ou ye a.",
+    salvationHomeBtn: "M ap fè pa sa a jodi a",
+    salvationTitle: "Resevwa Jezi Kris",
+    salvationIntro: "Ou pa bezwen pafè pou ou vin bò kot Bondye — jis sensè. Li priyè sa a byen fò, ak tout kè ou.",
+    salvationPrayerTitle: "Yon priyè pou resevwa Kris",
+    salvationPrayer: "Senyè Jezi, mwen rekonèt mwen bezwen ou. Mwen kwè ou mouri sou kwa a pou peche m yo epi ou leve vivan ankò. Jodi a, mwen vire do bay ansyen lavi m epi mwen resevwa ou kòm Sovè ak Senyè mwen. Mèsi paske ou padone m epi ban m yon lavi nouvo. Amèn.",
+    salvationConfirmBtn: "Mwen priye priyè sa a ak tout kè m",
+    salvationNameLabel: "Non ou (opsyonèl)",
+    salvationEmailLabel: "Imèl oswa telefòn (pou swivi)",
+    salvationSubmitBtn: "Konfime desizyon m",
+    salvationSendingBtn: "N ap voye...",
+    salvationSuccessTitle: "Byenveni nan fanmi Bondye a!",
+    salvationSuccessBody: "Syèl la kontan pou ou jodi a. Ekip nou an pral kontakte w pou akonpaye w nan nouvo lavi sa a.",
+    salvationNextStepsTitle: "Premye pa ou yo",
+    salvationNextSteps: [
+      "Li yon pasaj nan Bib la chak jou, menm si li kout",
+      "Pale ak Bondye chak jou nan lapriyè, tankou yon zanmi",
+      "Rejwenn yon kominote — pa rete pou kont ou nan lafwa ou",
+      "Pale ak yon moun ou fè konfyans sou desizyon sa a",
+      "Konsidere batèm kòm yon temwayaj piblik lafwa ou",
+    ],
+    victoriousLifeTitle: "Lavi Kretyen Viktorye",
+    victoriousLifeIntro: "Verite senp pou mache chak jou ak fòs ak espwa.",
+    victoriousTeachings: [
+      {
+        title: "Idantite ou an Kris",
+        body: "Ou pa defini ankò pa tan lontan w, echèk ou yo, oswa sa lòt moun di sou ou. An Kris, ou se yon nouvo kreyati, yo renmen e yo aksepte w. Valè ou pa depann de pèfòmans ou.",
+      },
+      {
+        title: "Venk tantasyon",
+        body: "Tantasyon se pa peche — se seleman lè ou tonbe nan li a. Bondye toujou bay yon chemen pou soti. Kouri kite kèk sitiyasyon se pa feblès, se sajès.",
+      },
+      {
+        title: "Lagè espirityèl",
+        body: "Batay la se pa kont moun ki antoure w yo, men se yon batay espirityèl. Lapriyè, Pawòl Bondye a, ak adorasyon se zam pwisan, se pa jis abitid relijye.",
+      },
+      {
+        title: "Mache nan lafwa",
+        body: "Lafwa se pa absans dout — se chwazi fè konfyans nan Bondye malgre ensètitid. Chak ti pa lafwa ranfòse pwochen an.",
+      },
+      {
+        title: "Pouvwa padon an",
+        body: "Padone pa vle di eskize mal yo fè a — se libere tèt ou anba pwazon rankin. Padon se yon chwa, se pa yon santiman.",
+      },
+      {
+        title: "Yon priyè ki chanje bagay",
+        body: "Lapriyè se pa yon fòmalite relijye, se yon vrè konvèsasyon ak yon Papa ki koute. Priye senp, onètman, regilyèman.",
+      },
+      {
+        title: "Pawòl la kòm fondasyon",
+        body: "Emosyon chanje, sikonstans chanje — Pawòl Bondye a rete estab. Ansre lavi w nan Bib la vle di bati sou wòch, pa sou sab.",
+      },
+      {
+        title: "Pèsevere nan eprèv",
+        body: "Difikilte pa vle di Bondye abandone w. Souvan, se jis nan eprèv la karaktè fòme e lafwa vin reyèl.",
+      },
+    ],
+    dailyEncouragements: [
+      "Bondye poko fini travay li nan ou — kontinye avanse.",
+      "Ou pi fò pase sa w ap fè fas jodi a.",
+      "Anyen nan sa w ap viv pa chape anba je Bondye.",
+      "Yon ti pa lafwa jodi a ka chanje tout semèn ou an.",
+      "Yo renmen w, pa paske ou merite l, men paske Bondye chwazi w.",
+      "Dekourajman manti — pwomès Bondye a rete vre.",
+      "Chak jou se yon nouvo chans pou rekòmanse.",
+      "Priyè ou te fè yè a pa bliye.",
+      "Bondye ka fè plis ak moso ou yo pase ou pou kont ou ak fòs ou.",
+      "Limyè klere menm nan nwit ki pi fonse yo.",
+      "Sa ou simen an sekrè, Bondye rekonpanse l an piblik.",
+      "Istwa w poko fini.",
+      "Gras Bondye a ase pou jodi a, pa bezwen pote tout davans.",
+      "Gen yon moun ki bezwen tande temwayaj ou jodi a.",
+      "Bondye repare sa ki sanble san repare.",
+    ],
     prayerNameLabel: "Non ou (opsyonèl)",
     prayerNamePlaceholder: "Anonim",
     prayerRequestLabel: "Demann ou",
@@ -1754,7 +1982,7 @@ const MEDIA = {
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
-  stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
+  stripeUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
   // Compteurs sociaux — mettez à jour ces chiffres manuellement de temps en temps
   memberCount: "500+",
   prayerCount: "1200+",
@@ -1764,6 +1992,8 @@ const MEDIA = {
   memberFormEndpoint: "https://formspree.io/f/mgawzbqq",
   // Créez un TROISIÈME formulaire sur Formspree pour les témoignages, et mettez son lien ici
   testimonyFormEndpoint: "https://formspree.io/f/mljrozby",
+  // Créez un QUATRIÈME formulaire sur Formspree pour les décisions de foi, et mettez son lien ici
+  salvationFormEndpoint: "https://formspree.io/f/VOTRE_4E_ID_FORMSPREE",
 };
 
 function Dawn({ compact }) {
@@ -1842,6 +2072,31 @@ export default function App() {
   const [testimonyName, setTestimonyName] = useState("");
   const [testimonyText, setTestimonyText] = useState("");
   const [testimonyStatus, setTestimonyStatus] = useState("idle"); // idle | sending | success | error
+
+  const [salvationStep, setSalvationStep] = useState("prayer"); // prayer | form | success
+  const [salvationName, setSalvationName] = useState("");
+  const [salvationContact, setSalvationContact] = useState("");
+  const [salvationStatus, setSalvationStatus] = useState("idle"); // idle | sending | error
+
+  const submitSalvation = async (e) => {
+    e.preventDefault();
+    setSalvationStatus("sending");
+    try {
+      const res = await fetch(MEDIA.salvationFormEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({ name: salvationName || "Anonyme", contact: salvationContact || "—", langue: lang }),
+      });
+      if (res.ok) {
+        setSalvationStep("success");
+        setSalvationStatus("idle");
+      } else {
+        setSalvationStatus("error");
+      }
+    } catch {
+      setSalvationStatus("error");
+    }
+  };
 
   const submitTestimony = async (e) => {
     e.preventDefault();
@@ -2008,6 +2263,7 @@ export default function App() {
     (Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000
   );
   const todayDevotion = t.devotions[dayOfYear % t.devotions.length];
+  const todayEncouragement = t.dailyEncouragements[dayOfYear % t.dailyEncouragements.length];
 
   const toggleAudio = () => {
     const el = audioRef.current;
@@ -2144,6 +2400,24 @@ export default function App() {
                     {t.heroBody}
                   </p>
 
+                  <div
+                    style={{
+                      marginTop: 16,
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 8,
+                      background: "rgba(255,255,255,0.06)",
+                      borderRadius: 12,
+                      padding: 12,
+                      maxWidth: 300,
+                    }}
+                  >
+                    <Sparkles size={15} color={COLORS.dawn} style={{ marginTop: 2, flexShrink: 0 }} />
+                    <span style={{ fontSize: 12.5, lineHeight: 1.5, color: COLORS.light, fontStyle: "italic" }}>
+                      {todayEncouragement}
+                    </span>
+                  </div>
+
                   {streak > 0 && (
                     <div
                       style={{
@@ -2239,6 +2513,34 @@ export default function App() {
                   }}
                 >
                   {t.ctaDevotion}
+                  <ChevronRight size={18} />
+                </button>
+
+                <button
+                  onClick={() => {
+                    setTab("more");
+                    setMoreView("salvation");
+                    setSalvationStep("prayer");
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    width: "100%",
+                    marginTop: 10,
+                    background: COLORS.ember,
+                    border: "none",
+                    color: COLORS.light,
+                    borderRadius: 14,
+                    padding: "14px 18px",
+                    fontSize: 14.5,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <Sparkles size={18} />
+                  <span style={{ flex: 1, textAlign: "left" }}>{t.salvationHomeBtn}</span>
                   <ChevronRight size={18} />
                 </button>
 
@@ -2897,6 +3199,8 @@ export default function App() {
                   { key: "events", label: t.eventsTitle, Icon: Calendar },
                   { key: "member", label: t.navMember, Icon: UserPlus },
                   { key: "bible", label: t.navBible, Icon: BookOpen },
+                  { key: "salvation", label: t.navSalvation, Icon: Sparkles },
+                  { key: "victorious", label: t.victoriousLifeTitle, Icon: Flame },
                   { key: "testimony", label: t.navTestimony, Icon: Megaphone },
                   { key: "heroes", label: t.navHeroes, Icon: Award },
                   { key: "pillars", label: t.navPillars, Icon: Compass },
@@ -3557,6 +3861,235 @@ export default function App() {
                   })}
                 </div>
               )}
+            </div>
+          )}
+
+          {tab === "more" && moreView === "salvation" && (
+            <div key={lang + "-salvation"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => {
+                  setMoreView(null);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+
+              {salvationStep === "prayer" && (
+                <>
+                  <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                    {t.salvationTitle}
+                  </div>
+                  <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.salvationIntro}</p>
+
+                  <div
+                    style={{
+                      marginTop: 20,
+                      background: `linear-gradient(160deg, ${COLORS.ink}, ${COLORS.night})`,
+                      border: "1px solid rgba(232,98,44,0.25)",
+                      borderRadius: 16,
+                      padding: 20,
+                    }}
+                  >
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.ember, fontWeight: 700 }}>
+                      {t.salvationPrayerTitle}
+                    </div>
+                    <p className="display" style={{ fontSize: 16, lineHeight: 1.7, marginTop: 12, color: COLORS.light, fontStyle: "italic" }}>
+                      {t.salvationPrayer}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setSalvationStep("form")}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      width: "100%",
+                      marginTop: 20,
+                      background: COLORS.ember,
+                      color: COLORS.light,
+                      border: "none",
+                      borderRadius: 14,
+                      padding: "15px 18px",
+                      fontSize: 15,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Sparkles size={17} />
+                    {t.salvationConfirmBtn}
+                  </button>
+                </>
+              )}
+
+              {salvationStep === "form" && (
+                <>
+                  <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                    {t.salvationSuccessTitle}
+                  </div>
+                  <form onSubmit={submitSalvation} style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 14 }}>
+                    <div>
+                      <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                        {t.salvationNameLabel}
+                      </label>
+                      <input
+                        type="text"
+                        value={salvationName}
+                        onChange={(e) => setSalvationName(e.target.value)}
+                        style={{
+                          width: "100%",
+                          background: "rgba(255,255,255,0.06)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: 10,
+                          padding: "11px 14px",
+                          color: COLORS.light,
+                          fontSize: 14,
+                          fontFamily: "inherit",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                        {t.salvationEmailLabel}
+                      </label>
+                      <input
+                        type="text"
+                        value={salvationContact}
+                        onChange={(e) => setSalvationContact(e.target.value)}
+                        style={{
+                          width: "100%",
+                          background: "rgba(255,255,255,0.06)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: 10,
+                          padding: "11px 14px",
+                          color: COLORS.light,
+                          fontSize: 14,
+                          fontFamily: "inherit",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                    </div>
+                    {salvationStatus === "error" && (
+                      <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.testimonyErrorBody}</div>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={salvationStatus === "sending"}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 8,
+                        background: COLORS.ember,
+                        color: COLORS.light,
+                        border: "none",
+                        borderRadius: 14,
+                        padding: "14px 18px",
+                        fontSize: 14.5,
+                        fontWeight: 600,
+                        cursor: salvationStatus === "sending" ? "default" : "pointer",
+                        opacity: salvationStatus === "sending" ? 0.7 : 1,
+                      }}
+                    >
+                      {salvationStatus === "sending" ? t.salvationSendingBtn : t.salvationSubmitBtn}
+                    </button>
+                  </form>
+                </>
+              )}
+
+              {salvationStep === "success" && (
+                <div style={{ textAlign: "center" }}>
+                  <div
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: "50%",
+                      background: "rgba(244,185,66,0.16)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "20px auto 16px",
+                    }}
+                  >
+                    <Sparkles size={28} color={COLORS.dawn} />
+                  </div>
+                  <div className="display" style={{ fontSize: 20, fontWeight: 700 }}>{t.salvationSuccessTitle}</div>
+                  <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.55 }}>{t.salvationSuccessBody}</p>
+
+                  <div style={{ textAlign: "left", marginTop: 24 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.dawn }}>{t.salvationNextStepsTitle}</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
+                      {t.salvationNextSteps.map((step, i) => (
+                        <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                          <Check size={15} color={COLORS.dawn} style={{ marginTop: 2, flexShrink: 0 }} />
+                          <span style={{ fontSize: 13, color: COLORS.light, lineHeight: 1.5 }}>{step}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {tab === "more" && moreView === "victorious" && (
+            <div key={lang + "-victorious"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.victoriousLifeTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.victoriousLifeIntro}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 20 }}>
+                {t.victoriousTeachings.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: COLORS.ink,
+                      borderRadius: 14,
+                      padding: 16,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div style={{ fontSize: 14.5, fontWeight: 700, color: COLORS.dawn }}>{item.title}</div>
+                    <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 6, lineHeight: 1.55 }}>{item.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
