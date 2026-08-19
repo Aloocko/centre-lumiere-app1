@@ -7,7 +7,7 @@ const COLORS = {
   night: "#1B1B3A",
   ink: "#2D2A4A",
   dawn: "#F4B942",
-  ember: "#E8622C",
+  ember: "#BC4614",
   light: "#FDFBF5",
   mist: "#C9C5D6",
 };
@@ -1982,7 +1982,7 @@ const MEDIA = {
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
-  stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
+  stripeUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
   // Compteurs sociaux — mettez à jour ces chiffres manuellement de temps en temps
   memberCount: "500+",
   prayerCount: "1200+",
