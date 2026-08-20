@@ -1027,8 +1027,9 @@ const CONTENT = {
     donateAmountLabel: "Choisissez un montant",
     donateCustom: "Autre montant",
     donateCta: "Faire un don via PayPal",
-    donateStripeCta: "Payer par carte (Stripe)",
+    donateStripeCta: "Payer par carte de crédit ou débit (Stripe)",
     donateSecure: "Paiement sécurisé",
+    donateCheckNote: "Vous préférez donner par chèque ? Contactez-nous directement via le formulaire « Devenir membre » et notre équipe vous indiquera comment procéder.",
     donateVerse: "« Donnez, et il vous sera donné : on versera dans votre sein une bonne mesure, tassée, secouée et qui déborde ; car on vous mesurera avec la mesure dont vous vous serez servis. »",
     donateVerseRef: "Luc 6:38",
     streakLabel: "jours consécutifs",
@@ -1068,6 +1069,104 @@ const CONTENT = {
     prayerVerse: "« Qui cherche trouve ; qui demande reçoit ; à qui frappe, on ouvrira. »",
     prayerVerseRef: "Matthieu 7:7-8",
     navTestimony: "Témoignage",
+    navHistory: "Notre histoire",
+    navFaq: "FAQ",
+    navBaptism: "Baptême",
+    baptismTitle: "S'inscrire au baptême",
+    baptismSubtitle: "Le baptême est un témoignage public de votre foi en Jésus-Christ. Remplissez ce formulaire pour vous inscrire à la prochaine session.",
+    baptismNameLabel: "Nom complet",
+    baptismContactLabel: "Courriel ou téléphone",
+    baptismReasonLabel: "Pourquoi voulez-vous être baptisé(e) ? (optionnel)",
+    baptismReasonPlaceholder: "Partagez brièvement ce qui vous motive...",
+    baptismSubmitBtn: "Envoyer mon inscription",
+    baptismSendingBtn: "Envoi en cours...",
+    baptismSuccessTitle: "Inscription reçue !",
+    baptismSuccessBody: "Notre équipe vous contactera bientôt avec les détails de la prochaine session de baptême.",
+    baptismErrorBody: "Une erreur est survenue. Veuillez réessayer.",
+    navReadingPlan: "Plan de lecture",
+    readingPlanTitle: "Plan de lecture biblique",
+    readingPlanIntro: "30 jours pour découvrir les grandes vérités de la Bible, un chapitre à la fois.",
+    readingPlanReadBtn: "Lire",
+    readingPlanDoneLabel: "Terminé",
+    readingPlan: [
+      { day: 1, bookNr: 43, chapter: 1 }, { day: 2, bookNr: 43, chapter: 3 },
+      { day: 3, bookNr: 40, chapter: 5 }, { day: 4, bookNr: 40, chapter: 6 },
+      { day: 5, bookNr: 19, chapter: 23 }, { day: 6, bookNr: 19, chapter: 1 },
+      { day: 7, bookNr: 45, chapter: 8 }, { day: 8, bookNr: 45, chapter: 12 },
+      { day: 9, bookNr: 46, chapter: 13 }, { day: 10, bookNr: 50, chapter: 4 },
+      { day: 11, bookNr: 49, chapter: 6 }, { day: 12, bookNr: 59, chapter: 1 },
+      { day: 13, bookNr: 20, chapter: 3 }, { day: 14, bookNr: 20, chapter: 31 },
+      { day: 15, bookNr: 1, chapter: 1 }, { day: 16, bookNr: 2, chapter: 20 },
+      { day: 17, bookNr: 19, chapter: 91 }, { day: 18, bookNr: 19, chapter: 34 },
+      { day: 19, bookNr: 42, chapter: 15 }, { day: 20, bookNr: 42, chapter: 24 },
+      { day: 21, bookNr: 44, chapter: 2 }, { day: 22, bookNr: 44, chapter: 16 },
+      { day: 23, bookNr: 58, chapter: 11 }, { day: 24, bookNr: 41, chapter: 4 },
+      { day: 25, bookNr: 43, chapter: 15 }, { day: 26, bookNr: 51, chapter: 3 },
+      { day: 27, bookNr: 60, chapter: 5 }, { day: 28, bookNr: 66, chapter: 21 },
+      { day: 29, bookNr: 23, chapter: 40 }, { day: 30, bookNr: 19, chapter: 150 },
+    ],
+    navMessageNotes: "Notes du message",
+    messageNotesTitle: "Notes du dernier message",
+    messageNotesDate: "Dernière mise à jour",
+    messageNotesDateValue: "À mettre à jour chaque semaine",
+    messageNotesMainTitle: "Titre du message",
+    messageNotesMainTitleValue: "Vivre par la foi, pas par la vue",
+    messageNotesVerseRef: "2 Corinthiens 5:7",
+    messageNotesPointsLabel: "Points clés",
+    messageNotesPoints: [
+      "La foi n'ignore pas la réalité — elle voit au-delà d'elle.",
+      "Ce qu'on voit change ; la Parole de Dieu, elle, ne change pas.",
+      "Marcher par la foi est un choix quotidien, pas un sentiment ponctuel.",
+    ],
+    navGallery: "Galerie",
+    galleryTitle: "Galerie photo",
+    galleryIntro: "Des moments forts de notre communauté.",
+    galleryCaption1: "Culte du dimanche",
+    galleryCaption2: "Baptêmes",
+    galleryCaption3: "Soirée de louange",
+    galleryCaption4: "Communauté en fête",
+    faqTitle: "Questions fréquentes",
+    faqIntro: "Les réponses aux questions les plus courantes.",
+    faqItems: [
+      {
+        q: "Comment devenir membre du Centre Lumière ?",
+        a: "Allez dans le menu « Plus » → « Devenir membre », remplissez le formulaire avec vos coordonnées. Notre équipe vous contactera pour vous accompagner dans les prochaines étapes.",
+      },
+      {
+        q: "Comment se faire baptiser ?",
+        a: "Le baptême est une étape importante après avoir accepté Jésus comme Sauveur. Contactez notre équipe via le formulaire « Devenir membre » ou lors d'un culte pour vous inscrire à la prochaine session de baptême.",
+      },
+      {
+        q: "Quels sont les horaires des cultes et activités ?",
+        a: "Consultez l'onglet « Événements » dans le menu « Plus » pour voir tous les rendez-vous à jour : culte dominical, soirées de prière, études bibliques.",
+      },
+      {
+        q: "Comment soumettre une demande de prière ?",
+        a: "Allez dans l'onglet « Prière », remplissez le formulaire (vous pouvez rester anonyme si vous préférez). Nos intercesseurs et nos sentinelles prient pour chaque demande reçue.",
+      },
+      {
+        q: "Comment faire un don ?",
+        a: "Allez dans le menu « Plus » → « Don ». Vous pouvez donner par carte de crédit (Stripe) ou par PayPal, en montant unique ou récurrent.",
+      },
+      {
+        q: "L'application est-elle gratuite ?",
+        a: "Oui, entièrement gratuite — aucun contenu n'est payant. Les dons sont volontaires et servent à soutenir la mission de l'église.",
+      },
+      {
+        q: "Comment regarder les cultes en direct ?",
+        a: "Allez dans l'onglet « Média » → « Direct » pour suivre nos cultes en direct sur YouTube ou Facebook, selon votre préférence.",
+      },
+      {
+        q: "L'application est-elle disponible dans plusieurs langues ?",
+        a: "Oui — français, anglais et créole haïtien. Changez de langue avec les boutons FR / EN / HT en haut de l'écran d'accueil.",
+      },
+      {
+        q: "Comment contacter l'église directement ?",
+        a: "Les coordonnées de contact sont disponibles sur notre fiche Google et notre site web centre-lumiere.org. Vous pouvez aussi utiliser le formulaire « Devenir membre » pour qu'on vous recontacte.",
+      },
+    ],
+    historyTitle: "Notre histoire",
+    historyBody: "Le Centre Lumière du Grand Réveil est né d'un appel clair de Dieu sur la vie de son fondateur. Poussé par cette conviction profonde, il s'est entouré d'un groupe de personnes passionnées de Dieu, unies par un même désir : voir des âmes sauvées et transformées par la grâce.\n\nDe cet appel et de ce petit groupe de foi est née une mission qui continue aujourd'hui de grandir — portée par la même vision d'un grand réveil spirituel, la même passion pour le salut des âmes, et la même conviction que Dieu agit encore puissamment aujourd'hui.",
     testimonyEncourageTitle: "Partagez ce que Dieu a fait",
     testimonyEncourageBody: "Votre témoignage peut encourager quelqu'un d'autre aujourd'hui. N'ayez pas peur de raconter ce que Dieu a fait dans votre vie.",
     testimonyTitle: "Partager un témoignage",
@@ -1392,8 +1491,9 @@ const CONTENT = {
     donateAmountLabel: "Choose an amount",
     donateCustom: "Other amount",
     donateCta: "Give via PayPal",
-    donateStripeCta: "Pay by card (Stripe)",
+    donateStripeCta: "Pay by credit or debit card (Stripe)",
     donateSecure: "Secure payment",
+    donateCheckNote: "Prefer to give by check? Contact us directly via the \"Become a Member\" form and our team will let you know how to proceed.",
     donateVerse: "\"Give, and it will be given to you. A good measure, pressed down, shaken together and running over, will be poured into your lap. For with the measure you use, it will be measured to you.\"",
     donateVerseRef: "Luke 6:38",
     streakLabel: "day streak",
@@ -1433,6 +1533,87 @@ const CONTENT = {
     prayerVerse: "\"Ask and it will be given to you; seek and you will find; knock and the door will be opened to you.\"",
     prayerVerseRef: "Matthew 7:7-8",
     navTestimony: "Testimony",
+    navHistory: "Our Story",
+    navFaq: "FAQ",
+    navBaptism: "Baptism",
+    baptismTitle: "Register for baptism",
+    baptismSubtitle: "Baptism is a public witness of your faith in Jesus Christ. Fill out this form to sign up for the next session.",
+    baptismNameLabel: "Full name",
+    baptismContactLabel: "Email or phone",
+    baptismReasonLabel: "Why do you want to be baptized? (optional)",
+    baptismReasonPlaceholder: "Briefly share what motivates you...",
+    baptismSubmitBtn: "Send my registration",
+    baptismSendingBtn: "Sending...",
+    baptismSuccessTitle: "Registration received!",
+    baptismSuccessBody: "Our team will contact you soon with details for the next baptism session.",
+    baptismErrorBody: "Something went wrong. Please try again.",
+    navReadingPlan: "Reading Plan",
+    readingPlanTitle: "Bible reading plan",
+    readingPlanIntro: "30 days to discover the great truths of the Bible, one chapter at a time.",
+    readingPlanReadBtn: "Read",
+    readingPlanDoneLabel: "Done",
+    navMessageNotes: "Message Notes",
+    messageNotesTitle: "Notes from the latest message",
+    messageNotesDate: "Last updated",
+    messageNotesDateValue: "To be updated weekly",
+    messageNotesMainTitle: "Message title",
+    messageNotesMainTitleValue: "Living by faith, not by sight",
+    messageNotesVerseRef: "2 Corinthians 5:7",
+    messageNotesPointsLabel: "Key points",
+    messageNotesPoints: [
+      "Faith doesn't ignore reality — it sees beyond it.",
+      "What we see changes; God's Word doesn't.",
+      "Walking by faith is a daily choice, not a passing feeling.",
+    ],
+    navGallery: "Gallery",
+    galleryTitle: "Photo gallery",
+    galleryIntro: "Highlights from our community.",
+    galleryCaption1: "Sunday service",
+    galleryCaption2: "Baptisms",
+    galleryCaption3: "Worship night",
+    galleryCaption4: "Community celebration",
+    faqTitle: "Frequently asked questions",
+    faqIntro: "Answers to the most common questions.",
+    faqItems: [
+      {
+        q: "How do I become a member of Centre Lumière?",
+        a: "Go to the \"More\" menu → \"Become a Member\", fill out the form with your details. Our team will contact you to guide you through next steps.",
+      },
+      {
+        q: "How do I get baptized?",
+        a: "Baptism is an important step after accepting Jesus as Savior. Contact our team via the \"Become a Member\" form or during a service to sign up for the next baptism session.",
+      },
+      {
+        q: "What are the service and activity schedules?",
+        a: "Check the \"Events\" tab in the \"More\" menu for all up-to-date gatherings: Sunday service, prayer nights, Bible studies.",
+      },
+      {
+        q: "How do I submit a prayer request?",
+        a: "Go to the \"Prayer\" tab and fill out the form (you may stay anonymous if you prefer). Our intercessors and watchmen pray over every request received.",
+      },
+      {
+        q: "How do I give a donation?",
+        a: "Go to the \"More\" menu → \"Give\". You can donate by credit card (Stripe) or PayPal, as a one-time or recurring gift.",
+      },
+      {
+        q: "Is the app free?",
+        a: "Yes, entirely free — no paid content. Donations are voluntary and support the church's mission.",
+      },
+      {
+        q: "How do I watch services live?",
+        a: "Go to the \"Media\" tab → \"Live\" to follow our services live on YouTube or Facebook, whichever you prefer.",
+      },
+      {
+        q: "Is the app available in multiple languages?",
+        a: "Yes — French, English, and Haitian Creole. Switch languages using the FR / EN / HT buttons at the top of the home screen.",
+      },
+      {
+        q: "How do I contact the church directly?",
+        a: "Contact details are available on our Google listing and website centre-lumiere.org. You can also use the \"Become a Member\" form to have someone reach out to you.",
+      },
+    ],
+    historyTitle: "Our Story",
+    historyBody: "Centre Lumière du Grand Réveil was born from a clear call of God on the life of its founder. Driven by this deep conviction, he gathered around him a group of people passionate about God, united by the same desire: to see souls saved and transformed by grace.\n\nFrom this call and this small group of faith came a mission that continues to grow today — carried by the same vision of a great spiritual awakening, the same passion for the salvation of souls, and the same conviction that God is still working powerfully today.",
     testimonyEncourageTitle: "Share what God has done",
     testimonyEncourageBody: "Your testimony can encourage someone else today. Don't be afraid to share what God has done in your life.",
     testimonyTitle: "Share a testimony",
@@ -1757,8 +1938,9 @@ const CONTENT = {
     donateAmountLabel: "Chwazi yon montan",
     donateCustom: "Lòt montan",
     donateCta: "Fè yon don via PayPal",
-    donateStripeCta: "Peye ak kat (Stripe)",
+    donateStripeCta: "Peye ak kat kredi oswa kat debi (Stripe)",
     donateSecure: "Peman sekirize",
+    donateCheckNote: "Ou pito bay ak chèk? Kontakte nou dirèkteman atravè fòm « Vin Manm » epi ekip nou an ap di w kijan pou fè sa.",
     donateVerse: "« Bay, y ap ba ou. Y ap vide nan pòch ou yon bon mezi, tase, souke, ki plen rive tonbe deyò. Paske se menm mezi nou sèvi pou lòt yo, y ap sèvi pou nou. »",
     donateVerseRef: "Lik 6:38",
     streakLabel: "jou youn apre lòt",
@@ -1798,6 +1980,87 @@ const CONTENT = {
     prayerVerse: "« Moun ki chèche jwenn ; moun ki mande resevwa ; y ap louvri pou moun k ap frape. »",
     prayerVerseRef: "Matye 7:7-8",
     navTestimony: "Temwayaj",
+    navHistory: "Istwa nou",
+    navFaq: "FAQ",
+    navBaptism: "Batèm",
+    baptismTitle: "Enskri pou batèm",
+    baptismSubtitle: "Batèm se yon temwayaj piblik lafwa w nan Jezi Kris. Ranpli fòm sa a pou enskri pou pwochen sesyon an.",
+    baptismNameLabel: "Non konplè",
+    baptismContactLabel: "Imèl oswa telefòn",
+    baptismReasonLabel: "Poukisa ou vle batize? (opsyonèl)",
+    baptismReasonPlaceholder: "Pataje an kèk mo sa k motive w...",
+    baptismSubmitBtn: "Voye enskripsyon m",
+    baptismSendingBtn: "N ap voye...",
+    baptismSuccessTitle: "Nou resevwa enskripsyon w!",
+    baptismSuccessBody: "Ekip nou an ap kontakte w byento ak detay pou pwochen sesyon batèm nan.",
+    baptismErrorBody: "Gen yon erè. Tanpri eseye ankò.",
+    navReadingPlan: "Plan Lekti",
+    readingPlanTitle: "Plan lekti biblik",
+    readingPlanIntro: "30 jou pou dekouvri gwo verite Bib la, yon chapit alafwa.",
+    readingPlanReadBtn: "Li",
+    readingPlanDoneLabel: "Fini",
+    navMessageNotes: "Nòt Mesaj",
+    messageNotesTitle: "Nòt dènye mesaj la",
+    messageNotesDate: "Dènye mizajou",
+    messageNotesDateValue: "Pou mete ajou chak semèn",
+    messageNotesMainTitle: "Tit mesaj la",
+    messageNotesMainTitleValue: "Viv pa lafwa, pa pa sa nou wè",
+    messageNotesVerseRef: "2 Korentyen 5:7",
+    messageNotesPointsLabel: "Pwen kle yo",
+    messageNotesPoints: [
+      "Lafwa pa inyore reyalite a — li wè pi lwen pase l.",
+      "Sa nou wè chanje; Pawòl Bondye a pa chanje.",
+      "Mache pa lafwa se yon chwa chak jou, se pa yon santiman pasajè.",
+    ],
+    navGallery: "Galri",
+    galleryTitle: "Galri foto",
+    galleryIntro: "Gwo moman nan kominote nou an.",
+    galleryCaption1: "Sèvis dimanch",
+    galleryCaption2: "Batèm",
+    galleryCaption3: "Sware adorasyon",
+    galleryCaption4: "Selebrasyon kominotè",
+    faqTitle: "Kesyon moun poze souvan",
+    faqIntro: "Repons pou kesyon ki poze pi souvan yo.",
+    faqItems: [
+      {
+        q: "Kijan pou m vin manm Centre Lumière?",
+        a: "Ale nan meni « Plis » → « Vin Manm », ranpli fòm lan ak enfòmasyon w. Ekip nou an ap kontakte w pou akonpaye w nan pwochen etap yo.",
+      },
+      {
+        q: "Kijan pou m batize?",
+        a: "Batèm se yon etap enpòtan apre ou fin aksepte Jezi kòm Sovè. Kontakte ekip nou an atravè fòm « Vin Manm » a oswa pandan yon sèvis pou enskri pou pwochen sesyon batèm nan.",
+      },
+      {
+        q: "Ki lè sèvis ak aktivite yo?",
+        a: "Gade tab « Evènman » nan meni « Plis » pou wè tout rasanbleman ki ajou: sèvis dimanch, sware priyè, etid biblik.",
+      },
+      {
+        q: "Kijan pou m soumèt yon demann priyè?",
+        a: "Ale nan tab « Priyè » a epi ranpli fòm lan (ou ka rete anonim si ou pito). Entèsesè nou yo ak gadyen nou yo priye pou chak demann yo resevwa.",
+      },
+      {
+        q: "Kijan pou m fè yon don?",
+        a: "Ale nan meni « Plis » → « Don ». Ou ka bay ak kat kredi (Stripe) oswa PayPal, yon sèl fwa oswa regilyèman.",
+      },
+      {
+        q: "Èske aplikasyon an gratis?",
+        a: "Wi, li antyèman gratis — pa gen okenn kontni peye. Don yo volontè e yo sipòte misyon legliz la.",
+      },
+      {
+        q: "Kijan pou m gade sèvis yo an dirèk?",
+        a: "Ale nan tab « Medya » → « Dirèk » pou swiv sèvis nou yo an dirèk sou YouTube oswa Facebook, jan ou pito.",
+      },
+      {
+        q: "Èske aplikasyon an disponib nan plizyè lang?",
+        a: "Wi — franse, angle, ak kreyòl ayisyen. Chanje lang ak bouton FR / EN / HT anlè ekran akèy la.",
+      },
+      {
+        q: "Kijan pou m kontakte legliz la dirèkteman?",
+        a: "Enfòmasyon kontak yo disponib sou fich Google nou an ak sit entènèt nou an centre-lumiere.org. Ou ka itilize tou fòm « Vin Manm » pou yon moun kontakte w.",
+      },
+    ],
+    historyTitle: "Istwa nou",
+    historyBody: "Centre Lumière du Grand Réveil te fèt apati yon apèl klè Bondye te mete sou lavi fondatè li. Pouse pa konviksyon pwofon sa a, li te rasanble yon gwoup moun ki gen pasyon pou Bondye, ini pa menm dezi a: wè nanm sove e transfòme pa gras.\n\nApati apèl sa a ak ti gwoup lafwa sa a, yon misyon te fèt e li kontinye grandi jodi a — pote pa menm vizyon gran reveye espirityèl la, menm pasyon pou sali nanm yo, ak menm konviksyon Bondye ap toujou aji ak pouvwa jodi a.",
     testimonyEncourageTitle: "Pataje sa Bondye fè",
     testimonyEncourageBody: "Temwayaj ou ka ankouraje yon lòt moun jodi a. Pa pè rakonte sa Bondye fè nan lavi w.",
     testimonyTitle: "Pataje yon temwayaj",
@@ -1982,7 +2245,7 @@ const MEDIA = {
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
   // Remplacez par votre lien Stripe Payment Link (créé sur dashboard.stripe.com)
-  stripeUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
+  stripeUrl: "https://buy.stripe.com/test_7sY8wR8cdaT9dpAbTx8IU00",
   // Compteurs sociaux — mettez à jour ces chiffres manuellement de temps en temps
   memberCount: "500+",
   prayerCount: "1200+",
@@ -1994,6 +2257,15 @@ const MEDIA = {
   testimonyFormEndpoint: "https://formspree.io/f/mljrozby",
   // Créez un QUATRIÈME formulaire sur Formspree pour les décisions de foi, et mettez son lien ici
   salvationFormEndpoint: "https://formspree.io/f/xqpzwpbj",
+  // Créez un CINQUIÈME formulaire sur Formspree pour les inscriptions au baptême, et mettez son lien ici
+  baptismFormEndpoint: "https://formspree.io/f/xbgrqpya",
+  // Remplacez ces liens par vos vraies photos hébergées (dans public/publique/, comme les icônes)
+  galleryImages: [
+    { url: "/icon-512.png", captionKey: "galleryCaption1" },
+    { url: "/icon-512.png", captionKey: "galleryCaption2" },
+    { url: "/icon-512.png", captionKey: "galleryCaption3" },
+    { url: "/icon-512.png", captionKey: "galleryCaption4" },
+  ],
 };
 
 function Dawn({ compact }) {
@@ -2115,6 +2387,57 @@ export default function App() {
       }
     } catch {
       setTestimonyStatus("error");
+    }
+  };
+
+  const [baptismName, setBaptismName] = useState("");
+  const [baptismContact, setBaptismContact] = useState("");
+  const [baptismReason, setBaptismReason] = useState("");
+  const [baptismStatus, setBaptismStatus] = useState("idle"); // idle | sending | success | error
+
+  const [readingPlanDone, setReadingPlanDone] = useState([]);
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem("cl_reading_plan") || "[]");
+      setReadingPlanDone(stored);
+    } catch {
+      // localStorage indisponible — pas grave
+    }
+  }, []);
+  const toggleReadingDay = (day) => {
+    setReadingPlanDone((prev) => {
+      const next = prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day];
+      try {
+        localStorage.setItem("cl_reading_plan", JSON.stringify(next));
+      } catch {
+        // localStorage indisponible — pas grave
+      }
+      return next;
+    });
+  };
+
+  const submitBaptism = async (e) => {
+    e.preventDefault();
+    if (!baptismName.trim() || !baptismContact.trim()) return;
+    setBaptismStatus("sending");
+    try {
+      const res = await fetch(MEDIA.baptismFormEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({
+          name: baptismName,
+          contact: baptismContact,
+          reason: baptismReason || "—",
+          langue: lang,
+        }),
+      });
+      if (res.ok) {
+        setBaptismStatus("success");
+      } else {
+        setBaptismStatus("error");
+      }
+    } catch {
+      setBaptismStatus("error");
     }
   };
 
@@ -3198,6 +3521,12 @@ export default function App() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
                 {[
+                  { key: "history", label: t.navHistory, Icon: BookOpen },
+                  { key: "baptism", label: t.navBaptism, Icon: HandHeart },
+                  { key: "readingplan", label: t.navReadingPlan, Icon: BookOpen },
+                  { key: "messagenotes", label: t.navMessageNotes, Icon: Megaphone },
+                  { key: "gallery", label: t.navGallery, Icon: Sparkles },
+                  { key: "faq", label: t.navFaq, Icon: HandHeart },
                   { key: "donate", label: t.navDonate, Icon: Heart },
                   { key: "events", label: t.eventsTitle, Icon: Calendar },
                   { key: "member", label: t.navMember, Icon: UserPlus },
@@ -3246,6 +3575,471 @@ export default function App() {
                 <div style={{ fontSize: 10.5, color: COLORS.mist, lineHeight: 1.5 }}>
                   © {new Date().getFullYear()} {t.copyrightLabel}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "history" && (
+            <div key={lang + "-history"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.historyTitle}
+              </div>
+              <div
+                style={{
+                  marginTop: 18,
+                  background: COLORS.ink,
+                  borderRadius: 16,
+                  padding: 20,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                {t.historyBody.split("\n\n").map((para, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontSize: 14,
+                      lineHeight: 1.7,
+                      color: COLORS.light,
+                      marginTop: i === 0 ? 0 : 14,
+                    }}
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "readingplan" && (
+            <div key={lang + "-readingplan"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.readingPlanTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.readingPlanIntro}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 20 }}>
+                {t.readingPlan.map((item) => {
+                  const bookName = BIBLE_BOOKS_FR.find((b) => b.nr === item.bookNr)?.name || "";
+                  const done = readingPlanDone.includes(item.day);
+                  return (
+                    <div
+                      key={item.day}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        background: COLORS.ink,
+                        borderRadius: 12,
+                        padding: "12px 14px",
+                        border: `1px solid ${done ? "rgba(244,185,66,0.35)" : "rgba(255,255,255,0.08)"}`,
+                      }}
+                    >
+                      <button
+                        onClick={() => toggleReadingDay(item.day)}
+                        aria-label={t.readingPlanDoneLabel}
+                        style={{
+                          width: 26,
+                          height: 26,
+                          borderRadius: "50%",
+                          border: `1.5px solid ${done ? COLORS.dawn : "rgba(255,255,255,0.25)"}`,
+                          background: done ? COLORS.dawn : "transparent",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          cursor: "pointer",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {done && <Check size={14} color={COLORS.night} />}
+                      </button>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: COLORS.mist, fontWeight: 600 }}>Jour {item.day}</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.light }}>
+                          {bookName} {item.chapter}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setBibleBook(item.bookNr);
+                          setBibleChapter(item.chapter);
+                          setMoreView("bible");
+                          fetchBible();
+                        }}
+                        style={{
+                          background: "rgba(244,185,66,0.14)",
+                          color: COLORS.dawn,
+                          border: "none",
+                          borderRadius: 8,
+                          padding: "6px 12px",
+                          fontSize: 12,
+                          fontWeight: 600,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {t.readingPlanReadBtn}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "messagenotes" && (
+            <div key={lang + "-messagenotes"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.messageNotesTitle}
+              </div>
+              <div style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 4 }}>
+                {t.messageNotesDate} : {t.messageNotesDateValue}
+              </div>
+
+              <div
+                style={{
+                  marginTop: 18,
+                  background: `linear-gradient(160deg, ${COLORS.ink}, ${COLORS.night})`,
+                  border: "1px solid rgba(244,185,66,0.2)",
+                  borderRadius: 16,
+                  padding: 20,
+                }}
+              >
+                <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.dawn, fontWeight: 600 }}>
+                  {t.messageNotesMainTitle}
+                </div>
+                <div className="display" style={{ fontSize: 19, fontWeight: 700, marginTop: 8, color: COLORS.light }}>
+                  {t.messageNotesMainTitleValue}
+                </div>
+                <div style={{ fontSize: 12.5, color: COLORS.mist, marginTop: 4 }}>{t.messageNotesVerseRef}</div>
+              </div>
+
+              <div style={{ marginTop: 20 }}>
+                <div style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                  {t.messageNotesPointsLabel}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 12 }}>
+                  {t.messageNotesPoints.map((point, i) => (
+                    <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                      <div
+                        style={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: "50%",
+                          background: "rgba(244,185,66,0.14)",
+                          color: COLORS.dawn,
+                          fontSize: 11,
+                          fontWeight: 700,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                          marginTop: 1,
+                        }}
+                      >
+                        {i + 1}
+                      </div>
+                      <span style={{ fontSize: 13.5, color: COLORS.light, lineHeight: 1.55 }}>{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "gallery" && (
+            <div key={lang + "-gallery"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.galleryTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.galleryIntro}</p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 20 }}>
+                {MEDIA.galleryImages.map((img, i) => (
+                  <div key={i} style={{ borderRadius: 12, overflow: "hidden", background: COLORS.ink }}>
+                    <img
+                      src={img.url}
+                      alt={t[img.captionKey]}
+                      loading="lazy"
+                      style={{ width: "100%", aspectRatio: "1 / 1", objectFit: "cover", display: "block" }}
+                    />
+                    <div style={{ fontSize: 11.5, color: COLORS.mist, padding: "8px 10px" }}>{t[img.captionKey]}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "baptism" && (
+            <div key={lang + "-baptism"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.baptismTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.baptismSubtitle}</p>
+
+              {baptismStatus === "success" ? (
+                <div
+                  style={{
+                    marginTop: 24,
+                    textAlign: "center",
+                    background: COLORS.ink,
+                    borderRadius: 16,
+                    padding: "36px 20px",
+                    border: "1px solid rgba(244,185,66,0.25)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: "rgba(244,185,66,0.16)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 16px",
+                    }}
+                  >
+                    <Check size={26} color={COLORS.dawn} />
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700 }}>{t.baptismSuccessTitle}</div>
+                  <p style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 8, lineHeight: 1.5 }}>{t.baptismSuccessBody}</p>
+                </div>
+              ) : (
+                <form onSubmit={submitBaptism} style={{ marginTop: 22, display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.baptismNameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={baptismName}
+                      onChange={(e) => setBaptismName(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.baptismContactLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={baptismContact}
+                      onChange={(e) => setBaptismContact(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.mist, display: "block", marginBottom: 6 }}>
+                      {t.baptismReasonLabel}
+                    </label>
+                    <textarea
+                      value={baptismReason}
+                      onChange={(e) => setBaptismReason(e.target.value)}
+                      placeholder={t.baptismReasonPlaceholder}
+                      rows={5}
+                      style={{
+                        width: "100%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: 10,
+                        padding: "11px 14px",
+                        color: COLORS.light,
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                        resize: "vertical",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+
+                  {baptismStatus === "error" && (
+                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.baptismErrorBody}</div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={baptismStatus === "sending"}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      background: COLORS.ember,
+                      color: COLORS.light,
+                      border: "none",
+                      borderRadius: 14,
+                      padding: "14px 18px",
+                      fontSize: 14.5,
+                      fontWeight: 600,
+                      cursor: baptismStatus === "sending" ? "default" : "pointer",
+                      opacity: baptismStatus === "sending" ? 0.7 : 1,
+                    }}
+                  >
+                    <Send size={16} />
+                    {baptismStatus === "sending" ? t.baptismSendingBtn : t.baptismSubmitBtn}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
+
+          {tab === "more" && moreView === "faq" && (
+            <div key={lang + "-faq"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "none",
+                  border: "none",
+                  color: COLORS.mist,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  padding: 0,
+                  marginBottom: 16,
+                }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
+                {t.faqTitle}
+              </div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.faqIntro}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+                {t.faqItems.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: COLORS.ink,
+                      borderRadius: 14,
+                      padding: 16,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.dawn }}>{item.q}</div>
+                    <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.55 }}>{item.a}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -3415,6 +4209,21 @@ export default function App() {
                 {t.donateCta}
               </a>
               <div style={{ textAlign: "center", fontSize: 11.5, color: COLORS.mist, marginTop: 10 }}>{t.donateSecure}</div>
+              <div
+                style={{
+                  marginTop: 14,
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 12,
+                  padding: 12,
+                  fontSize: 12,
+                  color: COLORS.mist,
+                  lineHeight: 1.5,
+                  textAlign: "center",
+                }}
+              >
+                {t.donateCheckNote}
+              </div>
             </div>
           )}
 
