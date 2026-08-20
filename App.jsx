@@ -3524,7 +3524,6 @@ export default function App() {
                   { key: "history", label: t.navHistory, Icon: BookOpen },
                   { key: "baptism", label: t.navBaptism, Icon: HandHeart },
                   { key: "readingplan", label: t.navReadingPlan, Icon: BookOpen },
-                  { key: "messagenotes", label: t.navMessageNotes, Icon: Megaphone },
                   { key: "gallery", label: t.navGallery, Icon: Sparkles },
                   { key: "faq", label: t.navFaq, Icon: HandHeart },
                   { key: "donate", label: t.navDonate, Icon: Heart },
@@ -3719,85 +3718,6 @@ export default function App() {
                     </div>
                   );
                 })}
-              </div>
-            </div>
-          )}
-
-          {tab === "more" && moreView === "messagenotes" && (
-            <div key={lang + "-messagenotes"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
-              <button
-                onClick={() => setMoreView(null)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  background: "none",
-                  border: "none",
-                  color: COLORS.mist,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  padding: 0,
-                  marginBottom: 16,
-                }}
-              >
-                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
-                {t.backLabel}
-              </button>
-              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
-                {t.messageNotesTitle}
-              </div>
-              <div style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 4 }}>
-                {t.messageNotesDate} : {t.messageNotesDateValue}
-              </div>
-
-              <div
-                style={{
-                  marginTop: 18,
-                  background: `linear-gradient(160deg, ${COLORS.ink}, ${COLORS.night})`,
-                  border: "1px solid rgba(244,185,66,0.2)",
-                  borderRadius: 16,
-                  padding: 20,
-                }}
-              >
-                <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.dawn, fontWeight: 600 }}>
-                  {t.messageNotesMainTitle}
-                </div>
-                <div className="display" style={{ fontSize: 19, fontWeight: 700, marginTop: 8, color: COLORS.light }}>
-                  {t.messageNotesMainTitleValue}
-                </div>
-                <div style={{ fontSize: 12.5, color: COLORS.mist, marginTop: 4 }}>{t.messageNotesVerseRef}</div>
-              </div>
-
-              <div style={{ marginTop: 20 }}>
-                <div style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase", letterSpacing: 0.6 }}>
-                  {t.messageNotesPointsLabel}
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 12 }}>
-                  {t.messageNotesPoints.map((point, i) => (
-                    <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                      <div
-                        style={{
-                          width: 22,
-                          height: 22,
-                          borderRadius: "50%",
-                          background: "rgba(244,185,66,0.14)",
-                          color: COLORS.dawn,
-                          fontSize: 11,
-                          fontWeight: 700,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                          marginTop: 1,
-                        }}
-                      >
-                        {i + 1}
-                      </div>
-                      <span style={{ fontSize: 13.5, color: COLORS.light, lineHeight: 1.55 }}>{point}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           )}
