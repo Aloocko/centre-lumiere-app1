@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 
 const FONTS = ``;
 
@@ -5263,6 +5264,7 @@ export default function App() {
           ))}
         </nav>
       </div>
+      <Analytics />
     </div>
   );
 }
