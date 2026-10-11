@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
 
 const FONTS = ``;
 
@@ -2228,6 +2228,29 @@ const PILLAR_ICONS = {
 
 const LANG_LABELS = { fr: "FR", en: "EN", ht: "HT" };
 
+// Actualités de l'église : ajoutez une entrée EN HAUT de la liste pour chaque nouvelle publication.
+const NEWS_LABELS = {
+  fr: { title: "Actualités", intro: "Les nouvelles du Centre Lumière du Grand Réveil.", empty: "Aucune actualité pour le moment.", more: "En savoir plus" },
+  en: { title: "News", intro: "The latest from Centre Lumière du Grand Réveil.", empty: "No news yet.", more: "Learn more" },
+  ht: { title: "Nouvèl", intro: "Dènye nouvèl Centre Lumière du Grand Réveil.", empty: "Poko gen nouvèl.", more: "Wè plis" },
+};
+const NEWS = [
+  {
+    date: "2026-10-10",
+    link: "",
+    fr: { title: "L'application Centre Lumière arrive sur Google Play", text: "Notre application est en cours d'examen par Google. Dès sa publication, vous pourrez la télécharger sur votre téléphone Android." },
+    en: { title: "The Centre Lumière app is coming to Google Play", text: "Our app is being reviewed by Google. Once published, you will be able to download it on your Android phone." },
+    ht: { title: "Aplikasyon Centre Lumière ap rive sou Google Play", text: "Google ap egzamine aplikasyon nou an. Le l piblye, w ap ka telechaje l sou telefòn Android ou." },
+  },
+  {
+    date: "2026-10-10",
+    link: "",
+    fr: { title: "Notre télévision en direct est lancée", text: "Suivez nos cultes et nos enseignements en direct dans l'onglet Média, section Télévision." },
+    en: { title: "Our live television is launched", text: "Follow our services and teachings live in the Media tab, Television section." },
+    ht: { title: "Televizyon nou an an dirèk lanse", text: "Swiv sèvis ak ansèyman nou yo an dirèk nan onglè Medya, seksyon Televizyon." },
+  },
+];
+
 // Remplacez ces liens par vos propres fichiers audio (mp3) et vidéos (page YouTube/Vimeo, etc.)
 const MEDIA = {
   audioSrc: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
@@ -2240,7 +2263,9 @@ const MEDIA = {
   radioStreamUrl: "https://stream.zeno.fm/a9w7o9zddjnuv",
   radioStationName: "Radio Centre Lumière",
   // Remplacez par l'URL "embed" de votre chaîne TV en continu (playlist YouTube en boucle, ou lien embed Vimeo/Facebook)
-  tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw",
+  tvEmbedUrl: "https://www.youtube.com/embed/live_stream?channel=UCtD9sGaj2biDHiha_TSDI6Q",
+  // Dernières vidéos de la chaîne (affichées quand il n'y a pas de direct en cours)
+  tvReplayUrl: "https://www.youtube.com/embed/videoseries?list=UUtD9sGaj2biDHiha_TSDI6Q",
   tvChannelName: "Télé Centre Lumière",
   // Remplacez par votre vrai lien de don (PayPal, Stripe, Zelle, GoFundMe, etc.)
   donationUrl: "https://paypal.me/clgr926",
@@ -2300,6 +2325,7 @@ export default function App() {
   const [lang, setLang] = useState("fr");
   const [tab, setTab] = useState("home");
   const [mediaView, setMediaView] = useState("live"); // live | tv | radio
+  const [tvReplay, setTvReplay] = useState(false);
   const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
   const [loaded, setLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -3521,6 +3547,7 @@ export default function App() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
                 {[
+                  { key: "news", label: NEWS_LABELS[lang].title, Icon: Newspaper },
                   { key: "history", label: t.navHistory, Icon: BookOpen },
                   { key: "baptism", label: t.navBaptism, Icon: HandHeart },
                   { key: "readingplan", label: t.navReadingPlan, Icon: BookOpen },
@@ -4186,7 +4213,8 @@ export default function App() {
                 }}
               >
                 <iframe
-                  src={MEDIA.tvEmbedUrl}
+                  key={tvReplay ? "replay" : "live"}
+                  src={tvReplay ? MEDIA.tvReplayUrl : MEDIA.tvEmbedUrl}
                   title={t.tvTitle}
                   loading="lazy"
                   allow="autoplay; encrypted-media; picture-in-picture"
@@ -4204,6 +4232,55 @@ export default function App() {
 
               <div style={{ marginTop: 14, fontSize: 13.5, fontWeight: 600, textAlign: "center", color: COLORS.mist }}>
                 {MEDIA.tvChannelName}
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
+                <button
+                  onClick={() => setTvReplay(!tvReplay)}
+                  style={{ flex: 1, padding: "11px 8px", borderRadius: 10, border: `1px solid ${COLORS.dawn}`, background: "rgba(244,185,66,0.14)", color: COLORS.dawn, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                >
+                  {tvReplay
+                    ? (lang === "en" ? "Back to live" : lang === "ht" ? "Tounen nan dirèk" : "Retour au direct")
+                    : (lang === "en" ? "No live? Watch latest videos" : lang === "ht" ? "Pa gen dirèk? Gade dènye videyo yo" : "Pas de direct ? Voir les dernières vidéos")}
+                </button>
+                <a
+                  href={MEDIA.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center", gap: 6, padding: "11px 12px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.15)", color: COLORS.mist, fontSize: 12.5, fontWeight: 600, textDecoration: "none" }}
+                >
+                  <ExternalLink size={14} /> YouTube
+                </a>
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "news" && (
+            <div key={lang + "-news"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", color: COLORS.mist, fontSize: 13, fontWeight: 600, cursor: "pointer", padding: 0, marginBottom: 16 }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>{NEWS_LABELS[lang].title}</div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{NEWS_LABELS[lang].intro}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+                {NEWS.length === 0 && <div style={{ fontSize: 13, color: COLORS.mist }}>{NEWS_LABELS[lang].empty}</div>}
+                {NEWS.map((n, i) => (
+                  <div key={i} style={{ background: COLORS.ink, borderRadius: 14, padding: 16, border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div style={{ fontSize: 11.5, color: COLORS.dawn, fontWeight: 700 }}>
+                      {new Date(n.date + "T12:00:00").toLocaleDateString(lang === "en" ? "en-CA" : lang === "ht" ? "fr-HT" : "fr-CA", { day: "numeric", month: "long", year: "numeric" })}
+                    </div>
+                    <div style={{ fontSize: 15.5, fontWeight: 700, marginTop: 4 }}>{n[lang].title}</div>
+                    <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.55 }}>{n[lang].text}</p>
+                    {n.link && (
+                      <a href={n.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 8, fontSize: 12.5, fontWeight: 700, color: COLORS.dawn }}>
+                        {NEWS_LABELS[lang].more} →
+                      </a>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           )}
