@@ -27,6 +27,32 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap"
     />
     <title>Centre Lumière du Grand Réveil — Église, Radio Chrétienne & Dévotions | Ambassade de la Grâce</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Church",
+      "name": "Centre Lumière du Grand Réveil — Ambassade de la Grâce",
+      "alternateName": "Centre Lumière du Grand Réveil",
+      "slogan": "La Grâce Réveille, la Lumière Transforme",
+      "url": "https://www.centre-lumiere.org/",
+      "logo": "https://www.centre-lumiere.org/icon-512.png",
+      "image": "https://www.centre-lumiere.org/icon-512.png",
+      "telephone": "+1-514-266-0196",
+      "email": "Egliseclgr@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "9071 boul. Pie-IX",
+        "addressLocality": "Montréal",
+        "addressRegion": "QC",
+        "postalCode": "H1Z 3V7",
+        "addressCountry": "CA"
+      },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:30", "closes": "11:45" }
+      ],
+      "inLanguage": ["fr", "en", "ht"]
+    }
+    </script>
     <!-- Notifications push OneSignal — remplacez VOTRE_APP_ID par celui donné par OneSignal -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
@@ -43,9 +69,15 @@
   <body style="margin:0;">
     <div id="root">
       <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#1B1B3A;font-family:-apple-system,sans-serif;">
-        <div style="text-align:center;color:#C9C5D6;font-size:13px;">Centre Lumière du Grand Réveil</div>
+        <div style="text-align:center;color:#C9C5D6;font-size:13px;max-width:420px;padding:0 20px;line-height:1.5;">
+          <h1 style="font-size:20px;color:#F4B942;margin:0 0 8px;">Centre Lumière du Grand Réveil</h1>
+          <p style="margin:0 0 8px;">Ambassade de la Grâce — Église chrétienne à Montréal, Québec.<br />La Grâce Réveille, la Lumière Transforme.</p>
+          <p style="margin:0 0 8px;">Dévotions quotidiennes, radio chrétienne, cultes en direct, prière en ligne, enseignements et dons.</p>
+          <p style="margin:0 0 8px;">Culte : dimanche de 8 h 30 à 11 h 45<br />9071 boul. Pie-IX, Montréal (QC) H1Z 3V7<br />Tél. : 514 266-0196 — Egliseclgr@gmail.com</p>
+        </div>
       </div>
     </div>
     <script type="module" src="/main.jsx"></script>
+    <noscript>Cette application nécessite JavaScript. Centre Lumière du Grand Réveil — Ambassade de la Grâce, 9071 boul. Pie-IX, Montréal. Tél. 514 266-0196.</noscript>
   </body>
 </html>
