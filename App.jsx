@@ -2251,6 +2251,17 @@ const NEWS = [
   },
 ];
 
+// Flyers à partager / télécharger (fichiers dans public/flyers/)
+const FLYERS = [
+  { key: "invitation", pdf: "/flyers/flyer-invitation.pdf", recto: "/flyers/invitation-recto.jpg", verso: "/flyers/invitation-verso.jpg" },
+  { key: "evangelisation", pdf: "/flyers/flyer-evangelisation.pdf", recto: "/flyers/evangelisation-recto.jpg", verso: "/flyers/evangelisation-verso.jpg" },
+];
+const FLYERS_LABELS = {
+  fr: { title: "Inviter", intro: "Partagez ces flyers avec votre famille, vos amis et vos voisins.", names: { invitation: "Invitation à l'église", evangelisation: "Dieu t'aime — Évangélisation" }, download: "Télécharger le PDF", share: "Partager", recto: "Recto", verso: "Verso", shareText: "Vous êtes invité(e) au Centre Lumière du Grand Réveil !" },
+  en: { title: "Invite", intro: "Share these flyers with your family, friends and neighbours.", names: { invitation: "Church invitation", evangelisation: "God loves you — Outreach" }, download: "Download PDF", share: "Share", recto: "Front", verso: "Back", shareText: "You are invited to Centre Lumière du Grand Réveil!" },
+  ht: { title: "Envite", intro: "Pataje flyer sa yo ak fanmi w, zanmi w ak vwazen w.", names: { invitation: "Envitasyon pou legliz la", evangelisation: "Bondye renmen w — Evanjelizasyon" }, download: "Telechaje PDF la", share: "Pataje", recto: "Devan", verso: "Dèyè", shareText: "Nou envite w nan Centre Lumière du Grand Réveil !" },
+};
+
 // Remplacez ces liens par vos propres fichiers audio (mp3) et vidéos (page YouTube/Vimeo, etc.)
 const MEDIA = {
   audioSrc: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
@@ -3548,6 +3559,7 @@ export default function App() {
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
                 {[
                   { key: "news", label: NEWS_LABELS[lang].title, Icon: Newspaper },
+                  { key: "flyers", label: FLYERS_LABELS[lang].title, Icon: Megaphone },
                   { key: "history", label: t.navHistory, Icon: BookOpen },
                   { key: "baptism", label: t.navBaptism, Icon: HandHeart },
                   { key: "readingplan", label: t.navReadingPlan, Icon: BookOpen },
@@ -4279,6 +4291,59 @@ export default function App() {
                         {NEWS_LABELS[lang].more} →
                       </a>
                     )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "more" && moreView === "flyers" && (
+            <div key={lang + "-flyers"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+              <button
+                onClick={() => setMoreView(null)}
+                style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", color: COLORS.mist, fontSize: 13, fontWeight: 600, cursor: "pointer", padding: 0, marginBottom: 16 }}
+              >
+                <ChevronRight size={15} style={{ transform: "rotate(180deg)" }} />
+                {t.backLabel}
+              </button>
+              <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>{FLYERS_LABELS[lang].title}</div>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{FLYERS_LABELS[lang].intro}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 20 }}>
+                {FLYERS.map((f) => (
+                  <div key={f.key} style={{ background: COLORS.ink, borderRadius: 14, padding: 14, border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 10 }}>{FLYERS_LABELS[lang].names[f.key]}</div>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      {[["recto", f.recto], ["verso", f.verso]].map(([side, src]) => (
+                        <div key={side} style={{ flex: 1, minWidth: 0 }}>
+                          <img src={src} alt={FLYERS_LABELS[lang].names[f.key] + " — " + FLYERS_LABELS[lang][side]} loading="lazy" style={{ width: "100%", height: "auto", borderRadius: 6, display: "block", background: "#fff" }} />
+                          <div style={{ fontSize: 11, color: COLORS.mist, textAlign: "center", marginTop: 4 }}>{FLYERS_LABELS[lang][side]}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                      <a
+                        href={f.pdf}
+                        download
+                        style={{ flex: 1, textAlign: "center", padding: "11px 8px", borderRadius: 10, border: `1px solid ${COLORS.dawn}`, background: "rgba(244,185,66,0.14)", color: COLORS.dawn, fontSize: 12.5, fontWeight: 700, textDecoration: "none" }}
+                      >
+                        {FLYERS_LABELS[lang].download}
+                      </a>
+                      <button
+                        onClick={async () => {
+                          const url = "https://www.centre-lumiere.org" + f.pdf;
+                          try {
+                            if (navigator.share) {
+                              await navigator.share({ title: FLYERS_LABELS[lang].names[f.key], text: FLYERS_LABELS[lang].shareText, url });
+                            } else if (navigator.clipboard) {
+                              await navigator.clipboard.writeText(url);
+                            }
+                          } catch (e) {}
+                        }}
+                        style={{ flex: 1, padding: "11px 8px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: COLORS.light, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                      >
+                        {FLYERS_LABELS[lang].share}
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
