@@ -30,8 +30,8 @@ const CONTENT = {
       "Une communauté vivante, portée par la grâce, envoyée pour éclairer chaque nation, chaque langue, chaque cœur.",
     missionLabel: "Notre mission",
     visionLabel: "Notre vision",
-    visionTagline: "Nous travaillons pour des gens, selon le Sermon sur la montagne du Seigneur Jésus.",
-    visionBody: "Matthieu 5 à 7",
+    visionTagline: "Réveiller les cœurs, libérer la grâce, illuminer le monde et régner.",
+    visionBody: "Être un épicentre de réveil spirituel, une ambassade du ciel où chaque personne, quelle que soit son histoire, rencontre la grâce transformative de Dieu, découvre son identité en Christ et est équipée pour rayonner la lumière du royaume dans sa sphère d'influence.",
     missionBody:
       "Nous existons pour glorifier Dieu et étendre son royaume, en adorant avec ferveur, en cultivant une communauté fraternelle authentique, en faisant des disciples matures et engagés, en servant avec amour les pauvres, les brisés et les marginalisés de notre communauté, en œuvrant pour la justice, la réconciliation et la dignité humaine, et en proclamant l'Évangile de la grâce avec puissance — jusqu'à ce que le grand réveil transforme chaque cœur, chaque famille et chaque nation.",
     verseRef: "Luc 4:18",
@@ -1339,8 +1339,8 @@ const CONTENT = {
       "A living community, carried by grace, sent to light up every nation, every language, every heart.",
     missionLabel: "Our mission",
     visionLabel: "Our vision",
-    visionTagline: "We work for people, according to the Sermon on the Mount of the Lord Jesus.",
-    visionBody: "Matthew 5–7",
+    visionTagline: "Awaken hearts, release grace, illuminate the world, and reign.",
+    visionBody: "To be an epicenter of spiritual awakening, an embassy of heaven where every person, whatever their story, encounters the transforming grace of God, discovers their identity in Christ, and is equipped to radiate the light of the kingdom in their sphere of influence.",
     missionBody:
       "We exist to glorify God and extend his kingdom — worshiping with fervor, cultivating authentic fellowship, making mature and committed disciples, lovingly serving the poor, the broken, and the marginalized in our community, working for justice, reconciliation, and human dignity, and proclaiming the Gospel of grace with power — until the great awakening transforms every heart, every family, and every nation.",
     verseRef: "Luke 4:18",
@@ -1786,8 +1786,8 @@ const CONTENT = {
       "Yon kominote vivan, gras pote l, voye pou klere chak nasyon, chak lang, chak kè.",
     missionLabel: "Misyon nou",
     visionLabel: "Vizyon nou",
-    visionTagline: "Nou travay pou moun, selon Sèmon sou mòn nan Granmèt Jézi.",
-    visionBody: "Matye 5 rive 7",
+    visionTagline: "Reveye kè yo, libere gras la, klere mond lan epi renye.",
+    visionBody: "Vin yon sant kote reveye espirityèl la fèt, yon anbasad syèl la kote chak moun, kèlkeswa istwa yo, rankontre gras Bondye ki transfòme a, dekouvri idantite yo an Kris, e yo ekipe pou yo klere limyè wayòm nan nan sfè enfliyans yo.",
     missionBody:
       "Nou egziste pou nou glorifye Bondye e elaji wayòm li an — nan adore avèk fèvè, nan kiltive yon vrè fratènite, nan fè disip ki mati e ki angaje, nan sèvi ak lanmou pòv yo, moun ki brize yo, ak moun ki mete sou kote nan kominote nou an, nan travay pou jistis, rekonsilyasyon, ak diyite imen, ak nan anonse Levanjil gras la avèk pouvwa — jiskaske gran reveye a transfòme chak kè, chak fanmi, ak chak nasyon.",
     verseRef: "Lik 4:18",
