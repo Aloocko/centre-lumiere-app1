@@ -2239,11 +2239,11 @@ const NEWS_LABELS = {
 };
 const NEWS = [
   {
-    date: "2026-10-10",
-    link: "",
-    fr: { title: "L'application Centre Lumière arrive sur Google Play", text: "Notre application est en cours d'examen par Google. Dès sa publication, vous pourrez la télécharger sur votre téléphone Android." },
-    en: { title: "The Centre Lumière app is coming to Google Play", text: "Our app is being reviewed by Google. Once published, you will be able to download it on your Android phone." },
-    ht: { title: "Aplikasyon Centre Lumière ap rive sou Google Play", text: "Google ap egzamine aplikasyon nou an. Le l piblye, w ap ka telechaje l sou telefòn Android ou." },
+    date: "2026-10-20",
+    link: "https://play.google.com/store/apps/details?id=org.centrelumiere.app",
+    fr: { title: "L'application Centre Lumière est disponible sur Google Play", text: "C'est fait ! Téléchargez gratuitement l'application sur votre téléphone Android : radio, télévision, direct, Bible, dévotions, prière et plus encore. La lumière se lève encore." },
+    en: { title: "The Centre Lumière app is now available on Google Play", text: "It's here! Download the app for free on your Android phone: radio, television, live, Bible, devotions, prayer and more. The light is still rising." },
+    ht: { title: "Aplikasyon Centre Lumière disponib sou Google Play", text: "Li fèt! Telechaje aplikasyon an gratis sou telefòn Android ou: radyo, televizyon, dirèk, Bib, devosyon, lapriyè ak plis ankò. Limyè a ap leve ankò." },
   },
   {
     date: "2026-10-10",
