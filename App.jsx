@@ -1062,7 +1062,8 @@ const CONTENT = {
     events: [
       { title: "Culte du dimanche", date: "Chaque dimanche, 10h00", location: "Centre Lumière du Grand Réveil" },
       { title: "Étude biblique", date: "Chaque mercredi, 19h00", location: "Centre Lumière du Grand Réveil" },
-      { title: "Veillée de prière", date: "Chaque vendredi, 19h00", location: "En ligne et sur place" },
+      { title: "Veillée de prière", date: "Vendredi 23 octobre, 23h00 – 00h30", location: "En ligne et sur place" },
+      { title: "Veillée de prière", date: "Vendredi 30 octobre, 20h30 – 00h30", location: "En ligne et sur place" },
     ],
     prayerTitle: "Demande de prière",
     prayerSubtitle: "Partagez ce qui pèse sur votre cœur — notre équipe prie pour vous.",
@@ -1526,7 +1527,8 @@ const CONTENT = {
     events: [
       { title: "Sunday Service", date: "Every Sunday, 10:00 AM", location: "Centre Lumière du Grand Réveil" },
       { title: "Bible Study", date: "Every Wednesday, 7:00 PM", location: "Centre Lumière du Grand Réveil" },
-      { title: "Prayer Vigil", date: "Every Friday, 7:00 PM", location: "Online and in person" },
+      { title: "Prayer Vigil", date: "Friday, October 23, 11:00 PM – 12:30 AM", location: "Online and in person" },
+      { title: "Prayer Vigil", date: "Friday, October 30, 8:30 PM – 12:30 AM", location: "Online and in person" },
     ],
     prayerTitle: "Prayer request",
     prayerSubtitle: "Share what's on your heart — our team prays for you.",
@@ -1973,7 +1975,8 @@ const CONTENT = {
     events: [
       { title: "Sèvis Dimanch", date: "Chak dimanch, 10h00", location: "Centre Lumière du Grand Réveil" },
       { title: "Etid Biblik", date: "Chak mèkredi, 19h00", location: "Centre Lumière du Grand Réveil" },
-      { title: "Veyè Priyè", date: "Chak vandredi, 19h00", location: "Anliy ak sou plas" },
+      { title: "Veyè Priyè", date: "Vandredi 23 oktòb, 23h00 – 00h30", location: "Anliy ak sou plas" },
+      { title: "Veyè Priyè", date: "Vandredi 30 oktòb, 20h30 – 00h30", location: "Anliy ak sou plas" },
     ],
     prayerTitle: "Demann priyè",
     prayerSubtitle: "Pataje sa k sou kè w — ekip nou an ap priye pou ou.",
