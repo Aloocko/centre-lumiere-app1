@@ -52,13 +52,14 @@
       "inLanguage": ["fr", "en", "ht"]
     }
     </script>
-    <!-- Notifications push OneSignal — remplacez VOTRE_APP_ID par celui donné par OneSignal -->
+    <!-- Notifications push OneSignal -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
       window.OneSignalDeferred = window.OneSignalDeferred || [];
       OneSignalDeferred.push(async function (OneSignal) {
         await OneSignal.init({
-          appId: "VOTRE_APP_ID",
+          appId: "b86bc72d-558b-4259-8537-3b49f1bb6cea",
+          safari_web_id: "web.onesignal.auto.32866db8-e87d-48d6-8bf4-a7b54cca5ee4",
         });
         // Affiche réellement la demande de permission après quelques secondes
         OneSignal.Slidedown.promptPush();
