@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.centrelumiere.app",
+      "sha256_cert_fingerprints": [
+        "21:7F:B9:11:B6:05:53:A5:48:E5:C4:B8:71:A8:00:6B:74:35:EA:BA:02:41:DE:CB:BD:49:31:42:52:D1:34:1F"
+      ]
+    }
+  }
+]
