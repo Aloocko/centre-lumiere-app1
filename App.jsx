@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, ChevronLeft, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
 
 const FONTS = ``;
 
@@ -2393,6 +2393,7 @@ export default function App() {
   const navKey = `${tab}|${mediaView}|${moreView ?? ""}`;
   const navKeyRef = useRef(navKey);
   const skipNextPush = useRef(false);
+  const navDepth = useRef(0);
   useEffect(() => {
     try {
       window.history.replaceState({ nav: navKey, tab, mediaView, moreView }, "");
@@ -2403,6 +2404,7 @@ export default function App() {
       const st = ev.state;
       if (!st || !st.nav) return;
       if (st.nav !== navKeyRef.current) skipNextPush.current = true;
+      navDepth.current = Math.max(0, navDepth.current - 1);
       setTab(st.tab);
       setMediaView(st.mediaView);
       setMoreView(st.moreView);
@@ -2420,11 +2422,22 @@ export default function App() {
     try {
       if (!window.history.state || window.history.state.nav !== navKey) {
         window.history.pushState({ nav: navKey, tab, mediaView, moreView }, "");
+        navDepth.current += 1;
       }
     } catch {
       // historique indisponible — rien à faire
     }
   }, [navKey]);
+  const showBack = tab !== "home" || moreView !== null;
+  const goBack = () => {
+    if (navDepth.current > 0) {
+      window.history.back();
+    } else if (moreView !== null) {
+      setMoreView(null);
+    } else {
+      setTab("home");
+    }
+  };
   const [loaded, setLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [liveSource, setLiveSource] = useState("youtube");
@@ -2786,11 +2799,22 @@ export default function App() {
             zIndex: 2,
           }}
         >
-          <div>
-            <div className="display" style={{ fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
-              {t.tagline}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+            {showBack && (
+              <button
+                onClick={goBack}
+                aria-label={lang === "en" ? "Back" : lang === "ht" ? "Retounen" : "Retour"}
+                style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", background: "rgba(244,185,66,0.14)", border: "1px solid rgba(244,185,66,0.4)", color: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
+              >
+                <ChevronLeft size={22} />
+              </button>
+            )}
+            <div>
+              <div className="display" style={{ fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
+                {t.tagline}
+              </div>
+              <div style={{ fontSize: 11, color: COLORS.mist, marginTop: 1 }}>{t.subtagline}</div>
             </div>
-            <div style={{ fontSize: 11, color: COLORS.mist, marginTop: 1 }}>{t.subtagline}</div>
           </div>
           <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.06)", padding: 3, borderRadius: 999 }}>
             {Object.keys(CONTENT).map((code) => (
