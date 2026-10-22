@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
 
 const FONTS = ``;
 
@@ -8,6 +8,7 @@ const COLORS = {
   ink: "#2D2A4A",
   dawn: "#F4B942",
   ember: "#BC4614",
+  emberText: "#E8622C", // braise plus clair pour le texte sur fond sombre (lisibilité)
   light: "#FDFBF5",
   mist: "#C9C5D6",
 };
@@ -2231,6 +2232,45 @@ const PILLAR_ICONS = {
 
 const LANG_LABELS = { fr: "FR", en: "EN", ht: "HT" };
 
+// Prochaines rencontres (heure de Montréal). Mettre à jour cette liste pour chaque nouvel événement.
+const UPCOMING = [
+  { start: "2026-10-23T23:00:00-04:00", end: "2026-10-24T00:30:00-04:00",
+    fr: "Veillée de prière", en: "Prayer vigil", ht: "Veyè priyè" },
+  { start: "2026-10-30T20:30:00-04:00", end: "2026-10-31T00:30:00-04:00",
+    fr: "Veillée de prière", en: "Prayer vigil", ht: "Veyè priyè" },
+];
+const SUNDAY = { fr: "Culte du dimanche", en: "Sunday service", ht: "Sèvis dimanch" };
+const HOME_LIVE_LABELS = {
+  fr: { live: "EN COURS", next: "PROCHAINEMENT", watch: "Regarder", radio: "Écouter la radio", in: "Dans", d: "j", h: "h", m: "min", sunday: "Dimanche, 8 h 30 – 11 h 45", votd: "Verset du jour", read: "Lire la dévotion", share: "Partager" },
+  en: { live: "HAPPENING NOW", next: "COMING UP", watch: "Watch", radio: "Listen to the radio", in: "In", d: "d", h: "h", m: "min", sunday: "Sunday, 8:30 – 11:45 AM", votd: "Verse of the day", read: "Read the devotion", share: "Share" },
+  ht: { live: "AN DIRÈK", next: "ANKÒ ASYEZ", watch: "Gade", radio: "Koute radyo a", in: "Nan", d: "j", h: "è", m: "min", sunday: "Dimanch, 8h30 – 11h45", votd: "Vèsè jou a", read: "Li devosyon an", share: "Pataje" },
+};
+// Heure de Montréal, indépendamment du fuseau de l'appareil
+function montrealNow(now) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+  }).formatToParts(now);
+  const get = (type) => parts.find((p) => p.type === type)?.value;
+  return { weekday: get("weekday"), minutes: Number(get("hour")) * 60 + Number(get("minute")) };
+}
+// Retourne { live: bool, title, startMs, sunday: bool } pour la carte d'accueil
+function homeSchedule(now, lang) {
+  const t = now.getTime();
+  const mt = montrealNow(now);
+  if (mt.weekday === "Sun" && mt.minutes >= 8 * 60 + 30 && mt.minutes < 11 * 60 + 45) {
+    return { live: true, title: SUNDAY[lang], sunday: true };
+  }
+  const running = UPCOMING.find((e) => t >= Date.parse(e.start) && t < Date.parse(e.end));
+  if (running) return { live: true, title: running[lang] };
+  const next = UPCOMING.filter((e) => Date.parse(e.start) > t).sort((a, b) => Date.parse(a.start) - Date.parse(b.start))[0];
+  const daysToSunday = (7 - ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(mt.weekday)) % 7;
+  // Si un événement ponctuel arrive avant le prochain dimanche (moins de 7 jours), il passe en premier
+  if (next && (Date.parse(next.start) - t) / 86400000 <= daysToSunday + 0.5) {
+    return { live: false, title: next[lang], startMs: Date.parse(next.start) };
+  }
+  return { live: false, title: SUNDAY[lang], sunday: true };
+}
+
 // Actualités de l'église : ajoutez une entrée EN HAUT de la liste pour chaque nouvelle publication.
 const NEWS_LABELS = {
   fr: { title: "Actualités", intro: "Les nouvelles du Centre Lumière du Grand Réveil.", empty: "Aucune actualité pour le moment.", more: "En savoir plus" },
@@ -2338,6 +2378,13 @@ function Dawn({ compact }) {
 export default function App() {
   const [lang, setLang] = useState("fr");
   const [tab, setTab] = useState("home");
+  const [missionOpen, setMissionOpen] = useState(false);
+  const [visionOpen, setVisionOpen] = useState(false);
+  const [nowTick, setNowTick] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNowTick(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
   const [mediaView, setMediaView] = useState("live"); // live | tv | radio
   const [tvReplay, setTvReplay] = useState(false);
   const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
@@ -2821,6 +2868,85 @@ export default function App() {
               </div>
 
               <div style={{ padding: "0 20px" }}>
+                {(() => {
+                  const L = HOME_LIVE_LABELS[lang];
+                  const sch = homeSchedule(nowTick, lang);
+                  let when = L.sunday;
+                  if (!sch.live && sch.startMs) {
+                    const diff = Math.max(0, sch.startMs - nowTick.getTime());
+                    const d = Math.floor(diff / 86400000);
+                    const h = Math.floor((diff % 86400000) / 3600000);
+                    const m = Math.floor((diff % 3600000) / 60000);
+                    when = `${L.in} ${d > 0 ? d + " " + L.d + " " : ""}${h} ${L.h} ${m} ${L.m}`;
+                  }
+                  return (
+                    <div
+                      style={{
+                        marginBottom: 12,
+                        background: `linear-gradient(150deg, ${COLORS.night} 0%, #2A2050 60%, #3A2250 100%)`,
+                        borderRadius: 18,
+                        padding: 20,
+                        border: `1px solid ${sch.live ? "rgba(232,70,44,0.55)" : "rgba(244,185,66,0.3)"}`,
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, color: sch.live ? "#FF6B4A" : COLORS.dawn }}>
+                        <span style={{ width: 8, height: 8, borderRadius: 4, background: sch.live ? "#FF3B30" : COLORS.dawn, boxShadow: sch.live ? "0 0 10px #FF3B30" : "none" }} />
+                        {sch.live ? L.live : L.next}
+                      </div>
+                      <div className="display" style={{ fontSize: 21, fontWeight: 600, marginTop: 8, color: COLORS.light, lineHeight: 1.25 }}>{sch.title}</div>
+                      <div style={{ fontSize: 13.5, color: COLORS.mist, marginTop: 4 }}>{sch.live ? "" : when}</div>
+                      <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+                        <button
+                          onClick={() => { setTab("media"); setMediaView("live"); }}
+                          style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: COLORS.ember, color: COLORS.light, border: "none", borderRadius: 12, padding: "12px 10px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                        >
+                          <Play size={16} /> {L.watch}
+                        </button>
+                        <button
+                          onClick={() => { setTab("media"); setMediaView("radio"); }}
+                          style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "rgba(244,185,66,0.12)", color: COLORS.dawn, border: "1px solid rgba(244,185,66,0.4)", borderRadius: 12, padding: "12px 10px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                        >
+                          <Radio size={16} /> {L.radio}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                <div
+                  style={{
+                    marginBottom: 12,
+                    background: `linear-gradient(155deg, #5A2A1A 0%, ${COLORS.ember} 120%)`,
+                    borderRadius: 18,
+                    padding: 22,
+                    border: "1px solid rgba(244,185,66,0.35)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+                  }}
+                >
+                  <div style={{ fontSize: 11, letterSpacing: 1.4, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>
+                    {HOME_LIVE_LABELS[lang].votd}
+                  </div>
+                  <p className="display" style={{ fontSize: 19, lineHeight: 1.45, marginTop: 10, color: COLORS.light, fontStyle: "italic" }}>
+                    « {todayDevotion.verse} »
+                  </p>
+                  <div style={{ fontSize: 13, color: COLORS.dawn, fontWeight: 700, marginTop: 8 }}>— {todayDevotion.ref}</div>
+                  <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+                    <button
+                      onClick={() => setTab("devotion")}
+                      style={{ flex: 1, background: COLORS.light, color: COLORS.night, border: "none", borderRadius: 12, padding: "11px 10px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
+                    >
+                      {HOME_LIVE_LABELS[lang].read}
+                    </button>
+                    <button
+                      onClick={shareDevotion}
+                      style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, background: "rgba(255,255,255,0.12)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.3)", borderRadius: 12, padding: "11px 16px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
+                    >
+                      <Share2 size={15} /> {HOME_LIVE_LABELS[lang].share}
+                    </button>
+                  </div>
+                </div>
+
                 <div
                   style={{
                     background: COLORS.ink,
@@ -2832,13 +2958,35 @@ export default function App() {
                   <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600 }}>
                     {t.missionLabel}
                   </div>
-                  <p style={{ fontSize: 14.5, lineHeight: 1.6, marginTop: 10 }}>{t.missionBody}</p>
-                  <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                    <p className="display" style={{ fontSize: 15, fontStyle: "italic", lineHeight: 1.5, color: COLORS.light }}>
-                      "{t.verseText}"
-                    </p>
-                    <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 6 }}>— {t.verseRef}</div>
-                  </div>
+                  <p
+                    style={{
+                      fontSize: 14.5,
+                      lineHeight: 1.6,
+                      marginTop: 10,
+                      ...(missionOpen
+                        ? {}
+                        : { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }),
+                    }}
+                  >
+                    {t.missionBody}
+                  </p>
+                  {missionOpen && (
+                    <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                      <p className="display" style={{ fontSize: 15, fontStyle: "italic", lineHeight: 1.5, color: COLORS.light }}>
+                        "{t.verseText}"
+                      </p>
+                      <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 6 }}>— {t.verseRef}</div>
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setMissionOpen((o) => !o)}
+                    aria-expanded={missionOpen}
+                    style={{ marginTop: 10, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 12.5, fontWeight: 700, color: COLORS.dawn }}
+                  >
+                    {missionOpen
+                      ? (lang === "en" ? "Show less ▲" : lang === "ht" ? "Montre mwens ▲" : "Réduire ▲")
+                      : (lang === "en" ? "Read more ▼" : lang === "ht" ? "Li plis ▼" : "Lire la suite ▼")}
+                  </button>
                 </div>
 
                 <div
@@ -2850,13 +2998,24 @@ export default function App() {
                     border: `1px solid rgba(232,98,44,0.22)`,
                   }}
                 >
-                  <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.ember, fontWeight: 600 }}>
+                  <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.emberText, fontWeight: 600 }}>
                     {t.visionLabel}
                   </div>
                   <p className="display" style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, marginTop: 10, color: COLORS.light }}>
                     « {t.visionTagline} »
                   </p>
-                  <p style={{ fontSize: 13.5, lineHeight: 1.6, marginTop: 10, color: COLORS.mist }}>{t.visionBody}</p>
+                  {visionOpen && (
+                    <p style={{ fontSize: 13.5, lineHeight: 1.6, marginTop: 10, color: COLORS.mist }}>{t.visionBody}</p>
+                  )}
+                  <button
+                    onClick={() => setVisionOpen((o) => !o)}
+                    aria-expanded={visionOpen}
+                    style={{ marginTop: 10, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 12.5, fontWeight: 700, color: COLORS.emberText }}
+                  >
+                    {visionOpen
+                      ? (lang === "en" ? "Show less ▲" : lang === "ht" ? "Montre mwens ▲" : "Réduire ▲")
+                      : (lang === "en" ? "Read more ▼" : lang === "ht" ? "Li plis ▼" : "Lire la suite ▼")}
+                  </button>
                 </div>
 
                 <button
@@ -2975,7 +3134,7 @@ export default function App() {
                   padding: 16,
                 }}
               >
-                <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ember }}>{t.devotionPrayerTitle}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.emberText }}>{t.devotionPrayerTitle}</div>
                 <p style={{ fontSize: 14, lineHeight: 1.6, marginTop: 8, color: COLORS.light }}>{todayDevotion.prayer}</p>
               </div>
 
@@ -3051,7 +3210,7 @@ export default function App() {
                     flexShrink: 0,
                   }}
                 >
-                  <Video size={18} color={COLORS.ember} />
+                  <Video size={18} color={COLORS.emberText} />
                 </div>
                 <div style={{ fontSize: 13.5, fontWeight: 600 }}>{t.videoLabel}</div>
                 <ChevronRight size={16} style={{ marginLeft: "auto", color: COLORS.mist }} />
@@ -3126,7 +3285,7 @@ export default function App() {
                       gap: 6,
                       background: "rgba(232,98,44,0.16)",
                       border: `1px solid ${COLORS.ember}`,
-                      color: COLORS.ember,
+                      color: COLORS.emberText,
                       fontSize: 11,
                       fontWeight: 700,
                       padding: "5px 10px",
@@ -3302,7 +3461,7 @@ export default function App() {
                         gap: 6,
                         background: "rgba(232,98,44,0.16)",
                         border: `1px solid ${COLORS.ember}`,
-                        color: COLORS.ember,
+                        color: COLORS.emberText,
                         fontSize: 10.5,
                         fontWeight: 700,
                         padding: "4px 10px",
@@ -3524,7 +3683,7 @@ export default function App() {
                   </div>
 
                   {prayerStatus === "error" && (
-                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.prayerErrorBody}</div>
+                    <div style={{ fontSize: 12.5, color: COLORS.emberText }}>{t.prayerErrorBody}</div>
                   )}
 
                   <button
@@ -3931,7 +4090,7 @@ export default function App() {
                   </div>
 
                   {baptismStatus === "error" && (
-                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.baptismErrorBody}</div>
+                    <div style={{ fontSize: 12.5, color: COLORS.emberText }}>{t.baptismErrorBody}</div>
                   )}
 
                   <button
@@ -4061,7 +4220,7 @@ export default function App() {
                 </div>
                 {[t.donateImpact1, t.donateImpact2, t.donateImpact3].map((line, i) => (
                   <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: i < 2 ? 10 : 0 }}>
-                    <Heart size={14} color={COLORS.ember} style={{ marginTop: 2, flexShrink: 0 }} />
+                    <Heart size={14} color={COLORS.emberText} style={{ marginTop: 2, flexShrink: 0 }} />
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{line}</span>
                   </div>
                 ))}
@@ -4202,7 +4361,7 @@ export default function App() {
                     gap: 6,
                     background: "rgba(232,98,44,0.16)",
                     border: `1px solid ${COLORS.ember}`,
-                    color: COLORS.ember,
+                    color: COLORS.emberText,
                     fontSize: 11,
                     fontWeight: 700,
                     padding: "5px 10px",
@@ -4572,7 +4731,7 @@ export default function App() {
                   </label>
 
                   {memberStatus === "error" && (
-                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.memberErrorBody}</div>
+                    <div style={{ fontSize: 12.5, color: COLORS.emberText }}>{t.memberErrorBody}</div>
                   )}
 
                   <button
@@ -4691,7 +4850,7 @@ export default function App() {
               )}
 
               {bibleStatus === "error" && (
-                <div style={{ textAlign: "center", marginTop: 30, color: COLORS.ember, fontSize: 13.5 }}>{t.bibleErrorBody}</div>
+                <div style={{ textAlign: "center", marginTop: 30, color: COLORS.emberText, fontSize: 13.5 }}>{t.bibleErrorBody}</div>
               )}
 
               {bibleResult && bibleStatus === "idle" && (
@@ -4782,7 +4941,7 @@ export default function App() {
                       padding: 20,
                     }}
                   >
-                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.ember, fontWeight: 700 }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.1, color: COLORS.emberText, fontWeight: 700 }}>
                       {t.salvationPrayerTitle}
                     </div>
                     <p className="display" style={{ fontSize: 16, lineHeight: 1.7, marginTop: 12, color: COLORS.light, fontStyle: "italic" }}>
@@ -4864,7 +5023,7 @@ export default function App() {
                       />
                     </div>
                     {salvationStatus === "error" && (
-                      <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.testimonyErrorBody}</div>
+                      <div style={{ fontSize: 12.5, color: COLORS.emberText }}>{t.testimonyErrorBody}</div>
                     )}
                     <button
                       type="submit"
@@ -5094,7 +5253,7 @@ export default function App() {
                   </div>
 
                   {testimonyStatus === "error" && (
-                    <div style={{ fontSize: 12.5, color: COLORS.ember }}>{t.testimonyErrorBody}</div>
+                    <div style={{ fontSize: 12.5, color: COLORS.emberText }}>{t.testimonyErrorBody}</div>
                   )}
 
                   <button
@@ -5191,7 +5350,7 @@ export default function App() {
                         borderTop: "1px solid rgba(255,255,255,0.08)",
                       }}
                     >
-                      <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.ember, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.emberText, textTransform: "uppercase", letterSpacing: 0.6 }}>
                         {t.heroesLessonLabel}
                       </div>
                       <p style={{ fontSize: 13, color: COLORS.light, marginTop: 6, lineHeight: 1.55 }}>{h.lesson}</p>
@@ -5278,7 +5437,7 @@ export default function App() {
                             style={{
                               fontSize: 11,
                               fontWeight: 700,
-                              color: COLORS.ember,
+                              color: COLORS.emberText,
                               background: "rgba(232,98,44,0.14)",
                               padding: "3px 9px",
                               borderRadius: 999,
