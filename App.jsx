@@ -2388,6 +2388,43 @@ export default function App() {
   const [mediaView, setMediaView] = useState("live"); // live | tv | radio
   const [tvReplay, setTvReplay] = useState(false);
   const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
+
+  // --- Bouton « retour » (Android / navigateur) : revient à l'écran précédent au lieu de quitter l'app ---
+  const navKey = `${tab}|${mediaView}|${moreView ?? ""}`;
+  const navKeyRef = useRef(navKey);
+  const skipNextPush = useRef(false);
+  useEffect(() => {
+    try {
+      window.history.replaceState({ nav: navKey, tab, mediaView, moreView }, "");
+    } catch {
+      // historique indisponible — le bouton retour gardera son comportement par défaut
+    }
+    const onPop = (ev) => {
+      const st = ev.state;
+      if (!st || !st.nav) return;
+      if (st.nav !== navKeyRef.current) skipNextPush.current = true;
+      setTab(st.tab);
+      setMediaView(st.mediaView);
+      setMoreView(st.moreView);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    navKeyRef.current = navKey;
+    if (skipNextPush.current) {
+      skipNextPush.current = false;
+      return;
+    }
+    try {
+      if (!window.history.state || window.history.state.nav !== navKey) {
+        window.history.pushState({ nav: navKey, tab, mediaView, moreView }, "");
+      }
+    } catch {
+      // historique indisponible — rien à faire
+    }
+  }, [navKey]);
   const [loaded, setLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [liveSource, setLiveSource] = useState("youtube");
