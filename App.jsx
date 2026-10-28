@@ -2893,7 +2893,7 @@ export default function App() {
               <button
                 onClick={goBack}
                 aria-label={lang === "en" ? "Back" : lang === "ht" ? "Retounen" : "Retour"}
-                style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", background: "rgba(244,185,66,0.14)", border: "1px solid rgba(244,185,66,0.4)", color: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
+                style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "rgba(244,185,66,0.14)", border: "1px solid rgba(244,185,66,0.4)", color: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
               >
                 <ChevronLeft size={22} />
               </button>
@@ -2916,9 +2916,11 @@ export default function App() {
                 style={{
                   border: "none",
                   cursor: "pointer",
-                  fontSize: 11,
+                  fontSize: 12,
                   fontWeight: 600,
-                  padding: "5px 9px",
+                  minHeight: 32,
+                  minWidth: 36,
+                  padding: "6px 10px",
                   borderRadius: 999,
                   background: lang === code ? COLORS.dawn : "transparent",
                   color: lang === code ? COLORS.night : COLORS.mist,
@@ -3084,13 +3086,13 @@ export default function App() {
                   <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
                     <button
                       onClick={() => setTab("devotion")}
-                      style={{ flex: 1, background: COLORS.light, color: COLORS.night, border: "none", borderRadius: 12, padding: "11px 10px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
+                      style={{ flex: 1, minHeight: 44, background: COLORS.light, color: COLORS.night, border: "none", borderRadius: 12, padding: "11px 10px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
                     >
                       {HOME_LIVE_LABELS[lang].read}
                     </button>
                     <button
                       onClick={shareDevotion}
-                      style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, background: "rgba(255,255,255,0.12)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.3)", borderRadius: 12, padding: "11px 16px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
+                      style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 44, background: "rgba(255,255,255,0.12)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.3)", borderRadius: 12, padding: "11px 16px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
                     >
                       <Share2 size={15} /> {HOME_LIVE_LABELS[lang].share}
                     </button>
@@ -3108,12 +3110,12 @@ export default function App() {
                         <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 11, letterSpacing: 1.3, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>
                           <Youtube size={15} color={COLORS.dawn} /> YouTube
                         </div>
-                        <a href={MEDIA.videoUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: COLORS.dawn, textDecoration: "none" }}>{Y.seeAll} ›</a>
+                        <a href={MEDIA.videoUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 700, color: COLORS.dawn, textDecoration: "none", padding: "10px 0 10px 12px", margin: "-10px 0" }}>{Y.seeAll} ›</a>
                       </div>
                       <div role="tablist" style={{ display: "flex", gap: 6, padding: "10px 14px 0" }}>
                         {[["videos", Y.videos, ytFeed.videos.length], ["shorts", Y.shorts, ytFeed.shorts.length]].filter((x) => x[2] > 0).map(([k, label]) => (
                           <button key={k} role="tab" aria-selected={view === k} onClick={() => setYtTab(k)}
-                            style={{ background: view === k ? COLORS.dawn : "rgba(255,255,255,0.06)", color: view === k ? COLORS.night : COLORS.mist, border: "none", borderRadius: 999, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                            style={{ background: view === k ? COLORS.dawn : "rgba(255,255,255,0.06)", color: view === k ? COLORS.night : COLORS.mist, border: "none", borderRadius: 999, minHeight: 36, padding: "8px 15px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
                             {label}
                           </button>
                         ))}
@@ -3133,8 +3135,8 @@ export default function App() {
                                 <Play size={12} color={COLORS.night} fill={COLORS.night} />
                               </span>
                             </div>
-                            <div style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.3, marginTop: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</div>
-                            <div style={{ fontSize: 10.5, color: COLORS.mist, marginTop: 2 }}>{Y.ago(daysAgo(v.published))}</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.3, marginTop: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</div>
+                            <div style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 2 }}>{Y.ago(daysAgo(v.published))}</div>
                           </button>
                         ))}
                       </div>
@@ -3176,7 +3178,7 @@ export default function App() {
                   <button
                     onClick={() => setMissionOpen((o) => !o)}
                     aria-expanded={missionOpen}
-                    style={{ marginTop: 10, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 12.5, fontWeight: 700, color: COLORS.dawn }}
+                    style={{ marginTop: 2, background: "none", border: "none", padding: "12px 0 4px", cursor: "pointer", fontSize: 13, fontWeight: 700, color: COLORS.dawn }}
                   >
                     {missionOpen
                       ? (lang === "en" ? "Show less ▲" : lang === "ht" ? "Montre mwens ▲" : "Réduire ▲")
@@ -3205,7 +3207,7 @@ export default function App() {
                   <button
                     onClick={() => setVisionOpen((o) => !o)}
                     aria-expanded={visionOpen}
-                    style={{ marginTop: 10, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 12.5, fontWeight: 700, color: COLORS.emberText }}
+                    style={{ marginTop: 2, background: "none", border: "none", padding: "12px 0 4px", cursor: "pointer", fontSize: 13, fontWeight: 700, color: COLORS.emberText }}
                   >
                     {visionOpen
                       ? (lang === "en" ? "Show less ▲" : lang === "ht" ? "Montre mwens ▲" : "Réduire ▲")
@@ -3323,7 +3325,7 @@ export default function App() {
                             {on ? <Pause size={18} color={COLORS.night} /> : <Play size={18} color={COLORS.night} fill={COLORS.night} />}
                           </span>
                           <span style={{ minWidth: 0 }}>
-                            <span style={{ display: "block", fontSize: 10.5, letterSpacing: 1.2, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{ep.series} · {P.ep} {ep.number}</span>
+                            <span style={{ display: "block", fontSize: 11, letterSpacing: 1.2, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{ep.series} · {P.ep} {ep.number}</span>
                             <span style={{ display: "block", fontSize: 14, fontWeight: 700, marginTop: 3 }}>{ep.title}</span>
                             {ep.duration && <span style={{ display: "block", fontSize: 11.5, color: COLORS.mist, marginTop: 2 }}>{ep.duration}</span>}
                           </span>
@@ -3340,7 +3342,7 @@ export default function App() {
                     <div key={u.number} style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, marginTop: 12, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
                       <span className="display" style={{ flexShrink: 0, width: 32, height: 32, borderRadius: 16, border: "1px solid rgba(244,185,66,0.4)", color: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 700 }}>{u.number}</span>
                       <span style={{ flex: 1, fontSize: 14, fontWeight: 600, color: COLORS.light }}>{u.title[lang]}</span>
-                      <span style={{ flexShrink: 0, fontSize: 10.5, fontWeight: 700, letterSpacing: 0.8, color: COLORS.night, background: COLORS.dawn, borderRadius: 999, padding: "4px 9px", textTransform: "uppercase" }}>{P.soon}</span>
+                      <span style={{ flexShrink: 0, fontSize: 11, fontWeight: 700, letterSpacing: 0.8, color: COLORS.night, background: COLORS.dawn, borderRadius: 999, padding: "4px 10px", textTransform: "uppercase" }}>{P.soon}</span>
                     </div>
                   ))}
                 </div>
@@ -3689,8 +3691,9 @@ export default function App() {
                     style={{
                       display: "block",
                       textAlign: "center",
-                      marginTop: 14,
-                      fontSize: 12.5,
+                      marginTop: 4,
+                      padding: "12px 0",
+                      fontSize: 13,
                       color: COLORS.mist,
                       textDecoration: "underline",
                     }}
@@ -5906,7 +5909,7 @@ export default function App() {
                 className="tab-btn"
                 style={{
                   flex: 1,
-                  minHeight: 44,
+                  minHeight: 48,
                   background: "none",
                   border: "none",
                   display: "flex",
@@ -5920,7 +5923,7 @@ export default function App() {
                 }}
               >
                 <Icon size={18} />
-                <span style={{ fontSize: 9, fontWeight: 600, whiteSpace: "nowrap" }}>{label}</span>
+                <span style={{ fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>{label}</span>
               </button>
             ))}
           </nav>
