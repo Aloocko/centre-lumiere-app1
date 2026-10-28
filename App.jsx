@@ -2396,6 +2396,7 @@ export default function App() {
   const [ytFeed, setYtFeed] = useState({ videos: [], shorts: [] });
   const [ytPlayer, setYtPlayer] = useState(null); // { id, title, isShort, url }
   const ytOpenRef = useRef(false);
+  const [ytTab, setYtTab] = useState("videos"); // videos | shorts
   useEffect(() => {
     let alive = true;
     fetch("/api/videos")
@@ -3057,64 +3058,44 @@ export default function App() {
                   </div>
                 </div>
 
-                {ytFeed.videos.length > 0 && (() => {
+                {(ytFeed.videos.length > 0 || ytFeed.shorts.length > 0) && (() => {
                   const Y = YT_LABELS[lang];
                   const daysAgo = (iso) => Math.floor((nowTick.getTime() - new Date(iso).getTime()) / 86400000);
+                  const view = ytTab === "shorts" && ytFeed.shorts.length ? "shorts" : ytFeed.videos.length ? ytTab : "shorts";
+                  const list = view === "shorts" ? ytFeed.shorts : ytFeed.videos;
                   return (
-                    <section aria-label={Y.videos} style={{ margin: "22px -20px 6px" }}>
-                      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", padding: "0 20px", gap: 12 }}>
-                        <div>
-                          <div className="display" style={{ fontSize: 22, fontWeight: 700, color: COLORS.light }}>{Y.videos}</div>
-                          <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{Y.videosSub}</div>
+                    <section aria-label="YouTube" style={{ marginBottom: 12, background: COLORS.ink, borderRadius: 16, border: "1px solid rgba(244,185,66,0.18)", padding: "14px 0 14px" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 14px", gap: 8 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 11, letterSpacing: 1.3, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>
+                          <Youtube size={15} color={COLORS.dawn} /> YouTube
                         </div>
-                        <a href={MEDIA.videoUrl} target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 700, color: COLORS.dawn, border: "1px solid rgba(244,185,66,0.4)", borderRadius: 999, padding: "7px 14px", textDecoration: "none" }}>{Y.seeAll}</a>
+                        <a href={MEDIA.videoUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: COLORS.dawn, textDecoration: "none" }}>{Y.seeAll} ›</a>
                       </div>
-                      <div className="yt-row" style={{ display: "flex", gap: 12, overflowX: "auto", scrollSnapType: "x mandatory", padding: "14px 20px 4px", WebkitOverflowScrolling: "touch" }}>
-                        {ytFeed.videos.map((v) => (
-                          <button
-                            key={v.id}
-                            onClick={() => setYtPlayer(v)}
-                            aria-label={v.title}
-                            style={{ flex: "0 0 78%", maxWidth: 300, scrollSnapAlign: "start", textAlign: "left", background: COLORS.ink, border: "1px solid rgba(244,185,66,0.2)", borderRadius: 16, padding: 0, overflow: "hidden", cursor: "pointer", color: COLORS.light }}
-                          >
-                            <div style={{ position: "relative", aspectRatio: "16 / 9", background: COLORS.night }}>
-                              <img src={v.thumb} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                              <span style={{ position: "absolute", left: 12, bottom: 12, width: 44, height: 44, borderRadius: 14, background: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 16px rgba(0,0,0,0.35)" }}>
-                                <Play size={20} color={COLORS.night} fill={COLORS.night} />
-                              </span>
-                            </div>
-                            <div style={{ padding: "11px 14px 14px" }}>
-                              <div style={{ fontSize: 10.5, letterSpacing: 1.3, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{Y.ago(daysAgo(v.published))}</div>
-                              <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.3, marginTop: 4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</div>
-                            </div>
+                      <div role="tablist" style={{ display: "flex", gap: 6, padding: "10px 14px 0" }}>
+                        {[["videos", Y.videos, ytFeed.videos.length], ["shorts", Y.shorts, ytFeed.shorts.length]].filter((x) => x[2] > 0).map(([k, label]) => (
+                          <button key={k} role="tab" aria-selected={view === k} onClick={() => setYtTab(k)}
+                            style={{ background: view === k ? COLORS.dawn : "rgba(255,255,255,0.06)", color: view === k ? COLORS.night : COLORS.mist, border: "none", borderRadius: 999, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                            {label}
                           </button>
                         ))}
                       </div>
-                    </section>
-                  );
-                })()}
-
-                {ytFeed.shorts.length > 0 && (() => {
-                  const Y = YT_LABELS[lang];
-                  return (
-                    <section aria-label={Y.shorts} style={{ margin: "16px -20px 14px" }}>
-                      <div style={{ padding: "0 20px" }}>
-                        <div className="display" style={{ fontSize: 22, fontWeight: 700, color: COLORS.light }}>{Y.shorts}</div>
-                        <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{Y.shortsSub}</div>
-                      </div>
-                      <div className="yt-row" style={{ display: "flex", gap: 10, overflowX: "auto", scrollSnapType: "x mandatory", padding: "14px 20px 4px", WebkitOverflowScrolling: "touch" }}>
-                        {ytFeed.shorts.map((v) => (
-                          <button
-                            key={v.id}
-                            onClick={() => setYtPlayer(v)}
-                            aria-label={v.title}
-                            style={{ flex: "0 0 38%", maxWidth: 150, scrollSnapAlign: "start", position: "relative", aspectRatio: "9 / 16", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(244,185,66,0.25)", padding: 0, cursor: "pointer", background: COLORS.night }}
-                          >
+                      <div className="yt-row" style={{ display: "flex", gap: 10, overflowX: "auto", scrollSnapType: "x mandatory", padding: "12px 14px 2px", WebkitOverflowScrolling: "touch" }}>
+                        {list.map((v) => view === "shorts" ? (
+                          <button key={v.id} onClick={() => setYtPlayer(v)} aria-label={v.title}
+                            style={{ flex: "0 0 26%", maxWidth: 104, scrollSnapAlign: "start", position: "relative", aspectRatio: "9 / 16", borderRadius: 12, overflow: "hidden", border: "1px solid rgba(244,185,66,0.22)", padding: 0, cursor: "pointer", background: COLORS.night }}>
                             <img src={v.thumb} alt="" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-                            <span style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85))" }} />
-                            <span style={{ position: "absolute", left: 8, right: 8, bottom: 8, fontSize: 11.5, fontWeight: 700, lineHeight: 1.25, color: COLORS.light, textAlign: "left", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                              {v.title.replace(/#\S+/g, "").trim()}
-                            </span>
+                          </button>
+                        ) : (
+                          <button key={v.id} onClick={() => setYtPlayer(v)} aria-label={v.title}
+                            style={{ flex: "0 0 46%", maxWidth: 190, scrollSnapAlign: "start", textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", color: COLORS.light }}>
+                            <div style={{ position: "relative", aspectRatio: "16 / 9", borderRadius: 10, overflow: "hidden", background: COLORS.night, border: "1px solid rgba(244,185,66,0.18)" }}>
+                              <img src={v.thumb} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                              <span style={{ position: "absolute", left: 6, bottom: 6, width: 26, height: 26, borderRadius: 8, background: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                <Play size={12} color={COLORS.night} fill={COLORS.night} />
+                              </span>
+                            </div>
+                            <div style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.3, marginTop: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</div>
+                            <div style={{ fontSize: 10.5, color: COLORS.mist, marginTop: 2 }}>{Y.ago(daysAgo(v.published))}</div>
                           </button>
                         ))}
                       </div>
