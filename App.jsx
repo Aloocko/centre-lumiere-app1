@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, ChevronLeft, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink, Mic } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, ChevronLeft, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink, Mic, User } from "lucide-react";
 
 const FONTS = ``;
 
@@ -2255,6 +2255,32 @@ const PODCAST_LABELS = {
   en: { nav: "Podcast", title: "Podcast", subtitle: "Teachings and prayers to listen to anywhere, anytime.", show: "Radio Centre Lumière", showSub: "The podcast", series: "Series 1 · O Holy Spirit", seriesBody: "What do we mean when we sing “O Holy Spirit”? Four episodes to find out.", soon: "Coming soon", episodes: "Episodes", ep: "Episode", meanwhile: "Meanwhile, on YouTube", play: "Listen", pause: "Pause" },
   ht: { nav: "Podcast", title: "Podcast", subtitle: "Ansèyman ak priyè pou w koute nenpòt kote, nenpòt lè.", show: "Radio Centre Lumière", showSub: "Podcast la", series: "Seri 1 · O Sentespri", seriesBody: "Kisa nou vle di lè n ap chante « O Sentespri » ? Kat epizòd pou n dekouvri sa.", soon: "Byento", episodes: "Epizòd", ep: "Epizòd", meanwhile: "Pandan n ap tann, sou YouTube", play: "Koute", pause: "Poz" },
 };
+const MY_LABELS = {
+  fr: { title: "Mon espace", open: "Mon espace", subtitle: "Vos favoris, votre écoute et vos réglages, sur ce téléphone.", streak: "Série de dévotion", days: (n) => `${n} jour${n > 1 ? "s" : ""} de suite`, noStreak: "Lisez la dévotion du jour pour commencer votre série.", resume: "Reprendre l'écoute", resumeAt: (m) => `Arrêté à ${m}`, favs: "Mes favoris", favsEmpty: "Touchez ❤ sur une vidéo ou sur le verset du jour pour le retrouver ici.", verses: "Versets", videos: "Vidéos et Shorts", remove: "Retirer des favoris", add: "Ajouter aux favoris", settings: "Réglages", language: "Langue", notif: "Notifications du matin", notifOn: "Activées", notifOff: "Activer", notifBlocked: "Bloquées dans les réglages du téléphone", note: "Ces informations restent sur ce téléphone." },
+  en: { title: "My space", open: "My space", subtitle: "Your favorites, listening and settings, on this phone.", streak: "Devotion streak", days: (n) => `${n} day${n > 1 ? "s" : ""} in a row`, noStreak: "Read today's devotion to start your streak.", resume: "Resume listening", resumeAt: (m) => `Stopped at ${m}`, favs: "My favorites", favsEmpty: "Tap ❤ on a video or on the verse of the day to find it here.", verses: "Verses", videos: "Videos and Shorts", remove: "Remove from favorites", add: "Add to favorites", settings: "Settings", language: "Language", notif: "Morning notifications", notifOn: "On", notifOff: "Turn on", notifBlocked: "Blocked in phone settings", note: "This information stays on this phone." },
+  ht: { title: "Espas mwen", open: "Espas mwen", subtitle: "Favori w, sa w ap koute ak paramèt ou, sou telefòn sa a.", streak: "Seri devosyon", days: (n) => `${n} jou youn dèyè lòt`, noStreak: "Li devosyon jodi a pou w kòmanse seri w.", resume: "Kontinye koute", resumeAt: (m) => `Kanpe nan ${m}`, favs: "Favori mwen", favsEmpty: "Touche ❤ sou yon videyo oswa sou vèsè jodi a pou w jwenn li isit la.", verses: "Vèsè", videos: "Videyo ak Shorts", remove: "Retire nan favori", add: "Mete nan favori", settings: "Paramèt", language: "Lang", notif: "Notifikasyon maten", notifOn: "Aktive", notifOff: "Aktive yo", notifBlocked: "Bloke nan paramèt telefòn nan", note: "Enfòmasyon sa yo rete sou telefòn sa a." },
+};
+const fmtTime = (sec) => {
+  const s = Math.max(0, Math.floor(sec || 0));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+};
+const lsGet = (k, d) => {
+  try {
+    const v = localStorage.getItem(k);
+    return v ? JSON.parse(v) : d;
+  } catch {
+    return d;
+  }
+};
+const lsSet = (k, v) => {
+  try {
+    if (v === null) localStorage.removeItem(k);
+    else localStorage.setItem(k, JSON.stringify(v));
+  } catch {
+    // stockage indisponible (navigation privée) : on continue sans sauvegarder
+  }
+};
+
 const DEVO_TABS = {
   fr: { nav: "Dévotion", devotion: "Dévotion", prayer: "Prière" },
   en: { nav: "Devotion", devotion: "Devotion", prayer: "Prayer" },
@@ -2519,6 +2545,34 @@ export default function App() {
   const podRef = useRef(null);
   const [podEp, setPodEp] = useState(null);
   const [podPlaying, setPodPlaying] = useState(false);
+  // Mon espace : favoris et reprise d'écoute, gardés sur le téléphone
+  const [favs, setFavs] = useState(() => lsGet("clgr_favs", []));
+  const [podResume, setPodResume] = useState(() => lsGet("clgr_pod_resume", null));
+  const isFav = (type, id) => favs.some((f) => f.type === type && f.id === id);
+  const toggleFav = (item) => {
+    setFavs((cur) => {
+      const next = cur.some((f) => f.type === item.type && f.id === item.id)
+        ? cur.filter((f) => !(f.type === item.type && f.id === item.id))
+        : [{ ...item, ts: Date.now() }, ...cur].slice(0, 100);
+      lsSet("clgr_favs", next);
+      return next;
+    });
+  };
+  const lastSaved = useRef(0);
+  const savePodPos = (final) => {
+    const el = podRef.current;
+    if (!el || !podEp) return;
+    if (final === "ended" || (el.duration && el.currentTime > el.duration - 15)) {
+      lsSet("clgr_pod_resume", null);
+      setPodResume(null);
+      return;
+    }
+    if (!final && Math.abs(el.currentTime - lastSaved.current) < 5) return;
+    lastSaved.current = el.currentTime;
+    const r = { id: podEp.id, t: el.currentTime, title: podEp.title, series: podEp.series, number: podEp.number, audioUrl: podEp.audioUrl };
+    lsSet("clgr_pod_resume", r);
+    setPodResume(r);
+  };
   const playEpisode = (ep) => {
     const el = podRef.current;
     if (!el) return;
@@ -2529,7 +2583,24 @@ export default function App() {
     if (radioRef.current && !radioRef.current.paused) radioRef.current.pause();
     setPodEp(ep);
     el.src = ep.audioUrl;
+    const saved = lsGet("clgr_pod_resume", null);
+    if (saved && saved.id === ep.id && saved.t > 5) {
+      el.addEventListener("loadedmetadata", () => { el.currentTime = saved.t; }, { once: true });
+    }
     el.play().catch(() => {});
+  };
+  // Notifications du matin (OneSignal)
+  const [notifState, setNotifState] = useState(() => (typeof Notification !== "undefined" ? Notification.permission : "unsupported"));
+  const askNotif = () => {
+    try {
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      window.OneSignalDeferred.push(async (OS) => {
+        await OS.Notifications.requestPermission();
+        if (typeof Notification !== "undefined") setNotifState(Notification.permission);
+      });
+    } catch {
+      // OneSignal indisponible
+    }
   };
 
   const submitPrayer = async (e) => {
@@ -2852,6 +2923,8 @@ export default function App() {
         }
         .fade-up { animation: fadeUp .6s ease both; }
         .yt-row { scrollbar-width: none; }
+        /* Petits écrans : quand la flèche retour est affichée, la langue se change depuis « Mon espace » */
+        @media (max-width: 400px) { .hdr-langs-narrow { display: none !important; } }
         .yt-row::-webkit-scrollbar { display: none; }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(10px); }
@@ -2905,7 +2978,15 @@ export default function App() {
               <div style={{ fontSize: 11, color: COLORS.mist, marginTop: 1 }}>{t.subtagline}</div>
             </div>
           </div>
-          <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.06)", padding: 3, borderRadius: 999 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          <button
+            onClick={() => { setTab("more"); setMoreView("myspace"); }}
+            aria-label={MY_LABELS[lang].open}
+            style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", background: moreView === "myspace" && tab === "more" ? COLORS.dawn : "rgba(255,255,255,0.06)", border: "1px solid rgba(244,185,66,0.35)", color: moreView === "myspace" && tab === "more" ? COLORS.night : COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
+          >
+            <User size={18} />
+          </button>
+          <div className={showBack ? "hdr-langs-narrow" : undefined} style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.06)", padding: 3, borderRadius: 999 }}>
             {Object.keys(CONTENT).map((code) => (
               <button
                 key={code}
@@ -2929,6 +3010,7 @@ export default function App() {
                 {LANG_LABELS[code]}
               </button>
             ))}
+          </div>
           </div>
         </div>
 
@@ -3095,6 +3177,14 @@ export default function App() {
                       style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 44, background: "rgba(255,255,255,0.12)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.3)", borderRadius: 12, padding: "11px 16px", fontSize: 13.5, fontWeight: 700, cursor: "pointer" }}
                     >
                       <Share2 size={15} /> {HOME_LIVE_LABELS[lang].share}
+                    </button>
+                    <button
+                      onClick={() => toggleFav({ type: "verse", id: todayDevotion.ref, title: todayDevotion.verse, ref: todayDevotion.ref })}
+                      aria-label={isFav("verse", todayDevotion.ref) ? MY_LABELS[lang].remove : MY_LABELS[lang].add}
+                      aria-pressed={isFav("verse", todayDevotion.ref)}
+                      style={{ flexShrink: 0, width: 44, minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.12)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.3)", borderRadius: 12, padding: 0, cursor: "pointer" }}
+                    >
+                      <Heart size={17} fill={isFav("verse", todayDevotion.ref) ? COLORS.light : "none"} />
                     </button>
                   </div>
                 </div>
@@ -4016,6 +4106,99 @@ export default function App() {
             </div>
           )}
 
+          {tab === "more" && moreView === "myspace" && (() => {
+            const M = MY_LABELS[lang];
+            const vFavs = favs.filter((f) => f.type === "video");
+            const verseFavs = favs.filter((f) => f.type === "verse");
+            const resumeEp = podResume && PODCAST_EPISODES.find((e) => e.id === podResume.id);
+            const label = { fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600 };
+            const card = { background: COLORS.ink, borderRadius: 16, padding: 18, border: "1px solid rgba(244,185,66,0.18)", marginTop: 12 };
+            return (
+              <div key={lang + "-myspace"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+                <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>{M.title}</div>
+                <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{M.subtitle}</p>
+
+                <div style={{ ...card, marginTop: 16, display: "flex", alignItems: "center", gap: 14, background: "rgba(232,98,44,0.12)", border: "1px solid rgba(232,98,44,0.35)" }}>
+                  <span style={{ fontSize: 30 }}>🔥</span>
+                  <div>
+                    <div style={label}>{M.streak}</div>
+                    <div className="display" style={{ fontSize: 18, fontWeight: 600, color: COLORS.light, marginTop: 4 }}>{streak > 0 ? M.days(streak) : M.noStreak}</div>
+                  </div>
+                </div>
+
+                {resumeEp && (
+                  <button onClick={() => playEpisode(resumeEp)} style={{ ...card, width: "100%", boxSizing: "border-box", display: "flex", alignItems: "center", gap: 12, textAlign: "left", cursor: "pointer", color: COLORS.light }}>
+                    <span style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {podEp && podEp.id === resumeEp.id && podPlaying ? <Pause size={18} color={COLORS.night} /> : <Play size={18} color={COLORS.night} fill={COLORS.night} />}
+                    </span>
+                    <span style={{ minWidth: 0 }}>
+                      <span style={{ ...label, display: "block" }}>{M.resume}</span>
+                      <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, marginTop: 3 }}>{resumeEp.title}</span>
+                      <span style={{ display: "block", fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{M.resumeAt(fmtTime(podResume.t))}</span>
+                    </span>
+                  </button>
+                )}
+
+                <div style={card}>
+                  <div style={label}>{M.favs}</div>
+                  {favs.length === 0 && <p style={{ fontSize: 13.5, color: COLORS.mist, lineHeight: 1.55, marginTop: 8 }}>{M.favsEmpty}</p>}
+                  {verseFavs.length > 0 && <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.mist, marginTop: 12 }}>{M.verses}</div>}
+                  {verseFavs.map((f) => (
+                    <div key={"v" + f.id} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 10, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                      <div style={{ flex: 1 }}>
+                        <div className="display" style={{ fontSize: 15, fontStyle: "italic", lineHeight: 1.45, color: COLORS.light }}>« {f.title} »</div>
+                        <div style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.dawn, marginTop: 4 }}>— {f.ref}</div>
+                      </div>
+                      <button onClick={() => toggleFav(f)} aria-label={M.remove} style={{ flexShrink: 0, width: 40, height: 40, background: "none", border: "none", color: COLORS.dawn, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Heart size={18} fill={COLORS.dawn} />
+                      </button>
+                    </div>
+                  ))}
+                  {vFavs.length > 0 && <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.mist, marginTop: 14 }}>{M.videos}</div>}
+                  {vFavs.map((f) => (
+                    <div key={"y" + f.id} style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 10 }}>
+                      <button onClick={() => setYtPlayer(f)} aria-label={f.title} style={{ flex: 1, minWidth: 0, display: "flex", gap: 12, alignItems: "center", background: "none", border: "none", padding: 0, cursor: "pointer", color: COLORS.light, textAlign: "left" }}>
+                        <span style={{ flexShrink: 0, width: f.isShort ? 50 : 100, aspectRatio: f.isShort ? "9 / 16" : "16 / 9", borderRadius: 8, overflow: "hidden", background: COLORS.night, border: "1px solid rgba(244,185,66,0.18)" }}>
+                          <img src={f.thumb} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        </span>
+                        <span style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{f.title.replace(/#\S+/g, "").trim()}</span>
+                      </button>
+                      <button onClick={() => toggleFav(f)} aria-label={M.remove} style={{ flexShrink: 0, width: 40, height: 40, background: "none", border: "none", color: COLORS.dawn, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Heart size={18} fill={COLORS.dawn} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={card}>
+                  <div style={label}>{M.settings}</div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginTop: 12 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: COLORS.light }}>{M.language}</span>
+                    <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.06)", padding: 3, borderRadius: 999 }}>
+                      {Object.keys(CONTENT).map((code) => (
+                        <button key={code} onClick={() => setLang(code)} aria-pressed={lang === code}
+                          style={{ border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600, minHeight: 32, minWidth: 40, padding: "6px 10px", borderRadius: 999, background: lang === code ? COLORS.dawn : "transparent", color: lang === code ? COLORS.night : COLORS.mist }}>
+                          {LANG_LABELS[code]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: COLORS.light }}>{M.notif}</span>
+                    {notifState === "granted" ? (
+                      <span style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.dawn }}>✓ {M.notifOn}</span>
+                    ) : notifState === "denied" ? (
+                      <span style={{ fontSize: 12, color: COLORS.mist, textAlign: "right", maxWidth: 160 }}>{M.notifBlocked}</span>
+                    ) : notifState === "unsupported" ? null : (
+                      <button onClick={askNotif} style={{ minHeight: 36, background: COLORS.dawn, color: COLORS.night, border: "none", borderRadius: 999, padding: "8px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{M.notifOff}</button>
+                    )}
+                  </div>
+                </div>
+                <p style={{ fontSize: 11.5, color: COLORS.mist, marginTop: 14, textAlign: "center" }}>{M.note}</p>
+              </div>
+            );
+          })()}
+
           {tab === "more" && moreView === null && (
             <div key={lang + "-more"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
               <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
@@ -4023,6 +4206,7 @@ export default function App() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
                 {[
+                  { key: "myspace", label: MY_LABELS[lang].title, Icon: User },
                   { key: "news", label: NEWS_LABELS[lang].title, Icon: Newspaper },
                   { key: "flyers", label: FLYERS_LABELS[lang].title, Icon: Megaphone },
                   { key: "history", label: t.navHistory, Icon: BookOpen },
@@ -5775,8 +5959,9 @@ export default function App() {
         <audio
           ref={podRef}
           onPlay={() => setPodPlaying(true)}
-          onPause={() => setPodPlaying(false)}
-          onEnded={() => setPodPlaying(false)}
+          onPause={() => { setPodPlaying(false); savePodPos(true); }}
+          onTimeUpdate={() => savePodPos(false)}
+          onEnded={() => { setPodPlaying(false); savePodPos("ended"); }}
           style={{ display: "none" }}
         />
 
@@ -5804,6 +5989,14 @@ export default function App() {
                 <a href={ytPlayer.url} target="_blank" rel="noopener noreferrer" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: COLORS.ember, color: COLORS.light, borderRadius: 12, padding: "12px 10px", fontSize: 14, fontWeight: 700, textDecoration: "none" }}>
                   <Youtube size={17} /> {YT_LABELS[lang].openYt}
                 </a>
+                <button
+                  onClick={() => toggleFav({ type: "video", id: ytPlayer.id, title: ytPlayer.title, thumb: ytPlayer.thumb, isShort: ytPlayer.isShort, url: ytPlayer.url })}
+                  aria-label={isFav("video", ytPlayer.id) ? MY_LABELS[lang].remove : MY_LABELS[lang].add}
+                  aria-pressed={isFav("video", ytPlayer.id)}
+                  style={{ flex: "0 0 auto", width: 48, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.1)", color: COLORS.dawn, border: "1px solid rgba(244,185,66,0.45)", borderRadius: 12, padding: 0, cursor: "pointer" }}
+                >
+                  <Heart size={19} fill={isFav("video", ytPlayer.id) ? COLORS.dawn : "none"} />
+                </button>
                 <button onClick={closeYt} style={{ flex: "0 0 auto", background: "rgba(255,255,255,0.1)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.25)", borderRadius: 12, padding: "12px 18px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
                   {YT_LABELS[lang].close}
                 </button>
