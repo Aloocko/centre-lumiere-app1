@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, BookOpen, Compass, ChevronRight, ChevronLeft, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink } from "lucide-react";
+import { Home, BookOpen, Compass, ChevronRight, ChevronLeft, Flame, Users, GraduationCap, HandHeart, Megaphone, Play, Share2, Pause, Video, Radio, Youtube, Facebook, Volume2, Tv, Heart, Send, Check, Award, Calendar, UserPlus, Sparkles, Newspaper, ExternalLink, Mic } from "lucide-react";
 
 const FONTS = ``;
 
@@ -2240,6 +2240,27 @@ const UPCOMING = [
     fr: "Veillée de prière", en: "Prayer vigil", ht: "Veyè priyè" },
 ];
 const SUNDAY = { fr: "Culte du dimanche", en: "Sunday service", ht: "Sèvis dimanch" };
+// --- Podcast ---
+// Pour ajouter un épisode : ajoutez une ligne ici avec le lien du fichier audio (MP3/M4A).
+// Exemple : { id: "ep1", series: "Ô Saint-Esprit", number: 1, title: "Qui est le Saint-Esprit ?", date: "2026-11-02", duration: "18 min", audioUrl: "https://…/episode-1.mp3" }
+const PODCAST_EPISODES = [];
+const PODCAST_UPCOMING = [
+  { number: 1, title: { fr: "Qui est le Saint-Esprit ?", en: "Who is the Holy Spirit?", ht: "Kiyès Sentespri a ye ?" } },
+  { number: 2, title: { fr: "Dépendre de l'Esprit chaque jour", en: "Depending on the Spirit every day", ht: "Depann de Lespri a chak jou" } },
+  { number: 3, title: { fr: "Conduit par l'Esprit", en: "Led by the Spirit", ht: "Lespri a k ap mennen nou" } },
+  { number: 4, title: { fr: "L'Esprit qui nous aide à prier", en: "The Spirit who helps us pray", ht: "Lespri ki ede nou priye" } },
+];
+const PODCAST_LABELS = {
+  fr: { nav: "Podcast", title: "Podcast", subtitle: "Enseignements et prières à écouter partout, à tout moment.", show: "Radio Centre Lumière", showSub: "Le podcast", series: "Série 1 · Ô Saint-Esprit", seriesBody: "Que voulons-nous dire quand nous chantons « Ô Saint-Esprit » ? Quatre épisodes pour le découvrir.", soon: "Bientôt", episodes: "Épisodes", ep: "Épisode", meanwhile: "En attendant, sur YouTube", play: "Écouter", pause: "Pause" },
+  en: { nav: "Podcast", title: "Podcast", subtitle: "Teachings and prayers to listen to anywhere, anytime.", show: "Radio Centre Lumière", showSub: "The podcast", series: "Series 1 · O Holy Spirit", seriesBody: "What do we mean when we sing “O Holy Spirit”? Four episodes to find out.", soon: "Coming soon", episodes: "Episodes", ep: "Episode", meanwhile: "Meanwhile, on YouTube", play: "Listen", pause: "Pause" },
+  ht: { nav: "Podcast", title: "Podcast", subtitle: "Ansèyman ak priyè pou w koute nenpòt kote, nenpòt lè.", show: "Radio Centre Lumière", showSub: "Podcast la", series: "Seri 1 · O Sentespri", seriesBody: "Kisa nou vle di lè n ap chante « O Sentespri » ? Kat epizòd pou n dekouvri sa.", soon: "Byento", episodes: "Epizòd", ep: "Epizòd", meanwhile: "Pandan n ap tann, sou YouTube", play: "Koute", pause: "Poz" },
+};
+const DEVO_TABS = {
+  fr: { nav: "Dévotion", devotion: "Dévotion", prayer: "Prière" },
+  en: { nav: "Devotion", devotion: "Devotion", prayer: "Prayer" },
+  ht: { nav: "Devosyon", devotion: "Devosyon", prayer: "Priyè" },
+};
+
 // Libellés des rangées « Dernières vidéos » et « Shorts » (flux YouTube automatique via /api/videos)
 const YT_LABELS = {
   fr: { videos: "Dernières vidéos", videosSub: "Mises à jour automatiquement depuis YouTube", shorts: "Shorts", shortsSub: "Une Parole en moins d'une minute", seeAll: "Tout voir", openYt: "Ouvrir sur YouTube", close: "Fermer", ago: (d) => (d <= 0 ? "Aujourd'hui" : d === 1 ? "Hier" : `Il y a ${d} jours`), views: "vues" },
@@ -2494,6 +2515,22 @@ export default function App() {
   const [donateFrequency, setDonateFrequency] = useState("once");
   const audioRef = useRef(null);
   const radioRef = useRef(null);
+  // Lecteur du podcast (un seul son à la fois : il met la radio en pause, et inversement)
+  const podRef = useRef(null);
+  const [podEp, setPodEp] = useState(null);
+  const [podPlaying, setPodPlaying] = useState(false);
+  const playEpisode = (ep) => {
+    const el = podRef.current;
+    if (!el) return;
+    if (podEp && podEp.id === ep.id) {
+      if (el.paused) el.play(); else el.pause();
+      return;
+    }
+    if (radioRef.current && !radioRef.current.paused) radioRef.current.pause();
+    setPodEp(ep);
+    el.src = ep.audioUrl;
+    el.play().catch(() => {});
+  };
 
   const submitPrayer = async (e) => {
     e.preventDefault();
@@ -2705,6 +2742,7 @@ export default function App() {
     if (radioPlaying) {
       el.pause();
     } else {
+      if (podRef.current && !podRef.current.paused) podRef.current.pause();
       el.play();
     }
   };
@@ -2712,6 +2750,7 @@ export default function App() {
   // Une vidéo qui s'ouvre met la radio en pause (pas deux sons en même temps)
   useEffect(() => {
     if (ytPlayer && radioRef.current && !radioRef.current.paused) radioRef.current.pause();
+    if (ytPlayer && podRef.current && !podRef.current.paused) podRef.current.pause();
   }, [ytPlayer]);
 
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied
@@ -3254,8 +3293,113 @@ export default function App() {
             </div>
           )}
 
+          {tab === "podcast" && (() => {
+            const P = PODCAST_LABELS[lang];
+            return (
+              <div key={lang + "-podcast"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
+                <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>{P.title}</div>
+                <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{P.subtitle}</p>
+
+                <div style={{ marginTop: 16, background: `linear-gradient(150deg, ${COLORS.night} 0%, #2A2050 60%, #3A2250 100%)`, borderRadius: 18, padding: 18, border: "1px solid rgba(244,185,66,0.3)", boxShadow: "0 8px 24px rgba(0,0,0,0.25)", display: "flex", gap: 14, alignItems: "center" }}>
+                  <div style={{ flexShrink: 0, width: 76, height: 76, borderRadius: 16, background: `radial-gradient(circle at 50% 40%, rgba(244,185,66,0.35), ${COLORS.night} 70%)`, border: "1px solid rgba(244,185,66,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Mic size={32} color={COLORS.dawn} />
+                  </div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 11, letterSpacing: 1.4, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{P.showSub}</div>
+                    <div className="display" style={{ fontSize: 19, fontWeight: 600, color: COLORS.light, marginTop: 4, lineHeight: 1.25 }}>{P.show}</div>
+                    <div style={{ fontSize: 12.5, color: COLORS.mist, marginTop: 4 }}>{t.slogan}</div>
+                  </div>
+                </div>
+
+                {PODCAST_EPISODES.length > 0 && (
+                  <>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600, marginTop: 22 }}>{P.episodes}</div>
+                    {PODCAST_EPISODES.map((ep) => {
+                      const on = podEp && podEp.id === ep.id && podPlaying;
+                      return (
+                        <button key={ep.id} onClick={() => playEpisode(ep)} aria-label={`${on ? P.pause : P.play} : ${ep.title}`}
+                          style={{ width: "100%", marginTop: 10, display: "flex", alignItems: "center", gap: 12, textAlign: "left", background: COLORS.ink, border: `1px solid ${on ? COLORS.dawn : "rgba(244,185,66,0.18)"}`, borderRadius: 14, padding: 12, cursor: "pointer", color: COLORS.light, boxSizing: "border-box" }}>
+                          <span style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 12, background: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            {on ? <Pause size={18} color={COLORS.night} /> : <Play size={18} color={COLORS.night} fill={COLORS.night} />}
+                          </span>
+                          <span style={{ minWidth: 0 }}>
+                            <span style={{ display: "block", fontSize: 10.5, letterSpacing: 1.2, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{ep.series} · {P.ep} {ep.number}</span>
+                            <span style={{ display: "block", fontSize: 14, fontWeight: 700, marginTop: 3 }}>{ep.title}</span>
+                            {ep.duration && <span style={{ display: "block", fontSize: 11.5, color: COLORS.mist, marginTop: 2 }}>{ep.duration}</span>}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </>
+                )}
+
+                <div style={{ marginTop: 16, background: COLORS.ink, borderRadius: 16, padding: 18, border: "1px solid rgba(244,185,66,0.18)" }}>
+                  <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600 }}>{P.series}</div>
+                  <p style={{ fontSize: 13.5, lineHeight: 1.55, color: COLORS.mist, marginTop: 8 }}>{P.seriesBody}</p>
+                  {PODCAST_UPCOMING.filter((u) => !PODCAST_EPISODES.some((e) => e.number === u.number && e.series === "Ô Saint-Esprit")).map((u) => (
+                    <div key={u.number} style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, marginTop: 12, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                      <span className="display" style={{ flexShrink: 0, width: 32, height: 32, borderRadius: 16, border: "1px solid rgba(244,185,66,0.4)", color: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 700 }}>{u.number}</span>
+                      <span style={{ flex: 1, fontSize: 14, fontWeight: 600, color: COLORS.light }}>{u.title[lang]}</span>
+                      <span style={{ flexShrink: 0, fontSize: 10.5, fontWeight: 700, letterSpacing: 0.8, color: COLORS.night, background: COLORS.dawn, borderRadius: 999, padding: "4px 9px", textTransform: "uppercase" }}>{P.soon}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {ytFeed.videos.length > 0 && (
+                  <>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600, marginTop: 22 }}>{P.meanwhile}</div>
+                    {ytFeed.videos.slice(0, 3).map((v) => (
+                      <button key={v.id} onClick={() => setYtPlayer(v)} aria-label={v.title}
+                        style={{ width: "100%", marginTop: 10, display: "flex", alignItems: "center", gap: 12, textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", color: COLORS.light }}>
+                        <span style={{ flexShrink: 0, width: 112, aspectRatio: "16 / 9", borderRadius: 10, overflow: "hidden", border: "1px solid rgba(244,185,66,0.18)", background: COLORS.night }}>
+                          <img src={v.thumb} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        </span>
+                        <span style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</span>
+                      </button>
+                    ))}
+                  </>
+                )}
+              </div>
+            );
+          })()}
+
+          {(tab === "devotion" || tab === "prayer") && (
+            <div style={{ padding: "20px 20px 0" }}>
+              <div style={{ display: "flex", gap: 8 }}>
+                {[
+                  { key: "devotion", label: DEVO_TABS[lang].devotion, Icon: BookOpen },
+                  { key: "prayer", label: DEVO_TABS[lang].prayer, Icon: HandHeart },
+                ].map(({ key, label, Icon }) => (
+                  <button
+                    key={key}
+                    onClick={() => setTab(key)}
+                    aria-pressed={tab === key}
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 6,
+                      padding: "10px 0",
+                      borderRadius: 10,
+                      border: `1px solid ${tab === key ? COLORS.dawn : "rgba(255,255,255,0.15)"}`,
+                      background: tab === key ? "rgba(244,185,66,0.14)" : "transparent",
+                      color: tab === key ? COLORS.dawn : COLORS.mist,
+                      fontSize: 12.5,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Icon size={15} />
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {tab === "devotion" && (
-            <div key={lang + "-devotion"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+            <div key={lang + "-devotion"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
               <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.2, color: COLORS.dawn, fontWeight: 600 }}>
                 {t.devotionLabel}
               </div>
@@ -3663,7 +3807,7 @@ export default function App() {
           )}
 
           {tab === "prayer" && (
-            <div key={lang + "-prayer"} className="fade-up" style={{ padding: "28px 20px 24px" }}>
+            <div key={lang + "-prayer"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
               <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                 {t.prayerTitle}
               </div>
@@ -5625,6 +5769,14 @@ export default function App() {
           style={{ display: "none" }}
         />
 
+        <audio
+          ref={podRef}
+          onPlay={() => setPodPlaying(true)}
+          onPause={() => setPodPlaying(false)}
+          onEnded={() => setPodPlaying(false)}
+          style={{ display: "none" }}
+        />
+
         {/* Lecteur vidéo intégré (vidéos et Shorts du flux YouTube) */}
         {ytPlayer && (
           <div
@@ -5657,103 +5809,122 @@ export default function App() {
           </div>
         )}
 
-        {/* Mini-barre radio, visible sur tous les écrans sauf l'onglet Radio lui-même */}
-        {radioPlaying && !(tab === "media" && mediaView === "radio") && (
-          <div
+        {/* Barres de lecture (podcast, radio) + menu du bas : toujours visibles en bas de l'écran */}
+        <div style={{ position: "sticky", bottom: 0, zIndex: 20 }}>
+          {/* Mini-barre podcast, visible tant qu'un épisode est chargé (sauf sur la page Podcast) */}
+          {podEp && tab !== "podcast" && (
+            <div
+              style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 16px", background: "linear-gradient(rgba(244,185,66,0.12), rgba(244,185,66,0.12)), #1B1B3A", borderTop: "1px solid rgba(244,185,66,0.25)", cursor: "pointer" }}
+              onClick={() => setTab("podcast")}
+            >
+              <Mic size={15} color={COLORS.dawn} />
+              <div style={{ fontSize: 12, fontWeight: 600, flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{podEp.title}</div>
+              <button
+                onClick={(e) => { e.stopPropagation(); playEpisode(podEp); }}
+                aria-label={podPlaying ? PODCAST_LABELS[lang].pause : PODCAST_LABELS[lang].play}
+                style={{ background: "none", border: "none", cursor: "pointer", color: COLORS.dawn, display: "flex" }}
+              >
+                {podPlaying ? <Pause size={16} /> : <Play size={16} />}
+              </button>
+            </div>
+          )}
+
+          {/* Mini-barre radio, visible sur tous les écrans sauf l'onglet Radio lui-même */}
+          {radioPlaying && !(tab === "media" && mediaView === "radio") && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "9px 16px",
+                background: "linear-gradient(rgba(244,185,66,0.12), rgba(244,185,66,0.12)), #1B1B3A",
+                borderTop: "1px solid rgba(244,185,66,0.25)",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setTab("media");
+                setMediaView("radio");
+              }}
+            >
+              <Volume2 size={15} color={COLORS.dawn} />
+              <div style={{ fontSize: 12, fontWeight: 600, flex: 1 }}>{MEDIA.radioStationName}</div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleRadio();
+                }}
+                aria-label={t.pauseLabel}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: COLORS.dawn,
+                  display: "flex",
+                }}
+              >
+                <Pause size={16} />
+              </button>
+            </div>
+          )}
+
+          {/* Bottom nav */}
+          <nav
+            aria-label={t.navMore}
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 16px",
-              background: "rgba(244,185,66,0.12)",
-              borderTop: "1px solid rgba(244,185,66,0.25)",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              setTab("media");
-              setMediaView("radio");
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(27,27,58,0.96)",
+              backdropFilter: "blur(8px)",
+              padding: "8px 12px calc(8px + env(safe-area-inset-bottom))",
             }}
           >
-            <Volume2 size={15} color={COLORS.dawn} />
-            <div style={{ fontSize: 12, fontWeight: 600, flex: 1 }}>{MEDIA.radioStationName}</div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleRadio();
-              }}
-              aria-label={t.pauseLabel}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                color: COLORS.dawn,
-                display: "flex",
-              }}
-            >
-              <Pause size={16} />
-            </button>
-          </div>
-        )}
-
-        {/* Bottom nav */}
-        <nav
-          aria-label={t.navMore}
-          style={{
-            display: "flex",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            background: "rgba(27,27,58,0.96)",
-            backdropFilter: "blur(8px)",
-            padding: "8px 12px calc(8px + env(safe-area-inset-bottom))",
-            position: "sticky",
-            bottom: 0,
-          }}
-        >
-          {[
-            { key: "home", label: t.navHome, Icon: Home },
-            {
-              key: "media",
-              label: t.navMedia,
-              Icon: Video,
-              onSelect: () => {
-                setTab("media");
+            {[
+              { key: "home", label: t.navHome, Icon: Home },
+              {
+                key: "media",
+                label: t.navMedia,
+                Icon: Video,
+                onSelect: () => {
+                  setTab("media");
+                },
               },
-            },
-            { key: "prayer", label: t.navPrayer, Icon: HandHeart },
-            { key: "devotion", label: t.navDevotion, Icon: BookOpen },
-            {
-              key: "more",
-              label: t.navMore,
-              Icon: Compass,
-              onSelect: () => {
-                setTab("more");
-                setMoreView(null);
+              { key: "devotion", label: DEVO_TABS[lang].nav, Icon: BookOpen, also: ["prayer"] },
+              { key: "podcast", label: PODCAST_LABELS[lang].nav, Icon: Mic },
+              {
+                key: "more",
+                label: t.navMore,
+                Icon: Compass,
+                onSelect: () => {
+                  setTab("more");
+                  setMoreView(null);
+                },
               },
-            },
-          ].map(({ key, label, Icon, onSelect }) => (
-            <button
-              key={key}
-              onClick={() => (onSelect ? onSelect() : setTab(key))}
-              className="tab-btn"
-              style={{
-                flex: 1,
-                minHeight: 44,
-                background: "none",
-                border: "none",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 3,
-                padding: "8px 0",
-                cursor: "pointer",
-                color: tab === key ? COLORS.dawn : COLORS.mist,
-              }}
-            >
-              <Icon size={18} />
-              <span style={{ fontSize: 9, fontWeight: 600, whiteSpace: "nowrap" }}>{label}</span>
-            </button>
-          ))}
-        </nav>
+            ].map(({ key, label, Icon, onSelect, also }) => (
+              <button
+                key={key}
+                onClick={() => (onSelect ? onSelect() : setTab(key))}
+                className="tab-btn"
+                style={{
+                  flex: 1,
+                  minHeight: 44,
+                  background: "none",
+                  border: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 3,
+                  padding: "8px 0",
+                  cursor: "pointer",
+                  color: tab === key || (also && also.includes(tab)) ? COLORS.dawn : COLORS.mist,
+                }}
+              >
+                <Icon size={18} />
+                <span style={{ fontSize: 9, fontWeight: 600, whiteSpace: "nowrap" }}>{label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
     </div>
   );
