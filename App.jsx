@@ -2240,6 +2240,13 @@ const UPCOMING = [
     fr: "Veillée de prière", en: "Prayer vigil", ht: "Veyè priyè" },
 ];
 const SUNDAY = { fr: "Culte du dimanche", en: "Sunday service", ht: "Sèvis dimanch" };
+// Libellés des rangées « Dernières vidéos » et « Shorts » (flux YouTube automatique via /api/videos)
+const YT_LABELS = {
+  fr: { videos: "Dernières vidéos", videosSub: "Mises à jour automatiquement depuis YouTube", shorts: "Shorts", shortsSub: "Une Parole en moins d'une minute", seeAll: "Tout voir", openYt: "Ouvrir sur YouTube", close: "Fermer", ago: (d) => (d <= 0 ? "Aujourd'hui" : d === 1 ? "Hier" : `Il y a ${d} jours`), views: "vues" },
+  en: { videos: "Latest videos", videosSub: "Updated automatically from YouTube", shorts: "Shorts", shortsSub: "A Word in under a minute", seeAll: "See all", openYt: "Open on YouTube", close: "Close", ago: (d) => (d <= 0 ? "Today" : d === 1 ? "Yesterday" : `${d} days ago`), views: "views" },
+  ht: { videos: "Dènye videyo", videosSub: "Mete ajou otomatikman sou YouTube", shorts: "Shorts", shortsSub: "Yon Pawòl nan mwens pase yon minit", seeAll: "Wè tout", openYt: "Louvri sou YouTube", close: "Fèmen", ago: (d) => (d <= 0 ? "Jodi a" : d === 1 ? "Yè" : `Sa gen ${d} jou`), views: "vi" },
+};
+
 const HOME_LIVE_LABELS = {
   fr: { live: "EN COURS", next: "PROCHAINEMENT", watch: "Regarder", radio: "Écouter la radio", in: "Dans", d: "j", h: "h", m: "min", sunday: "Dimanche, 8 h 30 – 11 h 45", votd: "Verset du jour", read: "Lire la dévotion", share: "Partager" },
   en: { live: "HAPPENING NOW", next: "COMING UP", watch: "Watch", radio: "Listen to the radio", in: "In", d: "d", h: "h", m: "min", sunday: "Sunday, 8:30 – 11:45 AM", votd: "Verse of the day", read: "Read the devotion", share: "Share" },
@@ -2385,6 +2392,20 @@ export default function App() {
     const id = setInterval(() => setNowTick(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
+  // Flux YouTube automatique (vidéos + Shorts) et lecteur intégré
+  const [ytFeed, setYtFeed] = useState({ videos: [], shorts: [] });
+  const [ytPlayer, setYtPlayer] = useState(null); // { id, title, isShort, url }
+  const ytOpenRef = useRef(false);
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/videos")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (alive && d && Array.isArray(d.videos)) setYtFeed({ videos: d.videos.slice(0, 12), shorts: (d.shorts || []).slice(0, 12) });
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
   const [mediaView, setMediaView] = useState("live"); // live | tv | radio
   const [tvReplay, setTvReplay] = useState(false);
   const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
@@ -2401,6 +2422,7 @@ export default function App() {
       // historique indisponible — le bouton retour gardera son comportement par défaut
     }
     const onPop = (ev) => {
+      if (ytOpenRef.current) return; // le retour ferme d'abord le lecteur vidéo (voir plus bas)
       const st = ev.state;
       if (!st || !st.nav) return;
       if (st.nav !== navKeyRef.current) skipNextPush.current = true;
@@ -2428,6 +2450,26 @@ export default function App() {
       // historique indisponible — rien à faire
     }
   }, [navKey]);
+  // Lecteur vidéo : le bouton retour du téléphone ferme la vidéo au lieu de quitter l'écran
+  useEffect(() => {
+    ytOpenRef.current = !!ytPlayer;
+    if (!ytPlayer) return;
+    try {
+      window.history.pushState({ ...(window.history.state || {}), yt: 1 }, "");
+    } catch {
+      // historique indisponible
+    }
+    const onPop = () => {
+      ytOpenRef.current = false;
+      setYtPlayer(null);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [ytPlayer]);
+  const closeYt = () => {
+    if (window.history.state && window.history.state.yt) window.history.back();
+    else setYtPlayer(null);
+  };
   const showBack = tab !== "home" || moreView !== null;
   const goBack = () => {
     if (navDepth.current > 0) {
@@ -2666,6 +2708,11 @@ export default function App() {
     }
   };
 
+  // Une vidéo qui s'ouvre met la radio en pause (pas deux sons en même temps)
+  useEffect(() => {
+    if (ytPlayer && radioRef.current && !radioRef.current.paused) radioRef.current.pause();
+  }, [ytPlayer]);
+
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied
 
   // --- Streak de lecture (série de jours consécutifs) ---
@@ -2764,6 +2811,8 @@ export default function App() {
           to { transform: translateX(-50%) translateY(0%); opacity: 0.9; }
         }
         .fade-up { animation: fadeUp .6s ease both; }
+        .yt-row { scrollbar-width: none; }
+        .yt-row::-webkit-scrollbar { display: none; }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
@@ -3007,6 +3056,71 @@ export default function App() {
                     </button>
                   </div>
                 </div>
+
+                {ytFeed.videos.length > 0 && (() => {
+                  const Y = YT_LABELS[lang];
+                  const daysAgo = (iso) => Math.floor((nowTick.getTime() - new Date(iso).getTime()) / 86400000);
+                  return (
+                    <section aria-label={Y.videos} style={{ margin: "22px -20px 6px" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", padding: "0 20px", gap: 12 }}>
+                        <div>
+                          <div className="display" style={{ fontSize: 22, fontWeight: 700, color: COLORS.light }}>{Y.videos}</div>
+                          <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{Y.videosSub}</div>
+                        </div>
+                        <a href={MEDIA.videoUrl} target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 700, color: COLORS.dawn, border: "1px solid rgba(244,185,66,0.4)", borderRadius: 999, padding: "7px 14px", textDecoration: "none" }}>{Y.seeAll}</a>
+                      </div>
+                      <div className="yt-row" style={{ display: "flex", gap: 12, overflowX: "auto", scrollSnapType: "x mandatory", padding: "14px 20px 4px", WebkitOverflowScrolling: "touch" }}>
+                        {ytFeed.videos.map((v) => (
+                          <button
+                            key={v.id}
+                            onClick={() => setYtPlayer(v)}
+                            aria-label={v.title}
+                            style={{ flex: "0 0 78%", maxWidth: 300, scrollSnapAlign: "start", textAlign: "left", background: COLORS.ink, border: "1px solid rgba(244,185,66,0.2)", borderRadius: 16, padding: 0, overflow: "hidden", cursor: "pointer", color: COLORS.light }}
+                          >
+                            <div style={{ position: "relative", aspectRatio: "16 / 9", background: COLORS.night }}>
+                              <img src={v.thumb} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                              <span style={{ position: "absolute", left: 12, bottom: 12, width: 44, height: 44, borderRadius: 14, background: COLORS.dawn, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 16px rgba(0,0,0,0.35)" }}>
+                                <Play size={20} color={COLORS.night} fill={COLORS.night} />
+                              </span>
+                            </div>
+                            <div style={{ padding: "11px 14px 14px" }}>
+                              <div style={{ fontSize: 10.5, letterSpacing: 1.3, fontWeight: 700, color: COLORS.dawn, textTransform: "uppercase" }}>{Y.ago(daysAgo(v.published))}</div>
+                              <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.3, marginTop: 4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{v.title}</div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })()}
+
+                {ytFeed.shorts.length > 0 && (() => {
+                  const Y = YT_LABELS[lang];
+                  return (
+                    <section aria-label={Y.shorts} style={{ margin: "16px -20px 14px" }}>
+                      <div style={{ padding: "0 20px" }}>
+                        <div className="display" style={{ fontSize: 22, fontWeight: 700, color: COLORS.light }}>{Y.shorts}</div>
+                        <div style={{ fontSize: 12, color: COLORS.mist, marginTop: 2 }}>{Y.shortsSub}</div>
+                      </div>
+                      <div className="yt-row" style={{ display: "flex", gap: 10, overflowX: "auto", scrollSnapType: "x mandatory", padding: "14px 20px 4px", WebkitOverflowScrolling: "touch" }}>
+                        {ytFeed.shorts.map((v) => (
+                          <button
+                            key={v.id}
+                            onClick={() => setYtPlayer(v)}
+                            aria-label={v.title}
+                            style={{ flex: "0 0 38%", maxWidth: 150, scrollSnapAlign: "start", position: "relative", aspectRatio: "9 / 16", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(244,185,66,0.25)", padding: 0, cursor: "pointer", background: COLORS.night }}
+                          >
+                            <img src={v.thumb} alt="" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                            <span style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85))" }} />
+                            <span style={{ position: "absolute", left: 8, right: 8, bottom: 8, fontSize: 11.5, fontWeight: 700, lineHeight: 1.25, color: COLORS.light, textAlign: "left", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                              {v.title.replace(/#\S+/g, "").trim()}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })()}
 
                 <div
                   style={{
@@ -5529,6 +5643,38 @@ export default function App() {
           onPause={() => setRadioPlaying(false)}
           style={{ display: "none" }}
         />
+
+        {/* Lecteur vidéo intégré (vidéos et Shorts du flux YouTube) */}
+        {ytPlayer && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={ytPlayer.title}
+            onClick={closeYt}
+            style={{ position: "fixed", inset: 0, zIndex: 50, background: "rgba(8,8,24,0.97)", backdropFilter: "blur(6px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px calc(20px + env(safe-area-inset-bottom))" }}
+          >
+            <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", maxWidth: ytPlayer.isShort ? 340 : 720 }}>
+              <div style={{ position: "relative", width: "100%", aspectRatio: ytPlayer.isShort ? "9 / 16" : "16 / 9", maxHeight: "70vh", margin: "0 auto", borderRadius: 16, overflow: "hidden", background: "#000", border: "1px solid rgba(244,185,66,0.3)" }}>
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${ytPlayer.id}?autoplay=1&playsinline=1&rel=0`}
+                  title={ytPlayer.title}
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                />
+              </div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.light, marginTop: 14, lineHeight: 1.35 }}>{ytPlayer.title}</div>
+              <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                <a href={ytPlayer.url} target="_blank" rel="noopener noreferrer" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: COLORS.ember, color: COLORS.light, borderRadius: 12, padding: "12px 10px", fontSize: 14, fontWeight: 700, textDecoration: "none" }}>
+                  <Youtube size={17} /> {YT_LABELS[lang].openYt}
+                </a>
+                <button onClick={closeYt} style={{ flex: "0 0 auto", background: "rgba(255,255,255,0.1)", color: COLORS.light, border: "1px solid rgba(255,255,255,0.25)", borderRadius: 12, padding: "12px 18px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                  {YT_LABELS[lang].close}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Mini-barre radio, visible sur tous les écrans sauf l'onglet Radio lui-même */}
         {radioPlaying && !(tab === "media" && mediaView === "radio") && (
