@@ -3098,7 +3098,7 @@ export default function App() {
                         WebkitBoxOrient: "vertical",
                       }}
                     >
-                      {liveNow.title}
+                      {liveNow.title || t.tvTitle}
                     </span>
                   </span>
                   <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.emberText, whiteSpace: "nowrap", flexShrink: 0, paddingRight: 4 }}>
@@ -4995,7 +4995,7 @@ export default function App() {
               </div>
 
               <div style={{ marginTop: 14, fontSize: 13.5, fontWeight: 600, textAlign: "center", color: current ? COLORS.light : COLORS.mist, lineHeight: 1.45 }}>
-                {current ? current.title : MEDIA.tvChannelName}
+                {(current && current.title) || MEDIA.tvChannelName}
               </div>
 
               <div style={{ display: "flex", gap: 8, marginTop: 14 }}>

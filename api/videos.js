@@ -16,15 +16,24 @@ const HEADERS = {
   Cookie: "CONSENT=YES+1; SOCS=CAI",
 };
 
+// Entités nommées courantes dans les titres français des pages YouTube.
+const ENTITES = {
+  nbsp: " ", amp: "&", lt: "<", gt: ">", quot: '"', apos: "'",
+  agrave: "à", Agrave: "À", acirc: "â", Acirc: "Â", ccedil: "ç", Ccedil: "Ç",
+  eacute: "é", Eacute: "É", egrave: "è", Egrave: "È", ecirc: "ê", Ecirc: "Ê",
+  euml: "ë", Euml: "Ë", icirc: "î", Icirc: "Î", iuml: "ï", Iuml: "Ï",
+  ocirc: "ô", Ocirc: "Ô", oelig: "œ", OElig: "Œ", ugrave: "ù", Ugrave: "Ù",
+  ucirc: "û", Ucirc: "Û", uuml: "ü", Uuml: "Ü", laquo: "«", raquo: "»",
+  middot: "·", hellip: "…", ndash: "–", mdash: "—", rsquo: "’", lsquo: "‘",
+  ldquo: "“", rdquo: "”", deg: "°", eur: "€", trade: "™", copy: "©",
+};
+
 const decode = (s = "") =>
   s
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&([A-Za-z]+);/g, (m, nom) => (nom in ENTITES ? ENTITES[nom] : m));
 
 const pick = (xml, re) => {
   const m = xml.match(re);
@@ -212,10 +221,19 @@ export function parseLivePage(html) {
   if (!enDirect) return null;
   const id = (chunk.match(/"videoId"\s*:\s*"([\w-]{11})"/) || [])[1];
   if (!id) return null;
-  const title = jsonStr((chunk.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || "");
+
+  // Le titre : la balise og:title est la plus fiable sur la version allégée.
+  // Le "title" du bloc vidéo y est parfois remplacé par une valeur parasite,
+  // d'où le contrôle de vraisemblance avant de l'accepter.
+  const plausible = (s) => !!s && s.trim().length >= 4 && !/^\d+$/.test(s.trim());
+  const og = decode((html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']{0,200})["']/i) || [])[1] || "");
+  const dansBloc = jsonStr((chunk.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || "");
+  const balise = decode((html.match(/<title>([^<]{0,200})<\/title>/i) || [])[1] || "").replace(/\s*-\s*YouTube\s*$/i, "");
+  const title = [og, dansBloc, balise].find(plausible) || "";
+
   return {
     id,
-    title: title || "En direct",
+    title,
     published: new Date().toISOString(),
     isLiveNow: true,
     thumb: thumbOf(id),
