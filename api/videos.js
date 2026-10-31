@@ -184,7 +184,7 @@ export function parseStreamsPage(html) {
   return out;
 }
 
-async function fromStreams() {
+export async function fromStreams() {
   const r = await fetch(`https://www.youtube.com/@${HANDLE}/streams?hl=en&gl=US`, { headers: HEADERS });
   if (!r.ok) throw new Error(`Page streams ${r.status}`);
   const all = parseStreamsPage(await r.text());
@@ -212,7 +212,7 @@ export function parseLivePage(html) {
   };
 }
 
-async function fromLive() {
+export async function fromLive() {
   const r = await fetch(`https://www.youtube.com/@${HANDLE}/live?hl=en&gl=US`, { headers: HEADERS });
   if (!r.ok) throw new Error(`Page live ${r.status}`);
   return parseLivePage(await r.text());
