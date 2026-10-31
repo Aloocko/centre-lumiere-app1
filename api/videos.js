@@ -193,6 +193,31 @@ async function fromStreams() {
   return { live, replays };
 }
 
+// --- 4) Détection directe du direct : /@chaine/live sert la page du direct en cours ---
+// C'est le signal le plus sûr : la page porte "isLiveNow":true et l'identifiant de la vidéo.
+export function parseLivePage(html) {
+  if (!/"isLiveNow"\s*:\s*true/.test(html)) return null;
+  const i = html.indexOf('"videoDetails"');
+  const chunk = i >= 0 ? html.slice(i, i + 5000) : html.slice(0, 20000);
+  const id = (chunk.match(/"videoId"\s*:\s*"([\w-]{11})"/) || [])[1];
+  if (!id) return null;
+  const title = jsonStr((chunk.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || "");
+  return {
+    id,
+    title: title || "En direct",
+    published: new Date().toISOString(),
+    isLiveNow: true,
+    thumb: thumbOf(id),
+    url: urlOf(id, false),
+  };
+}
+
+async function fromLive() {
+  const r = await fetch(`https://www.youtube.com/@${HANDLE}/live?hl=en&gl=US`, { headers: HEADERS });
+  if (!r.ok) throw new Error(`Page live ${r.status}`);
+  return parseLivePage(await r.text());
+}
+
 async function fromPages() {
   const get = async (path) => {
     const r = await fetch(`https://www.youtube.com/@${HANDLE}/${path}?hl=en&gl=US`, { headers: HEADERS });
@@ -213,11 +238,17 @@ export default async function handler(req, res) {
   let data;
   const errors = [];
 
-  // Les directs sont lus en parallèle : ils vivent sur une page à part,
-  // que ni le flux RSS ni l'onglet « Vidéos » ne montrent.
+  // Les directs sont lus en parallèle : ils vivent sur des pages à part,
+  // que ni le flux RSS ni l'onglet « Vidéos » ne distinguent.
+  const diag = {};
   const streamsPromise = fromStreams().catch((e) => {
+    diag.streams = String(e.message || e);
     errors.push(String(e.message || e));
     return { live: null, replays: [] };
+  });
+  const livePromise = fromLive().catch((e) => {
+    diag.live = String(e.message || e);
+    return null;
   });
 
   try {
@@ -231,27 +262,34 @@ export default async function handler(req, res) {
     }
   }
 
-  const { live, replays } = await streamsPromise;
+  const [{ live: liveFromStreams, replays }, liveDirect] = await Promise.all([streamsPromise, livePromise]);
+  // La page /live est la source la plus fiable ; la page « En direct » sert de secours.
+  const live = liveDirect || liveFromStreams;
+  diag.found = live ? (liveDirect ? "live-page" : "streams-page") : "none";
+  diag.replays = replays.length;
 
   if (data || live || replays.length) {
     const base = data || { videos: [], shorts: [], source: "streams" };
     // Un direct ou une rediffusion peut aussi figurer dans la liste des vidéos.
-    const liveIds = new Set([live?.id, ...replays.map((r) => r.id)].filter(Boolean));
+    const pastStreams = replays.filter((r) => r.id !== live?.id);
+    const liveIds = new Set([live?.id, ...pastStreams.map((r) => r.id)].filter(Boolean));
     const videos = base.videos.filter((v) => !liveIds.has(v.id));
-    // Pendant un direct, la page doit se rafraîchir vite ; sinon on garde le cache long.
+    // Pendant un direct, la page doit se rafraîchir vite ; sinon un cache de 5 minutes
+    // suffit pour qu'un direct qui commence apparaisse sans attendre une demi-heure.
     res.setHeader(
       "Cache-Control",
       live
         ? "public, s-maxage=120, stale-while-revalidate=600"
-        : "public, s-maxage=1800, stale-while-revalidate=86400"
+        : "public, s-maxage=300, stale-while-revalidate=86400"
     );
     res.status(200).json({
       ...base,
       videos,
       live,
-      replays,
+      replays: pastStreams,
       channelUrl: `https://www.youtube.com/@${HANDLE}`,
       liveUrl: live ? live.url : `https://www.youtube.com/@${HANDLE}/streams`,
+      diag,
       updated: new Date().toISOString(),
     });
   } else {
