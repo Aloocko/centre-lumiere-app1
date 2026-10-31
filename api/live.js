@@ -23,6 +23,8 @@ const sonde = async (nom, url) => {
       taille: html.length,
       titrePage: (html.match(/<title>([^<]{0,120})/) || [])[1] || null,
       aIsLiveNow: /"isLiveNow"\s*:\s*true/.test(html),
+      aIsLive: /"isLive"\s*:\s*true/.test(html),
+      aIsLiveContent: /"isLiveContent"\s*:\s*true/.test(html),
       aVideoDetails: html.includes('"videoDetails"'),
       aPlayerResponse: html.includes("ytInitialPlayerResponse"),
       aConsentement: /consent\.youtube|CookieConsent|Avant de continuer/i.test(html),
