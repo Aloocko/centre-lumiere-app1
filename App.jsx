@@ -1013,6 +1013,11 @@ const CONTENT = {
     tvTitle: "Télévision en direct",
     tvSubtitle: "Notre chaîne, 24h/24",
     tvOnAir: "À l'antenne",
+    tvOffAir: "Hors antenne",
+    tvReplays: "Rediffusions",
+    tvNoLive: "Aucun direct en ce moment. Voici la dernière rediffusion.",
+    liveNowTitle: "EN DIRECT MAINTENANT",
+    liveNowCta: "Regarder",
     donateBtn: "Faire un don",
     donateSubtext: "Soutenez la mission",
     navPrayer: "Prière",
@@ -1478,6 +1483,11 @@ const CONTENT = {
     tvTitle: "Live TV",
     tvSubtitle: "Our channel, 24/7",
     tvOnAir: "On air",
+    tvOffAir: "Off air",
+    tvReplays: "Replays",
+    tvNoLive: "No live right now. Here is the latest replay.",
+    liveNowTitle: "LIVE NOW",
+    liveNowCta: "Watch",
     donateBtn: "Donate",
     donateSubtext: "Support the mission",
     navPrayer: "Prayer",
@@ -1926,6 +1936,11 @@ const CONTENT = {
     tvTitle: "Televizyon an dirèk",
     tvSubtitle: "Chèn nou an, 24/24",
     tvOnAir: "Sou antèn",
+    tvOffAir: "Pa sou antèn",
+    tvReplays: "Rediyfizyon",
+    tvNoLive: "Pa gen dirèk kounye a. Men dènye rediyfizyon an.",
+    liveNowTitle: "AN DIRÈK KOUNYE A",
+    liveNowCta: "Gade",
     donateBtn: "Fè yon don",
     donateSubtext: "Soutni misyon an",
     navPrayer: "Priyè",
@@ -2440,22 +2455,32 @@ export default function App() {
     return () => clearInterval(id);
   }, []);
   // Flux YouTube automatique (vidéos + Shorts) et lecteur intégré
-  const [ytFeed, setYtFeed] = useState({ videos: [], shorts: [] });
+  const [ytFeed, setYtFeed] = useState({ videos: [], shorts: [], live: null, replays: [] });
   const [ytPlayer, setYtPlayer] = useState(null); // { id, title, isShort, url }
   const ytOpenRef = useRef(false);
   const [ytTab, setYtTab] = useState("videos"); // videos | shorts
   useEffect(() => {
     let alive = true;
-    fetch("/api/videos")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => {
-        if (alive && d && Array.isArray(d.videos)) setYtFeed({ videos: d.videos.slice(0, 12), shorts: (d.shorts || []).slice(0, 12) });
-      })
-      .catch(() => {});
-    return () => { alive = false; };
+    const load = () =>
+      fetch("/api/videos")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (!alive || !d) return;
+          setYtFeed({
+            videos: (d.videos || []).slice(0, 12),
+            shorts: (d.shorts || []).slice(0, 12),
+            live: d.live || null,
+            replays: (d.replays || []).slice(0, 12),
+          });
+        })
+        .catch(() => {});
+    load();
+    // Un direct peut commencer ou se terminer pendant que l'app est ouverte.
+    const id = setInterval(load, 120000);
+    return () => { alive = false; clearInterval(id); };
   }, []);
   const [mediaView, setMediaView] = useState("live"); // live | tv | radio
-  const [tvReplay, setTvReplay] = useState(false);
+  const [tvPick, setTvPick] = useState(null); // id choisi dans les rediffusions (null = direct ou dernière rediffusion)
   const [moreView, setMoreView] = useState(null); // null | donate | heroes | pillars
 
   // --- Bouton « retour » (Android / navigateur) : revient à l'écran précédent au lieu de quitter l'app ---
@@ -2531,7 +2556,9 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [liveSource, setLiveSource] = useState("youtube");
-  const [isLive, setIsLive] = useState(true); // simulation pour la démo
+  // Direct réel : détecté sur la page « En direct » de la chaîne par /api/videos
+  const liveNow = ytFeed.live || null;
+  const isLive = !!liveNow;
   const [radioPlaying, setRadioPlaying] = useState(false);
   const [prayerName, setPrayerName] = useState("");
   const [prayerText, setPrayerText] = useState("");
@@ -2922,6 +2949,11 @@ export default function App() {
           to { transform: translateX(-50%) translateY(0%); opacity: 0.9; }
         }
         .fade-up { animation: fadeUp .6s ease both; }
+        .live-dot { animation: livePulse 1.6s ease-in-out infinite; }
+        @keyframes livePulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.25; }
+        }
         .yt-row { scrollbar-width: none; }
         /* Petits écrans : quand la flèche retour est affichée, la langue se change depuis « Mon espace » */
         @media (max-width: 400px) { .hdr-langs-narrow { display: none !important; } }
@@ -3018,6 +3050,62 @@ export default function App() {
         <div role="main" aria-label={t.navHome} style={{ flex: 1, overflowY: "auto", position: "relative" }}>
           {tab === "home" && (
             <div key={lang + "-home"} className="fade-up">
+              {isLive && liveNow && (
+                <button
+                  onClick={() => { setTvPick(null); setMediaView("tv"); setTab("media"); }}
+                  className="fade-up"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    width: "calc(100% - 40px)",
+                    margin: "16px 20px 0",
+                    padding: 10,
+                    textAlign: "left",
+                    borderRadius: 14,
+                    border: `1px solid ${COLORS.ember}`,
+                    background: "linear-gradient(135deg, rgba(232,98,44,0.22), rgba(232,98,44,0.08))",
+                    cursor: "pointer",
+                    minHeight: 48,
+                  }}
+                >
+                  <img
+                    src={liveNow.thumb}
+                    alt=""
+                    loading="lazy"
+                    style={{ width: 96, height: 54, objectFit: "cover", borderRadius: 9, flexShrink: 0, background: "#000" }}
+                  />
+                  <span style={{ minWidth: 0, flex: 1 }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span
+                        className="live-dot"
+                        style={{ width: 7, height: 7, borderRadius: "50%", background: COLORS.emberText, display: "inline-block", flexShrink: 0 }}
+                      />
+                      <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: 0.8, color: COLORS.emberText }}>
+                        {t.liveNowTitle}
+                      </span>
+                    </span>
+                    <span
+                      style={{
+                        marginTop: 3,
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.light,
+                        lineHeight: 1.35,
+                        overflow: "hidden",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                      }}
+                    >
+                      {liveNow.title}
+                    </span>
+                  </span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.emberText, whiteSpace: "nowrap", flexShrink: 0, paddingRight: 4 }}>
+                    {t.liveNowCta} ›
+                  </span>
+                </button>
+              )}
               <div style={{ position: "relative", padding: "36px 24px 28px", minHeight: 230, overflow: "hidden" }}>
                 {loaded && <Dawn />}
                 <div style={{ position: "relative", zIndex: 1 }}>
@@ -4835,9 +4923,18 @@ export default function App() {
             </div>
           )}
 
-          {tab === "media" && mediaView === "tv" && (
+          {tab === "media" && mediaView === "tv" && (() => {
+            const replays = ytFeed.replays || [];
+            const playingLive = !tvPick && isLive;
+            const current = tvPick
+              ? replays.find((r) => r.id === tvPick) || null
+              : liveNow || replays[0] || null;
+            const src = current
+              ? `https://www.youtube-nocookie.com/embed/${current.id}?rel=0${playingLive ? "&autoplay=0" : ""}`
+              : MEDIA.tvEmbedUrl;
+            return (
             <div key={lang + "-tv"} className="fade-up" style={{ padding: "20px 20px 24px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
                 <div className="display" style={{ fontSize: 22, fontWeight: 600 }}>
                   {t.tvTitle}
                 </div>
@@ -4846,20 +4943,26 @@ export default function App() {
                     display: "flex",
                     alignItems: "center",
                     gap: 6,
-                    background: "rgba(232,98,44,0.16)",
-                    border: `1px solid ${COLORS.ember}`,
-                    color: COLORS.emberText,
+                    background: playingLive ? "rgba(232,98,44,0.16)" : "rgba(255,255,255,0.06)",
+                    border: `1px solid ${playingLive ? COLORS.ember : "rgba(255,255,255,0.15)"}`,
+                    color: playingLive ? COLORS.emberText : COLORS.mist,
                     fontSize: 11,
                     fontWeight: 700,
                     padding: "5px 10px",
                     borderRadius: 999,
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: COLORS.ember, display: "inline-block" }} />
-                  {t.tvOnAir}
+                  <span
+                    className={playingLive ? "live-dot" : undefined}
+                    style={{ width: 6, height: 6, borderRadius: "50%", background: playingLive ? COLORS.ember : COLORS.mist, display: "inline-block" }}
+                  />
+                  {playingLive ? t.tvOnAir : t.tvOffAir}
                 </div>
               </div>
-              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>{t.tvSubtitle}</p>
+              <p style={{ fontSize: 13, color: COLORS.mist, marginTop: 6, lineHeight: 1.5 }}>
+                {playingLive ? t.tvSubtitle : replays.length ? t.tvNoLive : t.tvSubtitle}
+              </p>
 
               <div
                 style={{
@@ -4874,9 +4977,9 @@ export default function App() {
                 }}
               >
                 <iframe
-                  key={tvReplay ? "replay" : "live"}
-                  src={tvReplay ? MEDIA.tvReplayUrl : MEDIA.tvEmbedUrl}
-                  title={t.tvTitle}
+                  key={current ? current.id : "channel"}
+                  src={src}
+                  title={current ? current.title : t.tvTitle}
                   loading="lazy"
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
@@ -4891,29 +4994,72 @@ export default function App() {
                 />
               </div>
 
-              <div style={{ marginTop: 14, fontSize: 13.5, fontWeight: 600, textAlign: "center", color: COLORS.mist }}>
-                {MEDIA.tvChannelName}
+              <div style={{ marginTop: 14, fontSize: 13.5, fontWeight: 600, textAlign: "center", color: current ? COLORS.light : COLORS.mist, lineHeight: 1.45 }}>
+                {current ? current.title : MEDIA.tvChannelName}
               </div>
+
               <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
-                <button
-                  onClick={() => setTvReplay(!tvReplay)}
-                  style={{ flex: 1, padding: "11px 8px", borderRadius: 10, border: `1px solid ${COLORS.dawn}`, background: "rgba(244,185,66,0.14)", color: COLORS.dawn, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
-                >
-                  {tvReplay
-                    ? (lang === "en" ? "Back to live" : lang === "ht" ? "Tounen nan dirèk" : "Retour au direct")
-                    : (lang === "en" ? "No live? Watch latest videos" : lang === "ht" ? "Pa gen dirèk? Gade dènye videyo yo" : "Pas de direct ? Voir les dernières vidéos")}
-                </button>
+                {isLive && tvPick && (
+                  <button
+                    onClick={() => setTvPick(null)}
+                    style={{ flex: 1, padding: "11px 8px", borderRadius: 10, border: `1px solid ${COLORS.ember}`, background: "rgba(232,98,44,0.16)", color: COLORS.emberText, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                  >
+                    {lang === "en" ? "Back to live" : lang === "ht" ? "Tounen nan dirèk" : "Retour au direct"}
+                  </button>
+                )}
                 <a
-                  href={MEDIA.videoUrl}
+                  href={current ? current.url : MEDIA.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: 6, padding: "11px 12px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.15)", color: COLORS.mist, fontSize: 12.5, fontWeight: 600, textDecoration: "none" }}
+                  style={{ flex: isLive && tvPick ? "none" : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "11px 12px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.15)", color: COLORS.mist, fontSize: 12.5, fontWeight: 600, textDecoration: "none" }}
                 >
                   <ExternalLink size={14} /> YouTube
                 </a>
               </div>
+
+              {replays.length > 0 && (
+                <div style={{ marginTop: 26 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.6, color: COLORS.dawn, textTransform: "uppercase", marginBottom: 12 }}>
+                    {t.tvReplays}
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {replays.slice(0, 8).map((r) => {
+                      const active = current && current.id === r.id;
+                      return (
+                        <button
+                          key={r.id}
+                          onClick={() => setTvPick(r.id)}
+                          style={{
+                            display: "flex",
+                            gap: 12,
+                            alignItems: "center",
+                            textAlign: "left",
+                            padding: 8,
+                            borderRadius: 12,
+                            border: `1px solid ${active ? COLORS.dawn : "rgba(255,255,255,0.1)"}`,
+                            background: active ? "rgba(244,185,66,0.1)" : "rgba(255,255,255,0.03)",
+                            cursor: "pointer",
+                            minHeight: 48,
+                          }}
+                        >
+                          <img
+                            src={r.thumb}
+                            alt=""
+                            loading="lazy"
+                            style={{ width: 104, height: 59, objectFit: "cover", borderRadius: 8, flexShrink: 0, background: "#000" }}
+                          />
+                          <span style={{ fontSize: 13, fontWeight: 600, color: active ? COLORS.dawn : COLORS.light, lineHeight: 1.35 }}>
+                            {r.title}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+            );
+          })()}
 
           {tab === "more" && moreView === "news" && (
             <div key={lang + "-news"} className="fade-up" style={{ padding: "20px 20px 24px" }}>

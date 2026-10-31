@@ -144,6 +144,55 @@ async function fromRss() {
   throw new Error(last || "RSS indisponible");
 }
 
+// --- 3) Page « En direct » de la chaîne ---
+// Renvoie les directs : celui en cours (isLiveNow) puis les rediffusions.
+export function parseStreamsPage(html) {
+  const out = [];
+  const seen = new Set();
+  const re = /"videoId":"([\w-]{11})"/g;
+  let m;
+  while ((m = re.exec(html)) && out.length < 20) {
+    const id = m[1];
+    if (seen.has(id)) continue;
+    const chunk = html.slice(m.index, m.index + 7000);
+    const title = jsonStr(
+      (chunk.match(/"title":\{"runs":\[\{"text":"((?:[^"\\]|\\.)*)"/) ||
+        chunk.match(/"title":\{"simpleText":"((?:[^"\\]|\\.)*)"/) ||
+        chunk.match(/"primaryText":\{"content":"((?:[^"\\]|\\.)*)"/) ||
+        [])[1] || ""
+    );
+    if (!title) continue;
+    // Un direct en cours porte un badge LIVE et un compteur de spectateurs,
+    // là où une rediffusion porte une durée et un nombre de vues.
+    const head = chunk.slice(0, 3500);
+    const liveNow =
+      /"style"\s*:\s*"LIVE"/.test(head) ||
+      /"isLiveNow"\s*:\s*true/.test(head) ||
+      /"iconType"\s*:\s*"LIVE"/.test(head) ||
+      /watching now|spectateurs? en ce moment|regardent en ce moment/i.test(head);
+    const when = jsonStr((chunk.match(/"publishedTimeText":\{"simpleText":"((?:[^"\\]|\\.)*)"/) || [])[1] || "");
+    seen.add(id);
+    out.push({
+      id,
+      title,
+      published: liveNow ? new Date().toISOString() : relToIso(when),
+      isLiveNow: liveNow,
+      thumb: thumbOf(id),
+      url: urlOf(id, false),
+    });
+  }
+  return out;
+}
+
+async function fromStreams() {
+  const r = await fetch(`https://www.youtube.com/@${HANDLE}/streams?hl=en&gl=US`, { headers: HEADERS });
+  if (!r.ok) throw new Error(`Page streams ${r.status}`);
+  const all = parseStreamsPage(await r.text());
+  const live = all.find((s) => s.isLiveNow) || null;
+  const replays = all.filter((s) => !s.isLiveNow);
+  return { live, replays };
+}
+
 async function fromPages() {
   const get = async (path) => {
     const r = await fetch(`https://www.youtube.com/@${HANDLE}/${path}?hl=en&gl=US`, { headers: HEADERS });
@@ -163,6 +212,14 @@ async function fromPages() {
 export default async function handler(req, res) {
   let data;
   const errors = [];
+
+  // Les directs sont lus en parallèle : ils vivent sur une page à part,
+  // que ni le flux RSS ni l'onglet « Vidéos » ne montrent.
+  const streamsPromise = fromStreams().catch((e) => {
+    errors.push(String(e.message || e));
+    return { live: null, replays: [] };
+  });
+
   try {
     data = await fromRss();
   } catch (e) {
@@ -173,11 +230,32 @@ export default async function handler(req, res) {
       errors.push(String(e2.message || e2));
     }
   }
-  if (data) {
-    res.setHeader("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=86400");
-    res.status(200).json({ ...data, channelUrl: `https://www.youtube.com/@${HANDLE}`, updated: new Date().toISOString() });
+
+  const { live, replays } = await streamsPromise;
+
+  if (data || live || replays.length) {
+    const base = data || { videos: [], shorts: [], source: "streams" };
+    // Un direct ou une rediffusion peut aussi figurer dans la liste des vidéos.
+    const liveIds = new Set([live?.id, ...replays.map((r) => r.id)].filter(Boolean));
+    const videos = base.videos.filter((v) => !liveIds.has(v.id));
+    // Pendant un direct, la page doit se rafraîchir vite ; sinon on garde le cache long.
+    res.setHeader(
+      "Cache-Control",
+      live
+        ? "public, s-maxage=120, stale-while-revalidate=600"
+        : "public, s-maxage=1800, stale-while-revalidate=86400"
+    );
+    res.status(200).json({
+      ...base,
+      videos,
+      live,
+      replays,
+      channelUrl: `https://www.youtube.com/@${HANDLE}`,
+      liveUrl: live ? live.url : `https://www.youtube.com/@${HANDLE}/streams`,
+      updated: new Date().toISOString(),
+    });
   } else {
     res.setHeader("Cache-Control", "public, s-maxage=120");
-    res.status(502).json({ videos: [], shorts: [], error: errors.join(" | ") });
+    res.status(502).json({ videos: [], shorts: [], live: null, replays: [], error: errors.join(" | ") });
   }
 }
