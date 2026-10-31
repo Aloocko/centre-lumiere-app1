@@ -194,17 +194,21 @@ export async function fromStreams() {
 }
 
 // --- 4) Détection directe du direct : /@chaine/live sert la page du direct en cours ---
-// Quand aucun direct n'est en cours, YouTube renvoie la page de la chaîne, sans
-// bloc "videoDetails". La présence de ce bloc, avec "isLive":true, est le signal.
-// Attention : "isLiveContent" vaut aussi true sur une rediffusion, il ne suffit pas.
+// L'adresse /live ne renvoie une page de vidéo (bloc "videoDetails") QUE lorsqu'un
+// direct est en cours ; sinon elle renvoie la page de la chaîne, qui n'a pas ce bloc.
+// Aux serveurs, YouTube sert une version allégée où "isLive" peut manquer : la
+// présence du bloc fait donc foi, sauf si la page dit explicitement le contraire.
+// "isLiveContent" est ignoré : il vaut aussi true sur une rediffusion.
 export function parseLivePage(html) {
   const i = html.indexOf('"videoDetails"');
   if (i < 0) return null;
   const chunk = html.slice(i, i + 6000);
-  const enDirect =
+  const ditNon = /"isLive"\s*:\s*false/.test(chunk) || /"isLiveNow"\s*:\s*false/.test(html);
+  const ditOui =
     /"isLive"\s*:\s*true/.test(chunk) ||
     /"isLiveNow"\s*:\s*true/.test(html) ||
     /"liveBroadcastDetails"\s*:\s*\{[^}]*"isLiveNow"\s*:\s*true/.test(html);
+  const enDirect = ditOui || !ditNon;
   if (!enDirect) return null;
   const id = (chunk.match(/"videoId"\s*:\s*"([\w-]{11})"/) || [])[1];
   if (!id) return null;
